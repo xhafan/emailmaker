@@ -16,10 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.9.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CoreDdd\CoreDdd.csproj" />
+    <PackageReference Include="CoreDdd" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

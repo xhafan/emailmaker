@@ -5,6 +5,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
@@ -27,13 +28,13 @@
     <PackageReference Include="NServiceBus" version="3.2.6" />
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="Shouldly" Version="3.0.0" />
+    <PackageReference Include="CoreDdd" Version="3.0.0" />
+    <PackageReference Include="CoreUtils" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CoreNserviceBusTest\CoreNserviceBusTest.csproj" />
-    <ProjectReference Include="..\CoreDdd\CoreDdd.csproj" />
     <ProjectReference Include="..\CoreTest\CoreTest.csproj" />
-    <ProjectReference Include="..\CoreUtils\CoreUtils.csproj" />
     <ProjectReference Include="..\EmailMaker.Core\EmailMaker.Core.csproj" />
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj" />
     <ProjectReference Include="..\EmailMaker.Messages\EmailMaker.Messages.csproj" />

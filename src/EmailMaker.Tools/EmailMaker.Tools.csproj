@@ -18,10 +18,10 @@
 
   <ItemGroup>
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
     <ProjectReference Include="..\EmailMaker.Infrastructure\EmailMaker.Infrastructure.csproj" />
   </ItemGroup>
 

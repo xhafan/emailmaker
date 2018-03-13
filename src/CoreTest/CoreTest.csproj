@@ -18,12 +18,9 @@
     <PackageReference Include="FakeItEasy" Version="4.4.0" />
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CoreDdd\CoreDdd.csproj" />
-    <ProjectReference Include="..\CoreIoC\CoreIoC.csproj" />
-    <ProjectReference Include="..\CoreUtils\CoreUtils.csproj" />
+    <PackageReference Include="CoreDdd" Version="3.0.0" />
+    <PackageReference Include="CoreIoC" Version="3.0.0" />
+    <PackageReference Include="CoreUtils" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

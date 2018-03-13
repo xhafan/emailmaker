@@ -7,12 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
+    <PackageReference Include="CoreDdd" Version="3.0.0" />
+    <PackageReference Include="CoreUtils" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreDdd\CoreDdd.csproj" />
     <ProjectReference Include="..\CoreTest\CoreTest.csproj" />
-    <ProjectReference Include="..\CoreUtils\CoreUtils.csproj" />
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj" />
   </ItemGroup>
 

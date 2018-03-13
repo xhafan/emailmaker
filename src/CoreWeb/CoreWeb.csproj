@@ -16,11 +16,8 @@
 
   <ItemGroup>
     <PackageReference Include="ASP.NET.MVC" Version="3.0.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CoreIoC\CoreIoC.csproj" />
-    <ProjectReference Include="..\CoreUtils\CoreUtils.csproj" />
+    <PackageReference Include="CoreIoC" Version="3.0.0" />
+    <PackageReference Include="CoreUtils" Version="3.0.0" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

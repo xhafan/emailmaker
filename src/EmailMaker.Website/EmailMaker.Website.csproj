@@ -82,6 +82,24 @@
     <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ASP.NET.MVC.3.0.0.1\lib\net40\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="CoreDdd.Nhibernate.Register.Castle">
+      <HintPath>..\packages\CoreDdd.Nhibernate.Register.Castle.3.0.0\lib\net40\CoreDdd.Nhibernate.Register.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreDdd.Nhibernate">
+      <HintPath>..\packages\CoreDdd.Nhibernate.3.0.0\lib\net40\CoreDdd.Nhibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreDdd.Register.Castle">
+      <HintPath>..\packages\CoreDdd.Register.Castle.3.0.0\lib\net40\CoreDdd.Register.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreDdd">
+      <HintPath>..\packages\CoreDdd.3.0.0\lib\net40\CoreDdd.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreIoC.Castle">
+      <HintPath>..\packages\CoreIoC.Castle.3.0.0\lib\net40\CoreIoC.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreIoC">
+      <HintPath>..\packages\CoreIoC.3.0.0\lib\net40\CoreIoC.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.WebPages" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -156,30 +174,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj">
-      <Project>{17D2DA72-CACA-4ADF-8068-5598090CF563}</Project>
-      <Name>CoreDdd.Nhibernate.Register.Castle</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj">
-      <Project>{63e96b9e-20a3-4576-a402-22c6aba75292}</Project>
-      <Name>CoreDdd.Nhibernate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CoreDdd.Register.Castle\CoreDdd.Register.Castle.csproj">
-      <Project>{B8045320-C387-42DD-9486-BAAC52A02022}</Project>
-      <Name>CoreDdd.Register.Castle</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CoreDdd\CoreDdd.csproj">
-      <Project>{a55844fe-7bba-4fe9-9c12-e233e944ae1e}</Project>
-      <Name>CoreDdd</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CoreIoC.Castle\CoreIoC.Castle.csproj">
-      <Project>{568EB03F-98D6-4AA2-80DD-5A8D2B8AEFA2}</Project>
-      <Name>CoreIoC.Castle</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CoreIoC\CoreIoC.csproj">
-      <Project>{BFFB3AD8-2EE2-4E6C-99D6-1D8563D696DC}</Project>
-      <Name>CoreIoC</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CoreWeb\CoreWeb.csproj">
       <Project>{84703bd6-f546-4eee-bb43-18201771c3b0}</Project>
       <Name>CoreWeb</Name>

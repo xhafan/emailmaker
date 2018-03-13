@@ -16,10 +16,10 @@
   <ItemGroup>
     <PackageReference Include="FluentNHibernate" Version="2.0.3" />
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
+    <PackageReference Include="CoreDdd" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreDdd\CoreDdd.csproj" />
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj" />
   </ItemGroup>
 
