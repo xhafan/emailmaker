@@ -12,11 +12,19 @@
     <Description>Persistence test helpers for CoreDdd library</Description>
     <PackageTags>CoreDdd persistence test helper</PackageTags>
     <PackageProjectUrl>http://xhafan.com/blog/</PackageProjectUrl>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.9.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreDdd" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj" />
   </ItemGroup>
 
 </Project>

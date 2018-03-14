@@ -1,4 +1,4 @@
-using CoreUtils;
+using System;
 using EmailMaker.Dtos.Emails;
 using EmailMaker.TestHelper.Builders;
 using NUnit.Framework;
@@ -9,7 +9,7 @@ namespace EmailMaker.UnitTests.Domain.Emails
     [TestFixture]
     public class when_updating_email_variables_with_invalid_email_id
     {
-        private CoreException _exception;
+        private Exception _exception;
 
         [SetUp]
         public void Context()
@@ -23,7 +23,7 @@ namespace EmailMaker.UnitTests.Domain.Emails
                 .WithEmailTemplate(template)
                 .Build();
             var emailDto = new EmailDto {EmailId = emailId};
-            _exception = Should.Throw<CoreException>(() => email.UpdateVariables(emailDto));
+            _exception = Should.Throw<Exception>(() => email.UpdateVariables(emailDto));
         }
 
         [Test]

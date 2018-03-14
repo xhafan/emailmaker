@@ -3,8 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net40;net45;net461</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TestProjectType>UnitTest</TestProjectType>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,8 +13,16 @@
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="Shouldly" Version="3.0.0" />
     <PackageReference Include="ASP.NET.MVC" version="3.0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreDdd" Version="3.0.0" />
     <PackageReference Include="CoreUtils" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +36,10 @@
     <ProjectReference Include="..\EmailMaker.Messages\EmailMaker.Messages.csproj" />
     <ProjectReference Include="..\EmailMaker.Queries\EmailMaker.Queries.csproj" />
     <ProjectReference Include="..\EmailMaker.TestHelper\EmailMaker.TestHelper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
 </Project>

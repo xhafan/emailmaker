@@ -3,13 +3,18 @@
   <PropertyGroup>
     <TargetFramework>net40</TargetFramework>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreUtils" Version="3.0.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>

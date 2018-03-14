@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net40;net461</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
@@ -18,7 +19,7 @@
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>

@@ -1,3 +1,4 @@
+using System;
 using CoreTest;
 using CoreUtils;
 using EmailMaker.Domain.Emails;
@@ -15,7 +16,7 @@ namespace EmailMaker.UnitTests.Domain.Emails
         private Email _email;
         private const string FromAddress = "from address";
         private const string Subject = "subject";
-        private CoreException _exception;
+        private Exception _exception;
 
         [SetUp]
         public void Context()
@@ -28,7 +29,7 @@ namespace EmailMaker.UnitTests.Domain.Emails
                 .WithEmailTemplate(template)
                 .WithState(state)
                 .Build();
-            _exception = Should.Throw<CoreException>(() => _email.EnqueueEmailToBeSent(FromAddress, null, Subject));
+            _exception = Should.Throw<Exception>(() => _email.EnqueueEmailToBeSent(FromAddress, null, Subject));
         }
 
         [Test]

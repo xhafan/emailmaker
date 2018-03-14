@@ -1,4 +1,4 @@
-using CoreUtils;
+using System;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Domain.Emails.EmailStates;
 using EmailMaker.TestHelper.Builders;
@@ -11,7 +11,7 @@ namespace EmailMaker.UnitTests.Domain.Emails
     [TestFixture]
     public class when_enqueueing_email_to_be_sent_with_defined_recipients
     {
-        private CoreException _exception;
+        private Exception _exception;
 
         [SetUp]
         public void Context()
@@ -25,7 +25,7 @@ namespace EmailMaker.UnitTests.Domain.Emails
                 .WithRecipient(new Recipient("email", "name"))
                 .Build();
 
-            _exception = Should.Throw<CoreException>(() => email.EnqueueEmailToBeSent(null, null, null));
+            _exception = Should.Throw<Exception>(() => email.EnqueueEmailToBeSent(null, null, null));
         }
 
         [Test]

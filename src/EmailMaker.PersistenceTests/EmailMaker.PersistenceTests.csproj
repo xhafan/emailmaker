@@ -5,8 +5,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TestProjectType>UnitTest</TestProjectType>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
@@ -37,12 +36,24 @@
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="Shouldly" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.0" />
     <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.0" />
     <PackageReference Include="CoreDdd" Version="3.0.0" />
     <PackageReference Include="CoreIoC.Castle" Version="3.0.0" />
     <PackageReference Include="CoreIoC" Version="3.0.0" />
     <PackageReference Include="CoreUtils" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Castle\CoreIoC.Castle.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +71,10 @@
     <None Update="connectionStrings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
 </Project>

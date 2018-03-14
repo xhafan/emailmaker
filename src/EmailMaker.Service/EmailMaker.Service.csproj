@@ -5,6 +5,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
@@ -34,6 +35,9 @@
     <PackageReference Include="NServiceBus" version="3.2.6" />
     <PackageReference Include="NServiceBus.CastleWindsor" version="3.2.6" />
     <PackageReference Include="NServiceBus.Host" version="3.2.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.0" />
     <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.0" />
     <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.0" />
@@ -41,6 +45,16 @@
     <PackageReference Include="CoreIoC.Castle" Version="3.0.0" />
     <PackageReference Include="CoreIoC" Version="3.0.0" />
     <PackageReference Include="CoreUtils" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Register.Castle\CoreDdd.Register.Castle.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Castle\CoreIoC.Castle.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,7 +77,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>

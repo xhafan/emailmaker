@@ -1,4 +1,4 @@
-using CoreUtils;
+using System;
 using EmailMaker.TestHelper.Builders;
 using NUnit.Framework;
 using Shouldly;
@@ -8,13 +8,13 @@ namespace EmailMaker.UnitTests.Domain.Users
     [TestFixture]
     public class when_changing_password_with_incorrect_old_password
     {
-        private CoreException _exception;
+        private Exception _exception;
 
         [SetUp]
         public void Context()
         {
             var user = UserBuilder.New.Build();
-            _exception = Should.Throw<CoreException>(() => user.ChangePassword("incorrect old password", "new password"));
+            _exception = Should.Throw<Exception>(() => user.ChangePassword("incorrect old password", "new password"));
         }
 
         [Test]

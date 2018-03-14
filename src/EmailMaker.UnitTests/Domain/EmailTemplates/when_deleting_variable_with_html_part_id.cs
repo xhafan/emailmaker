@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using CoreUtils;
+﻿using System;
+using System.Linq;
 using EmailMaker.Domain.EmailTemplates;
 using EmailMaker.TestHelper.Builders;
 using NUnit.Framework;
@@ -11,7 +11,7 @@ namespace EmailMaker.UnitTests.Domain.EmailTemplates
     public class when_deleting_variable_with_html_part_id
     {
         private EmailTemplate _template;
-        private CoreException _exception;
+        private Exception _exception;
 
         [SetUp]
         public void Context()
@@ -21,7 +21,7 @@ namespace EmailMaker.UnitTests.Domain.EmailTemplates
                 .WithVariable(1, 1)
                 .Build();
             var htmlPartId = _template.Parts.Last().Id;
-            _exception = Should.Throw<CoreException>(() => _template.DeleteVariable(htmlPartId));
+            _exception = Should.Throw<Exception>(() => _template.DeleteVariable(htmlPartId));
         }
 
         [Test]

@@ -12,15 +12,24 @@
     <Description>MVC Web helpers. Tutorial on http://xhafan.com/blog/coreddd-tutorial-real-life-ddd-tdd-asp-net-mvc-wpf-application-built-on-coreddd-library</Description>
     <PackageTags>MVC web helper</PackageTags>
     <PackageProjectUrl>http://xhafan.com/blog/</PackageProjectUrl>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ASP.NET.MVC" Version="3.0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreIoC" Version="3.0.0" />
     <PackageReference Include="CoreUtils" Version="3.0.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net40;net45;net461</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
@@ -27,8 +28,16 @@
     <PackageReference Include="FluentNHibernate" Version="2.0.3" />
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
     <PackageReference Include="NHibernateProfiler" Version="1.0.0.939" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.0" />
     <PackageReference Include="CoreDdd" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +46,7 @@
     <ProjectReference Include="..\EmailMaker.Dto\EmailMaker.Dtos.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>

@@ -1,4 +1,4 @@
-﻿using CoreUtils;
+﻿using System;
 using EmailMaker.Domain.EmailTemplates;
 using EmailMaker.TestHelper.Builders;
 using NUnit.Framework;
@@ -10,13 +10,13 @@ namespace EmailMaker.UnitTests.Domain.EmailTemplates
     public class when_deleting_variable_with_invalid_variable_id
     {
         private EmailTemplate _template;
-        private CoreException _exception;
+        private Exception _exception;
 
         [SetUp]
         public void Context()
         {
             _template = EmailTemplateBuilder.New.Build();
-            _exception = Should.Throw<CoreException>(() => _template.DeleteVariable(23));
+            _exception = Should.Throw<Exception>(() => _template.DeleteVariable(23));
         }
 
         [Test]

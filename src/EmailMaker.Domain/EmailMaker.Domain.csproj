@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net40;net45;net461</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
@@ -22,8 +23,16 @@
 
   <ItemGroup>
     <PackageReference Include="NServiceBus" Version="3.2.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreDdd" Version="3.0.0" />
     <PackageReference Include="CoreUtils" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +41,7 @@
     <ProjectReference Include="..\EmailMaker.Messages\EmailMaker.Messages.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
