@@ -57,6 +57,30 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.3.2.1\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="CoreDdd, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.3.0.4-beta\lib\net40\CoreDdd.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreDdd.Nhibernate, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.Nhibernate.3.0.4-beta\lib\net40\CoreDdd.Nhibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreDdd.Nhibernate.Register.Castle, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.Nhibernate.Register.Castle.3.0.4-beta\lib\net40\CoreDdd.Nhibernate.Register.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreDdd.Register.Castle, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.Register.Castle.3.0.4-beta\lib\net40\CoreDdd.Register.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreIoC, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreIoC.3.0.4-beta\lib\net40\CoreIoC.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreIoC.Castle, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreIoC.Castle.3.0.4-beta\lib\net40\CoreIoC.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreUtils, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreUtils.3.0.4-beta\lib\net40\CoreUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.3\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -78,27 +102,10 @@
     <Reference Include="NServiceBus.ObjectBuilder.CastleWindsor">
       <HintPath>..\packages\NServiceBus.CastleWindsor.3.2.6\lib\net40\NServiceBus.ObjectBuilder.CastleWindsor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ASP.NET.MVC.3.0.0.1\lib\net40\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="CoreDdd.Nhibernate.Register.Castle">
-      <HintPath>..\packages\CoreDdd.Nhibernate.Register.Castle.3.0.0\lib\net40\CoreDdd.Nhibernate.Register.Castle.dll</HintPath>
-    </Reference>
-    <Reference Include="CoreDdd.Nhibernate">
-      <HintPath>..\packages\CoreDdd.Nhibernate.3.0.0\lib\net40\CoreDdd.Nhibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="CoreDdd.Register.Castle">
-      <HintPath>..\packages\CoreDdd.Register.Castle.3.0.0\lib\net40\CoreDdd.Register.Castle.dll</HintPath>
-    </Reference>
-    <Reference Include="CoreDdd">
-      <HintPath>..\packages\CoreDdd.3.0.0\lib\net40\CoreDdd.dll</HintPath>
-    </Reference>
-    <Reference Include="CoreIoC.Castle">
-      <HintPath>..\packages\CoreIoC.Castle.3.0.0\lib\net40\CoreIoC.Castle.dll</HintPath>
-    </Reference>
-    <Reference Include="CoreIoC">
-      <HintPath>..\packages\CoreIoC.3.0.0\lib\net40\CoreIoC.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages" />
     <Reference Include="Microsoft.CSharp" />

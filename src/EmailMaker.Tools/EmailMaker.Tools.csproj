@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.0" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.4-beta" />
   </ItemGroup>
 
   <ItemGroup>
