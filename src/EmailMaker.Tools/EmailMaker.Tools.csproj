@@ -19,7 +19,14 @@
 
   <ItemGroup>
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.4-beta" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
   </ItemGroup>
 
   <ItemGroup>
