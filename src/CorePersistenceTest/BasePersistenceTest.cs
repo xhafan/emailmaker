@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace CorePersistenceTest
 {
+    [System.Obsolete("todo: remove me - dont force abstract methods to be implemented in derived tests")]
     public abstract class BasePersistenceTest
     {
         protected IUnitOfWork UnitOfWork;
