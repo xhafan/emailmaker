@@ -16,7 +16,7 @@ namespace EmailMaker.Commands.Handlers
 
         public override void Execute(ChangePasswordForUserCommand command)
         {
-            var user = _userRepository.GetById(command.UserId);
+            var user = _userRepository.Get(command.UserId);
             user.ChangePassword(command.OldPassword, command.NewPassword);
         }
     }

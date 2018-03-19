@@ -1,4 +1,4 @@
-﻿using CorePersistenceTest.Nhibernate;
+﻿using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.Users;
 using NUnit.Framework;
 using Shouldly;
@@ -6,7 +6,7 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Domain.Users
 {
     [TestFixture]
-    public class when_persisting_user : BaseNhibernateSimplePersistenceTest
+    public class when_persisting_user : BasePersistenceTest
     {
         private const string FirstName = "first name";
         private const string LastName = "last name";
@@ -15,14 +15,13 @@ namespace EmailMaker.PersistenceTests.Domain.Users
         private User _user;
         private User _retrievedUser;
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
             _user = new User(FirstName, LastName, EmailAddress, Password);
             Save(_user);
-        }
+            Clear();
 
-        protected override void PersistenceQuery()
-        {
             _retrievedUser = Get<User>(_user.Id);
         }
 

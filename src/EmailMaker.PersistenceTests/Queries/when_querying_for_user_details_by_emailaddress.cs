@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.Users;
 using EmailMaker.Dtos.Users;
 using EmailMaker.Queries.Handlers;
@@ -11,7 +11,7 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Queries
 {
     [TestFixture]
-    public class when_querying_for_user_details_by_emailaddress : BaseNhibernateSimplePersistenceTest
+    public class when_querying_for_user_details_by_emailaddress : BasePersistenceTest
     {
         private User _user;
         private IEnumerable<UserDto>  _results;
@@ -20,18 +20,15 @@ namespace EmailMaker.PersistenceTests.Queries
         private const string EmailAddress = "email@test.com";
         private const string Password = "password";
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
-           _user = new User(FirstName,LastName,EmailAddress,Password);
+           _user = new User(FirstName, LastName, EmailAddress, Password);
             Save(_user);
-        }
 
-        protected override void PersistenceQuery()
-        {
-            var query = new GetUserDetailsByEmailAddressQueryHandler();
-            _results = query.Execute<UserDto>(new GetUserDetailsByEmailAddressQuery { EmailAddress = EmailAddress });
+            var queryHandler = new GetUserDetailsByEmailAddressQueryHandler();
+            _results = queryHandler.Execute<UserDto>(new GetUserDetailsByEmailAddressQuery { EmailAddress = EmailAddress });
         }
-
         
         [Test]
         public void user_details_correctly_retrieved()

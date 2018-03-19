@@ -16,7 +16,7 @@ namespace EmailMaker.Commands.Handlers
 
         public override void Execute(UpdateEmailVariablesCommand command)
         {
-            var email = _emailRepository.GetById(command.Email.EmailId);
+            var email = _emailRepository.Get(command.Email.EmailId);
             email.UpdateVariables(command.Email);
         }
     }

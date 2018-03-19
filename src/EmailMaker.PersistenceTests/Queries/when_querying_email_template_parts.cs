@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.EmailTemplates;
 using EmailMaker.Dtos;
 using EmailMaker.Dtos.EmailTemplates;
@@ -13,34 +13,38 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Queries
 {
     [TestFixture]
-    public class when_querying_email_template_parts : BaseNhibernateSimplePersistenceTest
+    public class when_querying_email_template_parts : BasePersistenceTest
     {
         private EmailTemplate _emailTemplate;
         private IEnumerable<EmailTemplatePartDto> _result;
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
-            var user = UserBuilder.New.Build();
-            Save(user);
-            _emailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("123")
-                .WithName("template name")
-                .WithUserId(user.Id)
-                .Build(); 
-            Save(_emailTemplate);
-            _emailTemplate.CreateVariable(_emailTemplate.Parts.First().Id, 1, 1);
-            var anotherEmailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("another html")
-                .WithName("template name")
-                .WithUserId(user.Id)
-                .Build();
-            Save(_emailTemplate, anotherEmailTemplate);
-        }
+            PersistEmailTemplate();
 
-        protected override void PersistenceQuery()
-        {
-            var query = new GetEmailTemplatePartsQueryHandler();
-            _result = query.Execute<EmailTemplatePartDto>(new GetEmailTemplatePartsQuery { EmailTemplateId = _emailTemplate.Id });
+            var queryHandler = new GetEmailTemplatePartsQueryHandler();
+            _result = queryHandler.Execute<EmailTemplatePartDto>(new GetEmailTemplatePartsQuery { EmailTemplateId = _emailTemplate.Id });
+
+            void PersistEmailTemplate()
+            {
+                var user = UserBuilder.New.Build();
+                Save(user);
+                _emailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("123")
+                    .WithName("template name")
+                    .WithUserId(user.Id)
+                    .Build();
+                Save(_emailTemplate);
+                _emailTemplate.CreateVariable(_emailTemplate.Parts.First().Id, 1, 1);
+                var anotherEmailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("another html")
+                    .WithName("template name")
+                    .WithUserId(user.Id)
+                    .Build();
+                Save(_emailTemplate);
+                Save(anotherEmailTemplate);
+            }
         }
 
         [Test]

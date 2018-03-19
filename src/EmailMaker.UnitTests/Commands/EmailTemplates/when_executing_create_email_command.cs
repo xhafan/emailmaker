@@ -22,7 +22,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
             _emailRepository = A.Fake<IRepository<Email>>();
             _emailTemplateRepository = A.Fake<IRepository<EmailTemplate>>();
             const int emailTemplateId = 23;
-            A.CallTo(() => _emailTemplateRepository.GetById(emailTemplateId)).Returns(new EmailTemplate(123));
+            A.CallTo(() => _emailTemplateRepository.Get(emailTemplateId)).Returns(new EmailTemplate(123));
 
             var handler = new CreateEmailCommandHandler(_emailRepository, _emailTemplateRepository);
             handler.CommandExecuted += (sender, args) => _eventRaised = true;

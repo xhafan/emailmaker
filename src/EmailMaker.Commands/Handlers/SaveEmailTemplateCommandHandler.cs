@@ -16,7 +16,7 @@ namespace EmailMaker.Commands.Handlers
 
         public override void Execute(SaveEmailTemplateCommand command)
         {
-            var emailTemplate = _emailTemplateRepository.GetById(command.EmailTemplate.EmailTemplateId);
+            var emailTemplate = _emailTemplateRepository.Get(command.EmailTemplate.EmailTemplateId);
             emailTemplate.Update(command.EmailTemplate);
         }
     }

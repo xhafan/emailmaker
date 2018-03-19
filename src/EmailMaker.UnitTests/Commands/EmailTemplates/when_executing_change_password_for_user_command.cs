@@ -22,7 +22,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
         {
             _user = A.Fake<User>();
             _userRepository = A.Fake<IRepository<User>>();
-            A.CallTo(() => _userRepository.GetById(UserId)).Returns(_user);
+            A.CallTo(() => _userRepository.Get(UserId)).Returns(_user);
             var handler = new ChangePasswordForUserCommandHandler(_userRepository);
             handler.Execute(new ChangePasswordForUserCommand { UserId = UserId, OldPassword = OldPassword, NewPassword = NewPassword});
         }

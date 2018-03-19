@@ -1,5 +1,5 @@
 using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Domain.Emails.EmailStates;
 using EmailMaker.Domain.EmailTemplates;
@@ -10,7 +10,7 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Domain.Emails
 {
     [TestFixture]
-    public class when_persisting_email_with_recipients : BaseNhibernateSimplePersistenceTest
+    public class when_persisting_email_with_recipients : BasePersistenceTest
     {
         private Email _email;
         private Email _retrievedEmail;
@@ -22,36 +22,40 @@ namespace EmailMaker.PersistenceTests.Domain.Emails
         private const string FromAddress = "fromAddress@test.com";
         private const string Subject = "subject";
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
-            var user = UserBuilder.New.Build();
-            Save(user);
-            _emailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("123")
-                .WithName("template name")
-                .WithUserId(user.Id)
-                .Build();
-            Save(_emailTemplate);
+            PersistEmailWithRecipients();
+            Clear();
 
-            _recipientOne = new Recipient(EmailOne, "name one");
-            _recipientTwo = new Recipient(EmailTwo, "name two");
-            Save(_recipientOne);
-            Save(_recipientTwo);
-
-            _email = new EmailBuilder()
-                .WithoutAssigningIdsToParts()
-                .WithEmailTemplate(_emailTemplate)
-                .WithFromAddress(FromAddress)
-                .WithSubject(Subject)
-                .WithRecipient(_recipientOne)
-                .WithRecipient(_recipientTwo)
-                .Build();
-            Save(_email);           
-        }
-
-        protected override void PersistenceQuery()
-        {
             _retrievedEmail = Get<Email>(_email.Id);
+
+            void PersistEmailWithRecipients()
+            {
+                var user = UserBuilder.New.Build();
+                Save(user);
+                _emailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("123")
+                    .WithName("template name")
+                    .WithUserId(user.Id)
+                    .Build();
+                Save(_emailTemplate);
+
+                _recipientOne = new Recipient(EmailOne, "name one");
+                _recipientTwo = new Recipient(EmailTwo, "name two");
+                Save(_recipientOne);
+                Save(_recipientTwo);
+
+                _email = new EmailBuilder()
+                    .WithoutAssigningIdsToParts()
+                    .WithEmailTemplate(_emailTemplate)
+                    .WithFromAddress(FromAddress)
+                    .WithSubject(Subject)
+                    .WithRecipient(_recipientOne)
+                    .WithRecipient(_recipientTwo)
+                    .Build();
+                Save(_email);
+            }
         }
 
         [Test]

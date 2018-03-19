@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Domain.EmailTemplates;
 using EmailMaker.TestHelper.Builders;
@@ -9,31 +9,35 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Domain.Emails
 {
     [TestFixture]
-    public class when_persisting_email : BaseNhibernateSimplePersistenceTest
+    public class when_persisting_email : BasePersistenceTest
     {
         private Email _email;
         private Email _retrievedEmail;
         private EmailTemplate _emailTemplate;
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
-            var user = UserBuilder.New.Build();
-            Save(user);
-            _emailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("123")
-                .WithUserId(user.Id)
-                .Build();
-            Save(_emailTemplate);
-            _emailTemplate.CreateVariable(_emailTemplate.Parts.First().Id,  1, 1);
-            Save(_emailTemplate);
+            PersistEmail();
+            Clear();
 
-            _email = new Email(_emailTemplate);
-            Save(_email);
-        }
-
-        protected override void PersistenceQuery()
-        {
             _retrievedEmail = Get<Email>(_email.Id);
+
+            void PersistEmail()
+            {
+                var user = UserBuilder.New.Build();
+                Save(user);
+                _emailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("123")
+                    .WithUserId(user.Id)
+                    .Build();
+                Save(_emailTemplate);
+                _emailTemplate.CreateVariable(_emailTemplate.Parts.First().Id, 1, 1);
+                Save(_emailTemplate);
+
+                _email = new Email(_emailTemplate);
+                Save(_email);
+            }
         }
 
         [Test]
@@ -65,6 +69,5 @@ namespace EmailMaker.PersistenceTests.Domain.Emails
         {
             _retrievedEmail.State.Name.ShouldBe("Draft");
         }
-
     }
 }

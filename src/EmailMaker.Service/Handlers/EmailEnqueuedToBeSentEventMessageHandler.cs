@@ -21,7 +21,7 @@ namespace EmailMaker.Service.Handlers
 
         public void Handle(EmailEnqueuedToBeSentEventMessage message)
         {
-            var email = _emailRepository.GetById(message.EmailId);
+            var email = _emailRepository.Get(message.EmailId);
             var emailHtml = _emailHtmlBuilder.BuildHtmlEmail(email.Parts);
             email.EmailRecipients.Each(x => _bus.SendLocal(new SendEmailForEmailRecipientMessage
                                                                           {

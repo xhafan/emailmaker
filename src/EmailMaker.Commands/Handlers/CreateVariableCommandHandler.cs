@@ -16,7 +16,7 @@ namespace EmailMaker.Commands.Handlers
 
         public override void Execute(CreateVariableCommand command)
         {
-            var emailTemplate = _emailTemplateRepository.GetById(command.EmailTemplate.EmailTemplateId);
+            var emailTemplate = _emailTemplateRepository.Get(command.EmailTemplate.EmailTemplateId);
             emailTemplate.Update(command.EmailTemplate);
             emailTemplate.CreateVariable(command.HtmlTemplatePartId, command.HtmlStartIndex, command.Length);
         }

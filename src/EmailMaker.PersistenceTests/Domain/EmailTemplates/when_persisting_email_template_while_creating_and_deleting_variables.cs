@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.EmailTemplates;
 using EmailMaker.TestHelper.Builders;
 using NUnit.Framework;
@@ -8,12 +8,10 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Domain.EmailTemplates
 {
     [TestFixture]
-    public class when_persisting_email_template_while_creating_and_deleting_variables : BaseNhibernatePersistenceTest
+    public class when_persisting_email_template_while_creating_and_deleting_variables : BasePersistenceTest
     {
         private EmailTemplate _emailTemplate;
         private EmailTemplate _retrievedEmailTemplate;
-
-        protected override void Context() {}
 
         [Test]
         public void test_multiple_variable_creation_and_deletion_persistence()
@@ -24,29 +22,29 @@ namespace EmailMaker.PersistenceTests.Domain.EmailTemplates
                 .WithInitialHtml("12345")
                 .WithUserId(user.Id)
                 .Build();
-            Save(_emailTemplate);
-            Session.Clear();
+            Save(_emailTemplate);            
+            Clear();
             _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
             _CheckThatRetrievedEmailTemplateIsTheSameAsEmailTemplate();
             
             _emailTemplate = _retrievedEmailTemplate;
             _emailTemplate.CreateVariable(_emailTemplate.Parts.First().Id, 1, 1);
             Save(_emailTemplate);
-            Session.Clear();
+            Clear();
             _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
             _CheckThatRetrievedEmailTemplateIsTheSameAsEmailTemplate();
 
             _emailTemplate = _retrievedEmailTemplate;
             _emailTemplate.CreateVariable(_emailTemplate.Parts.Last().Id, 1, 1);
             Save(_emailTemplate);
-            Session.Clear();
+            Clear();
             _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
             _CheckThatRetrievedEmailTemplateIsTheSameAsEmailTemplate();
 
             _emailTemplate = _retrievedEmailTemplate;
             _emailTemplate.DeleteVariable(_emailTemplate.Parts.ElementAt(1).Id);
             Save(_emailTemplate);
-            Session.Clear();
+            Clear();
             _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
             _CheckThatRetrievedEmailTemplateIsTheSameAsEmailTemplate();        
         }

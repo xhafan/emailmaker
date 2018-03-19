@@ -28,7 +28,7 @@ namespace EmailMaker.Commands.Handlers
 
         public override void Execute(EnqueueEmailToBeSentCommand command)
         {
-            var email = _emailRepository.GetById(command.EmailId);
+            var email = _emailRepository.Get(command.EmailId);
             var emailAddressesAndNames = _recipientParser.Parse(command.Recipients);
             var existingRecipients = _queryExecutor.Execute<GetExistingRecipientsQuery, Recipient>(
                 new GetExistingRecipientsQuery

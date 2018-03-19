@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Dtos.Emails;
 using EmailMaker.Queries.Handlers;
@@ -12,35 +12,41 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Queries
 {
     [TestFixture]
-    public class when_querying_email : BaseNhibernateSimplePersistenceTest
+    public class when_querying_email : BasePersistenceTest
     {
         private Email _email;
         private IEnumerable<EmailDto> _result;
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
-            var user = UserBuilder.New.Build();
-            Save(user);
-            var emailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("html")
-                .WithName("template name")
-                .WithUserId(user.Id)
-                .Build(); 
-            _email = new Email(emailTemplate);
-            var anotherEmailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("another html")
-                .WithName("template name")
-                .WithUserId(user.Id)
-                .Build(); 
-            var anotherEmail = new Email(anotherEmailTemplate);
+            PersistEmail();
 
-            Save(emailTemplate, _email, anotherEmailTemplate, anotherEmail);
-        }
+            var queryHandler = new GetEmailQueryHandler();
+            _result = queryHandler.Execute<EmailDto>(new GetEmailQuery { EmailId = _email.Id });
 
-        protected override void PersistenceQuery()
-        {
-            var query = new GetEmailQueryHandler();
-            _result = query.Execute<EmailDto>(new GetEmailQuery { EmailId = _email.Id });
+            void PersistEmail()
+            {
+                var user = UserBuilder.New.Build();
+                Save(user);
+                var emailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("html")
+                    .WithName("template name")
+                    .WithUserId(user.Id)
+                    .Build();
+                _email = new Email(emailTemplate);
+                var anotherEmailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("another html")
+                    .WithName("template name")
+                    .WithUserId(user.Id)
+                    .Build();
+                var anotherEmail = new Email(anotherEmailTemplate);
+
+                Save(emailTemplate);
+                Save(_email);
+                Save(anotherEmailTemplate);
+                Save(anotherEmail);
+            }
         }
 
         [Test]

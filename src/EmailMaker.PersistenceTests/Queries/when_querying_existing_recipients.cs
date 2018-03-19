@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Queries.Handlers;
 using EmailMaker.Queries.Messages;
@@ -10,7 +10,7 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Queries
 {
     [TestFixture]
-    public class when_querying_existing_recipients : BaseNhibernateSimplePersistenceTest
+    public class when_querying_existing_recipients : BasePersistenceTest
     {
         private const string EmailAddressOne = "email1@test.com";
         private const string EmailAddressTwo = "email2@test.com";
@@ -19,19 +19,25 @@ namespace EmailMaker.PersistenceTests.Queries
         private Recipient _recipientOne;
         private Recipient _recipientTwo;
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
             _recipientOne = new Recipient(EmailAddressOne, "name1");
             Save(_recipientOne);
 
             _recipientTwo = new Recipient(EmailAddressTwo, "name2");
             Save(_recipientTwo);        
-        }
 
-        protected override void PersistenceQuery()
-        {
-            var query = new GetExistingRecipientsQueryHandler();
-            _result = query.Execute<Recipient>(new GetExistingRecipientsQuery { RecipientEmailAddresses = new[] { EmailAddressOne, EmailAddressTwo, EmailAddressThree } });
+            var queryHandler = new GetExistingRecipientsQueryHandler();
+            _result = queryHandler.Execute<Recipient>(new GetExistingRecipientsQuery
+            {
+                RecipientEmailAddresses = new[]
+                {
+                    EmailAddressOne,
+                    EmailAddressTwo,
+                    EmailAddressThree
+                }
+            });
         }
 
         [Test]

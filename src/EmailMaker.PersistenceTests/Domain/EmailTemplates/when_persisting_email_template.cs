@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using CoreUtils.Extensions;
 using EmailMaker.Domain.EmailTemplates;
 using EmailMaker.Domain.Users;
@@ -10,28 +10,32 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Domain.EmailTemplates
 {
     [TestFixture]
-    public class when_persisting_email_template : BaseNhibernateSimplePersistenceTest
+    public class when_persisting_email_template : BasePersistenceTest
     {
         private EmailTemplate _emailTemplate;
         private EmailTemplate _retrievedEmailTemplate;
         private const string TemplateName = "template name";
         private User _user;
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
-            _user = UserBuilder.New.Build();
-            Save(_user);
-            _emailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("html")
-                .WithName(TemplateName)
-                .WithUserId(_user.Id)
-                .Build();
-            Save(_emailTemplate);
-        }
+            PersistEmailTemplate();
+            Clear();
 
-        protected override void PersistenceQuery()
-        {
             _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
+
+            void PersistEmailTemplate()
+            {
+                _user = UserBuilder.New.Build();
+                Save(_user);
+                _emailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("html")
+                    .WithName(TemplateName)
+                    .WithUserId(_user.Id)
+                    .Build();
+                Save(_emailTemplate);
+            }
         }
 
         [Test]

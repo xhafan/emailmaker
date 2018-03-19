@@ -45,6 +45,7 @@
     <PackageReference Include="CoreIoC.Castle" Version="3.0.4-beta" />
     <PackageReference Include="CoreIoC" Version="3.0.4-beta" />
     <PackageReference Include="CoreUtils" Version="3.0.4-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.0.4-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
@@ -54,10 +55,10 @@
     <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Castle\CoreIoC.Castle.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.TestHelpers\CoreDdd.Nhibernate.TestHelpers.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CorePersistenceTest.Nhibernate\CorePersistenceTest.Nhibernate.csproj" />
     <ProjectReference Include="..\CoreTest\CoreTest.csproj" />
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj" />
     <ProjectReference Include="..\EmailMaker.Dto\EmailMaker.Dtos.csproj" />

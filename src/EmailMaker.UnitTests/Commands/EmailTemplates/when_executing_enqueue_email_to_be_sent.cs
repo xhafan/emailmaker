@@ -30,7 +30,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
             const int emailId = 23;
             _email = A.Fake<Email>();
             var emailRepository = A.Fake<IRepository<Email>>();
-            A.CallTo(() => emailRepository.GetById(emailId)).Returns(_email);
+            A.CallTo(() => emailRepository.Get(emailId)).Returns(_email);
 
             var recipientParser = A.Fake<IRecipientParser>();
             A.CallTo(() => recipientParser.Parse(Recipients)).Returns(new Dictionary<string, string>{{AddressOne, NameOne}, {AddressTwo, NameTwo}});

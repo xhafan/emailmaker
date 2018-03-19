@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Dtos;
 using EmailMaker.Dtos.Emails;
@@ -13,39 +13,42 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Queries
 {
     [TestFixture]
-    public class when_querying_email_parts : BaseNhibernateSimplePersistenceTest
+    public class when_querying_email_parts : BasePersistenceTest
     {
         private IEnumerable<EmailPartDto> _result;
         private Email _email;
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
-            var user = UserBuilder.New.Build();
-            Save(user);
-            var emailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("123")
-                .WithName("template name")
-                .WithUserId(user.Id)
-                .Build();
-            Save(emailTemplate);
-            emailTemplate.CreateVariable(emailTemplate.Parts.First().Id, 1, 1);
-            Save(emailTemplate);
+            PersistEmail();
 
-            var anotherEmailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("another html")
-                .WithName("template name")
-                .WithUserId(user.Id)
-                .Build(); 
-            Save(anotherEmailTemplate);
+            var queryHandler = new GetEmailPartsQueryHandler();
+            _result = queryHandler.Execute<EmailPartDto>(new GetEmailPartsQuery { EmailId = _email.Id });
 
-            _email = new Email(emailTemplate);
-            Save(_email);
-        }
+            void PersistEmail()
+            {
+                var user = UserBuilder.New.Build();
+                Save(user);
+                var emailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("123")
+                    .WithName("template name")
+                    .WithUserId(user.Id)
+                    .Build();
+                Save(emailTemplate);
+                emailTemplate.CreateVariable(emailTemplate.Parts.First().Id, 1, 1);
+                Save(emailTemplate);
 
-        protected override void PersistenceQuery()
-        {
-            var query = new GetEmailPartsQueryHandler();
-            _result = query.Execute<EmailPartDto>(new GetEmailPartsQuery { EmailId = _email.Id });
+                var anotherEmailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("another html")
+                    .WithName("template name")
+                    .WithUserId(user.Id)
+                    .Build();
+                Save(anotherEmailTemplate);
+
+                _email = new Email(emailTemplate);
+                Save(_email);
+            }
         }
 
         [Test]

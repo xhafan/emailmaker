@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CorePersistenceTest.Nhibernate;
+using CoreDdd.Nhibernate.TestHelpers;
 using EmailMaker.Domain.EmailTemplates;
 using EmailMaker.Domain.Users;
 using EmailMaker.Dtos.EmailTemplates;
@@ -13,28 +13,31 @@ using Shouldly;
 namespace EmailMaker.PersistenceTests.Queries
 {
     [TestFixture]
-    public class when_querying_all_email_template_details : BaseNhibernateSimplePersistenceTest
+    public class when_querying_all_email_template_details : BasePersistenceTest
     {
         private IEnumerable<EmailTemplateDetailsDto> _result;
         private EmailTemplate _emailTemplate;
         private User _user;
 
-        protected override void PersistenceContext()
+        [SetUp]
+        public void Context()
         {
-            _user = UserBuilder.New.Build();
-            Save(_user);
-            _emailTemplate = EmailTemplateBuilder.New
-                .WithInitialHtml("html")
-                .WithName("template name")
-                .WithUserId(_user.Id)
-                .Build(); 
-            Save(_emailTemplate);
-        }
+            PersistEmailTemplate();
 
-        protected override void PersistenceQuery()
-        {
-            var query = new GetAllEmailTemplateQueryHandler();
-            _result = query.Execute<EmailTemplateDetailsDto>(new GetAllEmailTemplateQuery { UserId = _user.Id });
+            var queryHandler = new GetAllEmailTemplateQueryHandler();
+            _result = queryHandler.Execute<EmailTemplateDetailsDto>(new GetAllEmailTemplateQuery { UserId = _user.Id });
+
+            void PersistEmailTemplate()
+            {
+                _user = UserBuilder.New.Build();
+                Save(_user);
+                _emailTemplate = EmailTemplateBuilder.New
+                    .WithInitialHtml("html")
+                    .WithName("template name")
+                    .WithUserId(_user.Id)
+                    .Build();
+                Save(_emailTemplate);
+            }
         }
 
         [Test]

@@ -21,7 +21,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
 
             const int emailId = 23;
             var emailRepository = A.Fake<IRepository<Email>>();
-            A.CallTo(() => emailRepository.GetById(emailId)).Returns(_email);
+            A.CallTo(() => emailRepository.Get(emailId)).Returns(_email);
 
             _emailDto = new EmailDto
                                     {

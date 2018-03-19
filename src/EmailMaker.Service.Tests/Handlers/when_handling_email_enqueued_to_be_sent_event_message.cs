@@ -52,7 +52,7 @@ namespace EmailMaker.Service.Tests.Handlers
             A.CallTo(() => _email.Subject).Returns(Subject);
 
             var emailRepository = A.Fake<IRepository<Email>>();
-            A.CallTo(() => emailRepository.GetById(EmailId)).Returns(_email);
+            A.CallTo(() => emailRepository.Get(EmailId)).Returns(_email);
 
             var emailHtmlBuilder = A.Fake<IEmailHtmlBuilder>();
             A.CallTo(() => emailHtmlBuilder.BuildHtmlEmail(emailParts)).Returns(EmailHtml);
