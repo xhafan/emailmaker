@@ -24,7 +24,7 @@ namespace EmailMaker.Infrastructure
         public EmailMakerNhibernateConfigurator(bool mapDtoAssembly)
             : base(mapDtoAssembly)
         {
-#if(DEBUG)
+#if DEBUG
             NHibernateProfiler.Initialize();
 #endif
         }
