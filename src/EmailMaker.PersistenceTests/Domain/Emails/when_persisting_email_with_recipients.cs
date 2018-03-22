@@ -25,12 +25,12 @@ namespace EmailMaker.PersistenceTests.Domain.Emails
         [SetUp]
         public void Context()
         {
-            PersistEmailWithRecipients();
+            _persistEmailWithRecipients();
             Clear();
 
             _retrievedEmail = Get<Email>(_email.Id);
 
-            void PersistEmailWithRecipients()
+            void _persistEmailWithRecipients()
             {
                 var user = UserBuilder.New.Build();
                 Save(user);

@@ -20,12 +20,12 @@ namespace EmailMaker.PersistenceTests.Domain.EmailTemplates
         [SetUp]
         public void Context()
         {
-            PersistEmailTemplate();
+            _persistEmailTemplate();
             Clear();
 
             _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
 
-            void PersistEmailTemplate()
+            void _persistEmailTemplate()
             {
                 _user = UserBuilder.New.Build();
                 Save(_user);
