@@ -20,7 +20,7 @@ namespace EmailMaker.Infrastructure
 
         protected override INhibernateConfigurator GetNhibernateConfigurator()
         {
-            return new EmailMakerNhibernateConfigurator(false);
+            return new EmailMakerNhibernateConfigurator(mapDtoAssembly: false);
         }
     }
 }
