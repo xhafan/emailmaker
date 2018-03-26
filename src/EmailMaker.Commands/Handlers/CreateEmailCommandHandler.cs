@@ -22,7 +22,7 @@ namespace EmailMaker.Commands.Handlers
             var emailTemplate = _emailTemplateRepository.Get(command.EmailTemplateId);
             var newEmail = new Email(emailTemplate);
             _emailRepository.Save(newEmail);
-            RaiseEvent(new CommandExecutedArgs { Args = newEmail.Id });
+            RaiseCommandExecutedEvent(new CommandExecutedArgs { Args = newEmail.Id });
         }
     }
 }

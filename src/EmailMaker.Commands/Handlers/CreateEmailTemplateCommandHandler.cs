@@ -18,7 +18,7 @@ namespace EmailMaker.Commands.Handlers
         {
             var newEmailTemplate = new EmailTemplate(command.UserId);
             _emailTemplateRepository.Save(newEmailTemplate);
-            RaiseEvent(new CommandExecutedArgs { Args = newEmailTemplate.Id });
+            RaiseCommandExecutedEvent(new CommandExecutedArgs { Args = newEmailTemplate.Id });
         }
     }
 }
