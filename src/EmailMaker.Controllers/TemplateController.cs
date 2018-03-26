@@ -37,7 +37,7 @@ namespace EmailMaker.Controllers
         {            
             var createdEmailTemplateId = default(int);
             var command = new CreateEmailTemplateCommand { UserId = UserId };
-            _commandExecutor.CommandExecuted += (sender, args) => createdEmailTemplateId = (int) args.Args;
+            _commandExecutor.CommandExecuted += args => createdEmailTemplateId = (int) args.Args;
             _commandExecutor.Execute(command);
 
             return this.RedirectToAction(a => a.Edit(createdEmailTemplateId));

@@ -25,7 +25,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
             A.CallTo(() => _emailTemplateRepository.Get(emailTemplateId)).Returns(new EmailTemplate(123));
 
             var handler = new CreateEmailCommandHandler(_emailRepository, _emailTemplateRepository);
-            handler.CommandExecuted += (sender, args) => _eventRaised = true;
+            handler.CommandExecuted += args => _eventRaised = true;
             handler.Execute(new CreateEmailCommand { EmailTemplateId = emailTemplateId});
         }
 
