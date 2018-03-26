@@ -6,8 +6,8 @@ using NHibernate;
 namespace EmailMaker.Queries.Handlers
 {
     public class GetUserDetailsByEmailAddressQueryHandler : BaseQueryOverHandler<GetUserDetailsByEmailAddressQuery>
-    {        
-        public override IQueryOver GetQueryOver<TResult>(GetUserDetailsByEmailAddressQuery query)
+    {
+        protected override IQueryOver GetQueryOver<TResult>(GetUserDetailsByEmailAddressQuery query)
         {
             return Session.QueryOver<UserDto>()
                 .Where(x => x.EmailAddress == query.EmailAddress);
