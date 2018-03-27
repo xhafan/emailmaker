@@ -212,9 +212,17 @@
       <Project>{84703bd6-f546-4eee-bb43-18201771c3b0}</Project>
       <Name>CoreWeb</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EmailMaker.Commands.Register.Castle\EmailMaker.Commands.Register.Castle.csproj">
+      <Project>{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}</Project>
+      <Name>EmailMaker.Commands.Register.Castle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Commands\EmailMaker.Commands.csproj">
       <Project>{DB6DC588-8415-4184-8B4B-6485374A2E68}</Project>
       <Name>EmailMaker.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmailMaker.Controllers.Register.Castle\EmailMaker.Controllers.Register.Castle.csproj">
+      <Project>{E4E6F033-46D1-422A-A835-61EFF0FA7181}</Project>
+      <Name>EmailMaker.Controllers.Register.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Controllers\EmailMaker.Controllers.csproj">
       <Project>{A34ED149-1B63-44AC-B72A-A81C5FD42190}</Project>

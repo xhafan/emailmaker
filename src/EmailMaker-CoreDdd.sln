@@ -77,6 +77,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreIoC.Ninject", "coredddR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreIoC.Ninject.Tests", "coredddRepoLink\src\CoreIoC.Ninject.Tests\CoreIoC.Ninject.Tests.csproj", "{F04859EF-37CE-4036-A315-0FFB8C0532E5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDdd.Nhibernate.Register.Ninject", "coredddRepoLink\src\CoreDdd.Nhibernate.Register.Ninject\CoreDdd.Nhibernate.Register.Ninject.csproj", "{E43CF435-ECE9-4D35-98AA-3228C4A74506}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDdd.Register.Ninject", "coredddRepoLink\src\CoreDdd.Register.Ninject\CoreDdd.Register.Ninject.csproj", "{E33E3571-C62A-4775-8315-FBAB7C6D9938}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailMaker.Controllers.Register.Castle", "EmailMaker.Controllers.Register.Castle\EmailMaker.Controllers.Register.Castle.csproj", "{E4E6F033-46D1-422A-A835-61EFF0FA7181}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailMaker.Commands.Register.Castle", "EmailMaker.Commands.Register.Castle\EmailMaker.Commands.Register.Castle.csproj", "{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug CoreDdd|Any CPU = Debug CoreDdd|Any CPU
@@ -288,6 +296,30 @@ Global
 		{F04859EF-37CE-4036-A315-0FFB8C0532E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F04859EF-37CE-4036-A315-0FFB8C0532E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F04859EF-37CE-4036-A315-0FFB8C0532E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E43CF435-ECE9-4D35-98AA-3228C4A74506}.Debug CoreDdd|Any CPU.ActiveCfg = Debug|Any CPU
+		{E43CF435-ECE9-4D35-98AA-3228C4A74506}.Debug CoreDdd|Any CPU.Build.0 = Debug|Any CPU
+		{E43CF435-ECE9-4D35-98AA-3228C4A74506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E43CF435-ECE9-4D35-98AA-3228C4A74506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E43CF435-ECE9-4D35-98AA-3228C4A74506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E43CF435-ECE9-4D35-98AA-3228C4A74506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E33E3571-C62A-4775-8315-FBAB7C6D9938}.Debug CoreDdd|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33E3571-C62A-4775-8315-FBAB7C6D9938}.Debug CoreDdd|Any CPU.Build.0 = Debug|Any CPU
+		{E33E3571-C62A-4775-8315-FBAB7C6D9938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33E3571-C62A-4775-8315-FBAB7C6D9938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E33E3571-C62A-4775-8315-FBAB7C6D9938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E33E3571-C62A-4775-8315-FBAB7C6D9938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4E6F033-46D1-422A-A835-61EFF0FA7181}.Debug CoreDdd|Any CPU.ActiveCfg = Debug CoreDdd|Any CPU
+		{E4E6F033-46D1-422A-A835-61EFF0FA7181}.Debug CoreDdd|Any CPU.Build.0 = Debug CoreDdd|Any CPU
+		{E4E6F033-46D1-422A-A835-61EFF0FA7181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4E6F033-46D1-422A-A835-61EFF0FA7181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4E6F033-46D1-422A-A835-61EFF0FA7181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4E6F033-46D1-422A-A835-61EFF0FA7181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}.Debug CoreDdd|Any CPU.ActiveCfg = Debug CoreDdd|Any CPU
+		{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}.Debug CoreDdd|Any CPU.Build.0 = Debug CoreDdd|Any CPU
+		{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -313,6 +345,8 @@ Global
 		{573BFE62-A79E-4569-ACC7-5C32EB645F36} = {728BAF88-2E0F-4804-80E8-C79F2D094F6E}
 		{C332A228-9BE8-4304-8031-E625F7C272EB} = {0C10C201-7188-4109-95E8-B9BCDA39BA9F}
 		{F04859EF-37CE-4036-A315-0FFB8C0532E5} = {728BAF88-2E0F-4804-80E8-C79F2D094F6E}
+		{E43CF435-ECE9-4D35-98AA-3228C4A74506} = {0C10C201-7188-4109-95E8-B9BCDA39BA9F}
+		{E33E3571-C62A-4775-8315-FBAB7C6D9938} = {0C10C201-7188-4109-95E8-B9BCDA39BA9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EFCD531-755C-4738-A710-61E0CB7030C6}
