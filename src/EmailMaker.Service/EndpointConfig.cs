@@ -5,9 +5,9 @@ using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
 using CoreIoC;
 using CoreIoC.Castle;
-using EmailMaker.Infrastructure;
+using EmailMaker.Infrastructure.Register.Castle;
 using EmailMaker.Messages;
-using EmailMaker.Queries;
+using EmailMaker.Queries.Register.Castle;
 using EmailMaker.Service.Handlers;
 using NServiceBus;
 

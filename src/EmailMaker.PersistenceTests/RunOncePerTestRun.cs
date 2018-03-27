@@ -3,7 +3,7 @@ using Castle.Windsor.Installer;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreIoC;
 using CoreIoC.Castle;
-using EmailMaker.Infrastructure;
+using EmailMaker.Infrastructure.Register.Castle;
 using NUnit.Framework;
 
 namespace EmailMaker.PersistenceTests

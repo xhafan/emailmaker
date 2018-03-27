@@ -10,13 +10,11 @@ using CoreIoC;
 using CoreIoC.Castle;
 using CoreWeb;
 using CoreWeb.ModelBinders;
-using EmailMaker.Commands;
 using EmailMaker.Commands.Register.Castle;
-using EmailMaker.Controllers;
 using EmailMaker.Controllers.Register.Castle;
-using EmailMaker.Domain.EventHandlers;
-using EmailMaker.Infrastructure;
-using EmailMaker.Queries;
+using EmailMaker.Domain.Register.Castle;
+using EmailMaker.Infrastructure.Register.Castle;
+using EmailMaker.Queries.Register.Castle;
 using NServiceBus;
 
 namespace EmailMaker.Website

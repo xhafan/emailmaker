@@ -96,7 +96,6 @@
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <Reference Include="CoreDdd">
       <HintPath>..\packages\CoreDdd.3.0.5-beta\lib\net40\CoreDdd.dll</HintPath>
@@ -120,7 +119,6 @@
       <HintPath>..\packages\CoreUtils.3.0.5-beta\lib\net40\CoreUtils.dll</HintPath>
     </Reference>
   </ItemGroup>
-
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
     <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj">
       <Project>{919DBBB7-CEE7-42CD-BF9C-1955244EAA33}</Project>
@@ -143,7 +141,6 @@
       <Name>CoreIoC</Name>
     </ProjectReference>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="Extensions\JsonExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,7 +210,7 @@
       <Name>CoreWeb</Name>
     </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Commands.Register.Castle\EmailMaker.Commands.Register.Castle.csproj">
-      <Project>{65DF75BC-BBF6-4614-A0EE-5BCA1788F08C}</Project>
+      <Project>{FD739EF6-FC20-4167-BA88-6EC3533C5486}</Project>
       <Name>EmailMaker.Commands.Register.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Commands\EmailMaker.Commands.csproj">
@@ -221,12 +218,16 @@
       <Name>EmailMaker.Commands</Name>
     </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Controllers.Register.Castle\EmailMaker.Controllers.Register.Castle.csproj">
-      <Project>{E4E6F033-46D1-422A-A835-61EFF0FA7181}</Project>
+      <Project>{7BAF65D6-0BB7-46E5-9C69-32C1AE7B1E6E}</Project>
       <Name>EmailMaker.Controllers.Register.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Controllers\EmailMaker.Controllers.csproj">
       <Project>{A34ED149-1B63-44AC-B72A-A81C5FD42190}</Project>
       <Name>EmailMaker.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmailMaker.Domain.Register.Castle\EmailMaker.Domain.Register.Castle.csproj">
+      <Project>{5EBFDEAE-FA52-4191-A661-832DE662825B}</Project>
+      <Name>EmailMaker.Domain.Register.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj">
       <Project>{09698B3F-4CF5-49DC-BA64-27790733B2D2}</Project>
@@ -236,9 +237,17 @@
       <Project>{9EC89380-5186-450A-BFCE-A08CF74BE535}</Project>
       <Name>EmailMaker.Dtos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EmailMaker.Infrastructure.Register.Castle\EmailMaker.Infrastructure.Register.Castle.csproj">
+      <Project>{546056FA-245F-463E-854B-DC9EE68D354F}</Project>
+      <Name>EmailMaker.Infrastructure.Register.Castle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Infrastructure\EmailMaker.Infrastructure.csproj">
       <Project>{4EC67C85-CA58-4ECC-BDAA-836A67C030C5}</Project>
       <Name>EmailMaker.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmailMaker.Queries.Register.Castle\EmailMaker.Queries.Register.Castle.csproj">
+      <Project>{1F1EC8F2-45C8-4681-A5FA-8C93CABEF9CE}</Project>
+      <Name>EmailMaker.Queries.Register.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Queries\EmailMaker.Queries.csproj">
       <Project>{B6CA3CBC-8ABD-4CCC-8E38-44D624F2174B}</Project>

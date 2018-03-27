@@ -60,8 +60,10 @@
   <ItemGroup>
     <ProjectReference Include="..\EmailMaker.Core\EmailMaker.Core.csproj" />
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj" />
+    <ProjectReference Include="..\EmailMaker.Infrastructure.Register.Castle\EmailMaker.Infrastructure.Register.Castle.csproj" />
     <ProjectReference Include="..\EmailMaker.Infrastructure\EmailMaker.Infrastructure.csproj" />
     <ProjectReference Include="..\EmailMaker.Messages\EmailMaker.Messages.csproj" />
+    <ProjectReference Include="..\EmailMaker.Queries.Register.Castle\EmailMaker.Queries.Register.Castle.csproj" />
     <ProjectReference Include="..\EmailMaker.Queries\EmailMaker.Queries.csproj" />
   </ItemGroup>
 

@@ -62,6 +62,7 @@
     <ProjectReference Include="..\CoreTest\CoreTest.csproj" />
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj" />
     <ProjectReference Include="..\EmailMaker.Dto\EmailMaker.Dtos.csproj" />
+    <ProjectReference Include="..\EmailMaker.Infrastructure.Register.Castle\EmailMaker.Infrastructure.Register.Castle.csproj" />
     <ProjectReference Include="..\EmailMaker.Infrastructure\EmailMaker.Infrastructure.csproj" />
     <ProjectReference Include="..\EmailMaker.Queries\EmailMaker.Queries.csproj" />
     <ProjectReference Include="..\EmailMaker.TestHelper\EmailMaker.TestHelper.csproj" />
