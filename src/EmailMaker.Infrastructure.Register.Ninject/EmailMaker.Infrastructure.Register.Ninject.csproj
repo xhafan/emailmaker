@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40;net45</TargetFrameworks>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <PackageReference Include="Ninject" Version="3.2.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <PackageReference Include="Ninject" Version="4.0.0-beta-0134" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EmailMaker.Infrastructure\EmailMaker.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
