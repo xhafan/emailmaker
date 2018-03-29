@@ -18,7 +18,7 @@ namespace EmailMaker.Service
                                             };
             SetLoggingLibrary.Log4Net(log4net.Config.XmlConfigurator.Configure);
 
-            var container = NinjectIoCRegistration.RegisterIoCServices(); // change it to NinjectIoCRegistration to use Ninject IoC
+            var container = CastleIoCRegistration.RegisterIoCServices(); // change it to NinjectIoCRegistration to use Ninject IoC
             Configure
                 .With(nserviceBusAssemblies)
                 .Builder(container)
