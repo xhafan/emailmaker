@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;net461</TargetFrameworks>
+    <TargetFrameworks>net40</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -11,16 +11,10 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <PackageReference Include="Castle.Core" Version="3.2.1" />
     <PackageReference Include="Castle.Windsor" Version="3.2.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-    <PackageReference Include="Castle.Core" Version="4.2.1" />
-    <PackageReference Include="Castle.Windsor" Version="4.1.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="Castle.Core" Version="4.2.1" />
-    <PackageReference Include="Castle.Windsor" Version="4.1.0" />
+    <PackageReference Include="Ninject" Version="3.2.2" />
+    <PackageReference Include="Ninject.Extensions.ContextPreservation" Version="3.2.0" />
+    <PackageReference Include="Ninject.Extensions.NamedScope" Version="3.2.0" />
+    <PackageReference Include="NServiceBus.Ninject" Version="3.2.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,20 +33,26 @@
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.5-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.0.5-beta" />
     <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.5-beta" />
     <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.5-beta" />
+    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.0.5-beta" />
     <PackageReference Include="CoreDdd" Version="3.0.5-beta" />
     <PackageReference Include="CoreIoC.Castle" Version="3.0.5-beta" />
+    <PackageReference Include="CoreIoC.Ninject" Version="3.0.5-beta" />
     <PackageReference Include="CoreIoC" Version="3.0.5-beta" />
     <PackageReference Include="CoreUtils" Version="3.0.5-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
     <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.Register.Ninject\CoreDdd.Nhibernate.Register.Ninject.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Register.Castle\CoreDdd.Register.Castle.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Register.Ninject\CoreDdd.Register.Ninject.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Castle\CoreIoC.Castle.csproj" />
+    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Ninject\CoreIoC.Ninject.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>
@@ -61,9 +61,11 @@
     <ProjectReference Include="..\EmailMaker.Core\EmailMaker.Core.csproj" />
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj" />
     <ProjectReference Include="..\EmailMaker.Infrastructure.Register.Castle\EmailMaker.Infrastructure.Register.Castle.csproj" />
+    <ProjectReference Include="..\EmailMaker.Infrastructure.Register.Ninject\EmailMaker.Infrastructure.Register.Ninject.csproj" />
     <ProjectReference Include="..\EmailMaker.Infrastructure\EmailMaker.Infrastructure.csproj" />
     <ProjectReference Include="..\EmailMaker.Messages\EmailMaker.Messages.csproj" />
     <ProjectReference Include="..\EmailMaker.Queries.Register.Castle\EmailMaker.Queries.Register.Castle.csproj" />
+    <ProjectReference Include="..\EmailMaker.Queries.Register.Ninject\EmailMaker.Queries.Register.Ninject.csproj" />
     <ProjectReference Include="..\EmailMaker.Queries\EmailMaker.Queries.csproj" />
   </ItemGroup>
 

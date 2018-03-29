@@ -19,12 +19,10 @@ namespace EmailMaker.Service
 
         public void HandleEndMessage()
         {
-            _unitOfWork.Commit();
         }
 
         public void HandleError()
         {
-            _unitOfWork.Rollback();
         }
     }
 }

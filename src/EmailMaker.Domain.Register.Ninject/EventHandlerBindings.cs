@@ -17,7 +17,7 @@ namespace EmailMaker.Domain.Register.Ninject
                 .FromAssemblyContaining<EmailEnqueuedToBeSentEventHandler>()
                 .SelectAllClasses()
                 .InheritedFrom(typeof(IDomainEventHandler<>))
-                .BindDefaultInterface()
+                .BindAllInterfaces()
                 .Configure(y => y.InTransientScope()));
         }
     }

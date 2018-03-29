@@ -1,6 +1,5 @@
 using CoreDdd.Commands;
 using EmailMaker.Commands.Handlers;
-using Ninject;
 using Ninject.Modules;
 using Ninject.Extensions.Conventions;
 
@@ -18,7 +17,7 @@ namespace EmailMaker.Commands.Register.Ninject
                 .FromAssemblyContaining<CreateEmailCommandHandler>()
                 .SelectAllClasses()
                 .InheritedFrom(typeof(ICommandHandler<>))
-                .BindDefaultInterface()
+                .BindAllInterfaces()
                 .Configure(y => y.InTransientScope()));
         }
     }

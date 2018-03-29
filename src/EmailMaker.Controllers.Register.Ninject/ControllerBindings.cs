@@ -16,7 +16,7 @@ namespace EmailMaker.Controllers.Register.Ninject
                 .FromAssemblyContaining<EmailController>()
                 .SelectAllClasses()
                 .InheritedFrom<IController>()
-                .BindDefaultInterface()
+                .BindAllInterfaces()
                 .Configure(y => y.InTransientScope()));
         }
     }

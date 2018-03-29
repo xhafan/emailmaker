@@ -17,7 +17,7 @@ namespace EmailMaker.Queries.Register.Ninject
                 .FromAssemblyContaining<GetEmailQueryHandler>()
                 .SelectAllClasses()
                 .InheritedFrom(typeof(IQueryHandler<>))
-                .BindDefaultInterface()
+                .BindAllInterfaces()
                 .Configure(y => y.InTransientScope()));
         }
     }

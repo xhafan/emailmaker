@@ -1,14 +1,7 @@
-﻿using Castle.Windsor;
-using Castle.Windsor.Installer;
-using CoreDdd.Nhibernate.Configurations;
-using CoreDdd.Nhibernate.Register.Castle;
-using CoreDdd.Register.Castle;
+﻿using CoreDdd.Nhibernate.Configurations;
 using CoreIoC;
-using CoreIoC.Castle;
-using EmailMaker.Infrastructure.Register.Castle;
-using EmailMaker.Messages;
-using EmailMaker.Queries.Register.Castle;
 using EmailMaker.Service.Handlers;
+using EmailMaker.Service.IoCRegistration;
 using NServiceBus;
 
 namespace EmailMaker.Service
@@ -21,29 +14,20 @@ namespace EmailMaker.Service
                                             {
                                                 typeof (IMessage).Assembly,
                                                 typeof (Configure).Assembly,
-                                                typeof (SendEmailForEmailRecipientMessage).Assembly,
-                                                typeof (SendEmailForEmailRecipientMessageHandler).Assembly
+                                                typeof (EmailEnqueuedToBeSentEventMessageHandler).Assembly
                                             };
             SetLoggingLibrary.Log4Net(log4net.Config.XmlConfigurator.Configure);
-            var windsorContainer = new WindsorContainer();
+
+            var container = NinjectIoCRegistration.RegisterIoCServices(); // change it to NinjectIoCRegistration to use Ninject IoC
             Configure
                 .With(nserviceBusAssemblies)
-                .CastleWindsorBuilder(windsorContainer)
+                .Builder(container)
                 .BinarySerializer()
                 .MsmqTransport()
                 .DisableTimeoutManager()
                 .MsmqSubscriptionStorage()
                 .UnicastBus();
-            NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerThread);
-            windsorContainer.Install(
-                FromAssembly.Containing<QueryExecutorInstaller>(),
-                FromAssembly.Containing<EmailSenderInstaller>(),
-                FromAssembly.Containing<QueryHandlerInstaller>(),
-                FromAssembly.Containing<NhibernateInstaller>(),
-                FromAssembly.Containing<EmailMakerNhibernateInstaller>()
-                );            
-            IoC.Initialize(new CastleContainer(windsorContainer));
-            
+           
             ConfigureNhibernate();            
         }
 
