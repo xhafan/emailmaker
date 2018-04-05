@@ -30,6 +30,8 @@
     <Use64BitIISExpress />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +84,10 @@
       <HintPath>..\packages\NServiceBus.CastleWindsor.3.2.6\lib\net40\NServiceBus.ObjectBuilder.CastleWindsor.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Data.SQLite, Version=1.0.108.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.108.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ASP.NET.MVC.3.0.0.1\lib\net40\System.Web.Mvc.dll</HintPath>
@@ -132,12 +138,20 @@
       <Project>{98A96361-3D2C-4AA9-A347-1124E4D2D1DF}</Project>
       <Name>CoreDdd</Name>
     </ProjectReference>
+    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj">
+      <Project>{38CAA86D-8ADF-4BA2-A56F-03A0948D9472}</Project>
+      <Name>CoreDdd</Name>
+    </ProjectReference>
     <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Castle\CoreIoC.Castle.csproj">
       <Project>{051BB9FD-8215-4B16-AD1F-A37899C77544}</Project>
       <Name>CoreIoC.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj">
       <Project>{BBBD355A-6056-4269-A235-2D0A3D3E8170}</Project>
+      <Name>CoreIoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj">
+      <Project>{F27C0E99-734B-41BD-B2C6-CED99A9E8720}</Project>
       <Name>CoreIoC</Name>
     </ProjectReference>
   </ItemGroup>
@@ -147,6 +161,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransactionScopeUnitOfWorkHttpModule.cs" />
+    <Compile Include="UnitOfWorkHttpModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\js\emailmaker.jquery.extensions.js" />
@@ -338,4 +354,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net40\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.108.0\build\net40\System.Data.SQLite.Core.targets'))" />
+  </Target>
 </Project>

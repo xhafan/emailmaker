@@ -1,13 +1,15 @@
-﻿using System.Web;
+﻿using System.Transactions;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
-using CoreDdd.UnitOfWorks;
 using CoreIoC;
 using CoreIoC.Castle;
+using CoreUtils.Storages;
 using CoreWeb;
 using CoreWeb.ModelBinders;
 using EmailMaker.Commands.Register.Castle;
@@ -57,11 +59,14 @@ namespace EmailMaker.Website
                 .CastleWindsorBuilder(windsorContainer)
                 .BinarySerializer()
                 .MsmqTransport()
+                .PurgeOnStartup(true)
                 .UnicastBus()
                 .LoadMessageHandlers()
                 .CreateBus()
                 .Start();
+
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerWebRequest);
+
             windsorContainer.Install(
                 FromAssembly.Containing<ControllerInstaller>(),
                 FromAssembly.Containing<QueryExecutorInstaller>(),
@@ -71,25 +76,21 @@ namespace EmailMaker.Website
                 FromAssembly.Containing<NhibernateInstaller>(),
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
                 );
+
+            _registerTransactionScopeStoragePerWebRequest();
+
             IoC.Initialize(new CastleContainer(windsorContainer));
 
             ControllerBuilder.Current.SetControllerFactory(new IoCControllerFactory());
             ModelBinders.Binders.DefaultBinder = new EnumConverterModelBinder();
-        }
 
-        public virtual void Application_BeginRequest()
-        {
-            GetUnitOfWorkPerWebRequest().BeginTransaction();
+            void _registerTransactionScopeStoragePerWebRequest()
+            {
+                windsorContainer.Register(
+                    Component.For<IStorage<TransactionScope>>()
+                        .ImplementedBy<Storage<TransactionScope>>()
+                        .LifeStyle.PerWebRequest);
+            }
         }
-
-        public virtual void Application_Error()
-        {
-            GetUnitOfWorkPerWebRequest().Rollback();
-        }
-
-        private IUnitOfWork GetUnitOfWorkPerWebRequest()
-        {
-            return IoC.Resolve<IUnitOfWork>();
-        }   
     }
 }

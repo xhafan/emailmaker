@@ -24,8 +24,9 @@ namespace EmailMaker.Service
                 .Builder(container)
                 .BinarySerializer()
                 .MsmqTransport()
+                .IsTransactional(true)
                 .DisableTimeoutManager()
-                .MsmqSubscriptionStorage()
+                .MsmqSubscriptionStorage()                
                 .UnicastBus();
            
             ConfigureNhibernate();            

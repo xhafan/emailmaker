@@ -29,6 +29,7 @@
     <PackageReference Include="NServiceBus" version="3.2.6" />
     <PackageReference Include="NServiceBus.CastleWindsor" version="3.2.6" />
     <PackageReference Include="NServiceBus.Host" version="3.2.6" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
