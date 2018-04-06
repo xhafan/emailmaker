@@ -11,6 +11,18 @@
     <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <PackageReference Include="Npgsql" Version="2.2.7" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <PackageReference Include="Npgsql" Version="3.2.7" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Npgsql" Version="3.2.7" />
+  </ItemGroup>
+
   <ItemGroup>
     <Content Include="..\EmailMaker.Website\hibernate.cfg.xml" Link="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

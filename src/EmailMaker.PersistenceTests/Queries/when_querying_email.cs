@@ -20,12 +20,12 @@ namespace EmailMaker.PersistenceTests.Queries
         [SetUp]
         public void Context()
         {
-            PersistEmail();
+            _persistEmail();
 
             var queryHandler = new GetEmailQueryHandler();
             _result = queryHandler.Execute<EmailDto>(new GetEmailQuery { EmailId = _email.Id });
 
-            void PersistEmail()
+            void _persistEmail()
             {
                 var user = UserBuilder.New.Build();
                 Save(user);

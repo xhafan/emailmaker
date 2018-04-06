@@ -21,12 +21,12 @@ namespace EmailMaker.PersistenceTests.Queries
         [SetUp]
         public void Context()
         {
-            PersistEmail();
+            _persistEmail();
 
             var queryHandler = new GetEmailVariablePartsQueryHandler();
             _result = queryHandler.Execute<EmailPartDto>(new GetEmailVariablePartsQuery { EmailId = _email.Id });
 
-            void PersistEmail()
+            void _persistEmail()
             {
                 var user = UserBuilder.New.Build();
                 Save(user);

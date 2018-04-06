@@ -15,6 +15,7 @@
     <PackageReference Include="Ninject.Extensions.ContextPreservation" Version="3.2.0" />
     <PackageReference Include="Ninject.Extensions.NamedScope" Version="3.2.0" />
     <PackageReference Include="NServiceBus.Ninject" Version="3.2.6" />
+    <PackageReference Include="Npgsql" Version="2.2.7" />
   </ItemGroup>
 
   <ItemGroup>

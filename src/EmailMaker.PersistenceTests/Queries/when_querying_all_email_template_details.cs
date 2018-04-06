@@ -22,12 +22,12 @@ namespace EmailMaker.PersistenceTests.Queries
         [SetUp]
         public void Context()
         {
-            PersistEmailTemplate();
+            _persistEmailTemplate();
 
             var queryHandler = new GetAllEmailTemplateQueryHandler();
             _result = queryHandler.Execute<EmailTemplateDetailsDto>(new GetAllEmailTemplateQuery { UserId = _user.Id });
 
-            void PersistEmailTemplate()
+            void _persistEmailTemplate()
             {
                 _user = UserBuilder.New.Build();
                 Save(_user);

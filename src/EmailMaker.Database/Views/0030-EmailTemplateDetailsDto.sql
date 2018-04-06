@@ -1,10 +1,10 @@
-IF OBJECT_ID(N'EmailTemplateDetailsDTO') IS NOT NULL
+IF OBJECT_ID(N'EmailTemplateDetailsDto') IS NOT NULL
 BEGIN
-DROP VIEW EmailTemplateDetailsDTO
+DROP VIEW EmailTemplateDetailsDto
 END
 GO
 
-create view EmailTemplateDetailsDTO
+create view EmailTemplateDetailsDto
 as
 select 
 	Id as EmailTemplateId,

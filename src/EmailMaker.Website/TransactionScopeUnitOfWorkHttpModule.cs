@@ -31,6 +31,9 @@ namespace EmailMaker.Website
         {
             if (HttpContext.Current.Server.GetLastError() != null) return;
 
+            var unitOfWork = GetUnitOfWorkPerWebRequest();
+            unitOfWork.Commit();
+
             var transactionScope = GetTransactionScopePerWebRequest();
             transactionScope.Complete();
             transactionScope.Dispose();
@@ -38,6 +41,9 @@ namespace EmailMaker.Website
 
         private void Application_Error(Object source, EventArgs e)
         {
+            var unitOfWork = GetUnitOfWorkPerWebRequest();
+            unitOfWork.Rollback();
+
             var transactionScope = GetTransactionScopePerWebRequest();
             transactionScope.Dispose();
         }
