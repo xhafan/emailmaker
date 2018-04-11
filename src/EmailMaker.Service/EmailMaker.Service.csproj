@@ -34,16 +34,16 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.6-beta" />
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.0.6-beta" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.6-beta" />
-    <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.6-beta" />
-    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.0.6-beta" />
-    <PackageReference Include="CoreDdd" Version="3.0.6-beta" />
-    <PackageReference Include="CoreIoC.Castle" Version="3.0.6-beta" />
-    <PackageReference Include="CoreIoC.Ninject" Version="3.0.6-beta" />
-    <PackageReference Include="CoreIoC" Version="3.0.6-beta" />
-    <PackageReference Include="CoreUtils" Version="3.0.6-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.8-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.0.8-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.8-beta" />
+    <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.8-beta" />
+    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.0.8-beta" />
+    <PackageReference Include="CoreDdd" Version="3.0.8-beta" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.0.8-beta" />
+    <PackageReference Include="CoreIoC.Ninject" Version="3.0.8-beta" />
+    <PackageReference Include="CoreIoC" Version="3.0.8-beta" />
+    <PackageReference Include="CoreUtils" Version="3.0.8-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
