@@ -43,13 +43,13 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.8-beta" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.8-beta" />
-    <PackageReference Include="CoreDdd" Version="3.0.8-beta" />
-    <PackageReference Include="CoreIoC.Castle" Version="3.0.8-beta" />
-    <PackageReference Include="CoreIoC" Version="3.0.8-beta" />
-    <PackageReference Include="CoreUtils" Version="3.0.8-beta" />
-    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.0.8-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.9-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.9-beta" />
+    <PackageReference Include="CoreDdd" Version="3.0.9-beta" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.0.9-beta" />
+    <PackageReference Include="CoreIoC" Version="3.0.9-beta" />
+    <PackageReference Include="CoreUtils" Version="3.0.9-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.0.9-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
