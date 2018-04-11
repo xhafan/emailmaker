@@ -11,7 +11,7 @@ using Shouldly;
 namespace EmailMaker.UnitTests.Domain.Emails
 {
     [TestFixture]
-    public class when_enqueueing_email_to_be_sent : BaseDomainEventTest<EmailEnqueuedToBeSentEvent>
+    public class when_enqueueing_email_to_be_sent : BaseDomainEventTest<EmailEnqueuedToBeSentDomainEvent>
     {
         private Email _email;
         private const string FromAddress = "from address";

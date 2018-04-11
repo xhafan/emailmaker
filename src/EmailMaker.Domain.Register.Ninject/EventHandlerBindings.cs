@@ -14,7 +14,7 @@ namespace EmailMaker.Domain.Register.Ninject
 #else
             KernelConfiguration.Bind(x => x
 #endif
-                .FromAssemblyContaining<EmailEnqueuedToBeSentEventHandler>()
+                .FromAssemblyContaining<EmailEnqueuedToBeSentDomainEventHandler>()
                 .SelectAllClasses()
                 .InheritedFrom(typeof(IDomainEventHandler<>))
                 .BindAllInterfaces()

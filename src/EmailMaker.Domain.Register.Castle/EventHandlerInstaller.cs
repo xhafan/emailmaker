@@ -12,7 +12,7 @@ namespace EmailMaker.Domain.Register.Castle
         {
             container.Register(
                 Classes
-                    .FromAssemblyContaining<EmailEnqueuedToBeSentEventHandler>()
+                    .FromAssemblyContaining<EmailEnqueuedToBeSentDomainEventHandler>()
                     .BasedOn(typeof(IDomainEventHandler<>))
                     .WithService.FirstInterface()
                     .Configure(x => x.LifestyleTransient()));

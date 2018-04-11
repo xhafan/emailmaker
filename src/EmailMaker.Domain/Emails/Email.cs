@@ -89,7 +89,7 @@ namespace EmailMaker.Domain.Emails
 
             recipients.Each(r => _emailRecipients.Add(new EmailRecipient(this, r)));
 
-            DomainEvents.RaiseEvent(new EmailEnqueuedToBeSentEvent
+            DomainEvents.RaiseEvent(new EmailEnqueuedToBeSentDomainEvent
                                         {
                                             EmailId = Id
                                         });
