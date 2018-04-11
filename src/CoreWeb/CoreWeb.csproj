@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
-    <PackageReference Include="CoreIoC" Version="3.0.9-beta" />
-    <PackageReference Include="CoreUtils" Version="3.0.9-beta" />
+    <PackageReference Include="CoreIoC" Version="3.0.11-beta" />
+    <PackageReference Include="CoreUtils" Version="3.0.11-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
