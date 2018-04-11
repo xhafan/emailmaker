@@ -1,4 +1,5 @@
-﻿using CoreDdd.UnitOfWorks;
+﻿using System.Data;
+using CoreDdd.UnitOfWorks;
 using FakeItEasy;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace EmailMaker.Service.Tests.UnitOfWorkMessageModules
         [Test]
         public void unit_of_work_begins_transaction()
         {
-            A.CallTo(() => _unitOfWork.BeginTransaction()).MustHaveHappened();
+            A.CallTo(() => _unitOfWork.BeginTransaction(IsolationLevel.Unspecified)).MustHaveHappened();
         }
     }
 }
