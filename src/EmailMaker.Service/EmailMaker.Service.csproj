@@ -81,6 +81,7 @@
 
   <ItemGroup>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Transactions" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'!='Release'">

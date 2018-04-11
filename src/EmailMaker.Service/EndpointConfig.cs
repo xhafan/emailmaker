@@ -1,4 +1,5 @@
-﻿using CoreDdd.Nhibernate.Configurations;
+﻿using System.Transactions;
+using CoreDdd.Nhibernate.Configurations;
 using CoreIoC;
 using EmailMaker.Service.Handlers;
 using EmailMaker.Service.IoCRegistration;
@@ -24,6 +25,7 @@ namespace EmailMaker.Service
                 .Builder(container)
                 .BinarySerializer()
                 .MsmqTransport()
+                .IsolationLevel(IsolationLevel.ReadCommitted)
                 .IsTransactional(true)
                 .DisableTimeoutManager()
                 .MsmqSubscriptionStorage()                
