@@ -53,23 +53,21 @@ namespace EmailMaker.PersistenceTests.Queries
             _result.Count().ShouldBe(3);
             
             var htmlPart = (HtmlEmailTemplatePart)_emailTemplate.Parts.First();
-            var partDto = _result.First();
+            var partDto = _result.Single(x => x.PartId == htmlPart.Id);
             partDto.EmailTemplateId.ShouldBe(_emailTemplate.Id);
-            partDto.PartId.ShouldBe(htmlPart.Id);
             partDto.PartType.ShouldBe(PartType.Html);
             partDto.Html.ShouldBe(htmlPart.Html);
             partDto.VariableValue.ShouldBe(null);
 
             var variablePart = (VariableEmailTemplatePart)_emailTemplate.Parts.ElementAt(1);
-            partDto = _result.ElementAt(1);
+            partDto = _result.Single(x => x.PartId == variablePart.Id);
             partDto.EmailTemplateId.ShouldBe(_emailTemplate.Id);
-            partDto.PartId.ShouldBe(variablePart.Id);
             partDto.PartType.ShouldBe(PartType.Variable);
             partDto.Html.ShouldBe(null);
             partDto.VariableValue.ShouldBe(variablePart.Value);
 
             htmlPart = (HtmlEmailTemplatePart)_emailTemplate.Parts.Last();
-            partDto = _result.Last();
+            partDto = _result.Single(x => x.PartId == htmlPart.Id);
             partDto.EmailTemplateId.ShouldBe(_emailTemplate.Id);
             partDto.PartId.ShouldBe(htmlPart.Id);
             partDto.PartType.ShouldBe(PartType.Html);

@@ -57,12 +57,12 @@ namespace EmailMaker.PersistenceTests.Queries
         {
             _result.Count().ShouldBe(2);
 
-            var variablePart = _email.Parts.ElementAt(1) as VariableEmailPart;
-            var partDto = _result.First();
+            var variablePart = (VariableEmailPart)_email.Parts.ElementAt(1);
+            var partDto = _result.Single(x => x.PartId == variablePart.Id);
             _VariablePartDtoDataMatchVariableEmailPart(partDto, variablePart);
 
-            variablePart = _email.Parts.ElementAt(3) as VariableEmailPart;
-            partDto = _result.Last();
+            variablePart = (VariableEmailPart)_email.Parts.ElementAt(3);
+            partDto = _result.Single(x => x.PartId == variablePart.Id);
             _VariablePartDtoDataMatchVariableEmailPart(partDto, variablePart);
         }
 
