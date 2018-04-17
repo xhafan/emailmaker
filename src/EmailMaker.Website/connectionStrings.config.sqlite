@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<connectionStrings>
+  <add name="EmailMakerConnection" connectionString="Data Source=C:/Projects/emailmaker/src/EmailMaker.Website/bin/EmailMaker.db;New=True;" />
+</connectionStrings>

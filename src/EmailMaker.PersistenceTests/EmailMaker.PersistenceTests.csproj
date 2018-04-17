@@ -30,12 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\EmailMaker.Website\hibernate.cfg.xml" Link="hibernate.cfg.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="Shouldly" Version="3.0.0" />
@@ -50,6 +44,7 @@
     <PackageReference Include="CoreIoC" Version="3.0.11-beta" />
     <PackageReference Include="CoreUtils" Version="3.0.11-beta" />
     <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.0.11-beta" />
+    <ProjectReference Include="DatabaseBuilder" Version="1.0.1-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
@@ -60,6 +55,7 @@
     <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
     <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.TestHelpers\CoreDdd.Nhibernate.TestHelpers.csproj" />
+    <ProjectReference Include="..\databasebuilderRepoLink\src\DatabaseBuilder\DatabaseBuilder.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,8 +69,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="connectionStrings.config.postgresql" />
+    <None Remove="connectionStrings.config.sqlite" />
+    <None Remove="connectionStrings.config.sqlserver" />
+    <None Remove="hibernate.cfg.xml.postgresql" />
+    <None Remove="hibernate.cfg.xml.sqlite" />
+    <None Remove="hibernate.cfg.xml.sqlserver" />
+    <None Remove="set_postgresql_db.bat" />
+    <None Remove="set_sqlite_db.bat" />
+    <None Remove="set_sql_server_db.bat" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="App.config" />
     <None Update="connectionStrings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -82,5 +97,9 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="rmdir &quot;$(OutDir)\EmailMaker.Database&quot; /S /Q &gt;nul 2&gt;nul&#xD;&#xA;xcopy $(SolutionDir)\EmailMaker.Database &quot;$(OutDir)\EmailMaker.Database&quot; /E /I /Y &gt;nul" />
+  </Target>
 
 </Project>

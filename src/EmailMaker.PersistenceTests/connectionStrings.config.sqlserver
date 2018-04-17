@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<connectionStrings>
+  <add 
+    name="EmailMakerPersistenceTestsConnection" 
+    connectionString="Server=localhost; User=emailmakertest;Password=password01;Initial Catalog=EmailMakerTest;" 
+    providerName="sqlserver"
+    />
+</connectionStrings>
