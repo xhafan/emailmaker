@@ -132,31 +132,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj">
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj">
       <Project>{919DBBB7-CEE7-42CD-BF9C-1955244EAA33}</Project>
       <Name>CoreDdd.Nhibernate.Register.Castle</Name>
     </ProjectReference>
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Register.Castle\CoreDdd.Register.Castle.csproj">
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Register.Castle\CoreDdd.Register.Castle.csproj">
       <Project>{BBA70886-0CA5-4E21-A642-B77FB0918169}</Project>
       <Name>CoreDdd.Register.Castle</Name>
     </ProjectReference>
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj">
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd\CoreDdd.csproj">
       <Project>{98A96361-3D2C-4AA9-A347-1124E4D2D1DF}</Project>
       <Name>CoreDdd</Name>
     </ProjectReference>
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj">
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj">
       <Project>{38CAA86D-8ADF-4BA2-A56F-03A0948D9472}</Project>
       <Name>CoreDdd</Name>
     </ProjectReference>
-    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Castle\CoreIoC.Castle.csproj">
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC.Castle\CoreIoC.Castle.csproj">
       <Project>{051BB9FD-8215-4B16-AD1F-A37899C77544}</Project>
       <Name>CoreIoC.Castle</Name>
     </ProjectReference>
-    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj">
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj">
       <Project>{BBBD355A-6056-4269-A235-2D0A3D3E8170}</Project>
       <Name>CoreIoC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj">
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj">
       <Project>{F27C0E99-734B-41BD-B2C6-CED99A9E8720}</Project>
       <Name>CoreIoC</Name>
     </ProjectReference>

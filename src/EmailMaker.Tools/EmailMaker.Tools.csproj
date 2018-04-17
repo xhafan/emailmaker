@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
   </ItemGroup>
 
   <ItemGroup>

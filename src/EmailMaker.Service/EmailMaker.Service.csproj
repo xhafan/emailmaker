@@ -47,16 +47,16 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate.Register.Ninject\CoreDdd.Nhibernate.Register.Ninject.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Register.Castle\CoreDdd.Register.Castle.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd.Register.Ninject\CoreDdd.Register.Ninject.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreDdd\CoreDdd.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Castle\CoreIoC.Castle.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC.Ninject\CoreIoC.Ninject.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreIoC\CoreIoC.csproj" />
-    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate.Register.Ninject\CoreDdd.Nhibernate.Register.Ninject.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Register.Castle\CoreDdd.Register.Castle.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Register.Ninject\CoreDdd.Register.Ninject.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd\CoreDdd.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC.Castle\CoreIoC.Castle.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC.Ninject\CoreIoC.Ninject.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

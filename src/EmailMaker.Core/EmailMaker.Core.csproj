@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
-    <ProjectReference Include="..\coredddRepoLink\src\CoreUtils\CoreUtils.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'!='Release'">
