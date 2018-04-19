@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Web;
+using CoreDdd.Domain.Events;
 using CoreDdd.UnitOfWorks;
 using CoreIoC;
 
 namespace EmailMaker.Website
 {
     // register UnitOfWorkHttpModule in the web.config (system.webServer -> modules)
-    // nservicebus messages are sent to EmailMaker service even when the DB transaction rolls back
     public class UnitOfWorkHttpModule : IHttpModule
     {
         public void Init(HttpApplication application)
         {
+            DomainEvents.EnableDelayedDomainEventHandling(); // nservicebus messages sent from domain event handlers would not be sent if the main DB transaction rolls back
+
             application.BeginRequest += Application_BeginRequest;
             application.EndRequest += Application_EndRequest;
             application.Error += Application_Error;
@@ -28,6 +30,27 @@ namespace EmailMaker.Website
 
             var unitOfWork = GetUnitOfWorkPerWebRequest();
             unitOfWork.Commit();
+
+            DomainEvents.RaiseDelayedEvents(_DomainEventHandlingSurroundingTransaction);
+        }
+
+        private void _DomainEventHandlingSurroundingTransaction(Action domainEventHandlingAction)
+        {
+            var unitOfWork = GetUnitOfWorkPerWebRequest();
+
+            try
+            {
+                unitOfWork.BeginTransaction();
+
+                domainEventHandlingAction();
+
+                unitOfWork.Commit();
+            }
+            catch
+            {
+                unitOfWork.Rollback();
+                throw;
+            }
         }
 
         private void Application_Error(Object source, EventArgs e)

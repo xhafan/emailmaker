@@ -1,10 +1,12 @@
-﻿using System.Transactions;
+﻿using System.Collections.Generic;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using CoreDdd.Domain.Events;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
 using CoreIoC;
@@ -77,6 +79,7 @@ namespace EmailMaker.Website
                 );
 
             _registerTransactionScopeStoragePerWebRequest();
+            _registerDelayedDomainEventHandlingActionsStoragePerWebRequest();
 
             IoC.Initialize(new CastleContainer(windsorContainer));
 
@@ -88,6 +91,14 @@ namespace EmailMaker.Website
                 windsorContainer.Register(
                     Component.For<IStorage<TransactionScope>>()
                         .ImplementedBy<Storage<TransactionScope>>()
+                        .LifeStyle.PerWebRequest);
+            }
+
+            void _registerDelayedDomainEventHandlingActionsStoragePerWebRequest()
+            {
+                windsorContainer.Register(
+                    Component.For<IStorage<DelayedDomainEventHandlingActions>>()
+                        .ImplementedBy<Storage<DelayedDomainEventHandlingActions>>()
                         .LifeStyle.PerWebRequest);
             }
         }
