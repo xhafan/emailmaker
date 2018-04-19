@@ -59,7 +59,6 @@ namespace EmailMaker.Website
                 .CastleWindsorBuilder(windsorContainer)
                 .BinarySerializer()
                 .MsmqTransport()
-                .PurgeOnStartup(true)
                 .UnicastBus()
                 .LoadMessageHandlers()
                 .CreateBus()
