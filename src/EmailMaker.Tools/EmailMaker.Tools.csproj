@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.12-beta" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.14-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
