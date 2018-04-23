@@ -62,8 +62,11 @@ namespace EmailMaker.Website
             var transactionScopeStoragePerWebRequest = IoC.Resolve<IStorage<TransactionScope>>();
             if (transactionScopeStoragePerWebRequest.Get() == null)
             {
-                var newTransactionScope = new TransactionScope(TransactionScopeOption.Required,
-                    new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted});
+                var newTransactionScope = new TransactionScope(
+                    TransactionScopeOption.Required,
+                    new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted},
+                    TransactionScopeAsyncFlowOption.Enabled
+                    );
                 transactionScopeStoragePerWebRequest.Set(newTransactionScope);
             }
             return transactionScopeStoragePerWebRequest.Get();
