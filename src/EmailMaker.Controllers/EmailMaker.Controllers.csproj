@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="ASP.NET.MVC" Version="3.0.0.1" />
     <PackageReference Include="MvcContrib" Version="2.0.95.0" />
-    <PackageReference Include="Iesi.Collections" Version="4.0.3" />
+    <PackageReference Include="Iesi.Collections" Version="4.0.4" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">

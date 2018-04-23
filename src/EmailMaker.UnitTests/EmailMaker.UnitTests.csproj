@@ -8,9 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="4.4.0" />
-    <PackageReference Include="Iesi.Collections" Version="4.0.3" />
+    <PackageReference Include="Iesi.Collections" Version="4.0.4" />
     <PackageReference Include="NServiceBus" version="3.2.6" />
-    <PackageReference Include="NUnit" Version="3.9.0" />
+    <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="Shouldly" Version="3.0.0" />
     <PackageReference Include="ASP.NET.MVC" version="3.0.0.1" />
   </ItemGroup>

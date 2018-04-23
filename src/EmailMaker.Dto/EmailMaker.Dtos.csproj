@@ -8,15 +8,16 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <PackageReference Include="NHibernate" Version="4.1.1.4000" />
+    <PackageReference Include="FluentNHibernate" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="NHibernate" Version="5.0.3" />
+    <PackageReference Include="NHibernate" Version="5.1.1" />
+    <PackageReference Include="FluentNHibernate" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentNHibernate" Version="2.0.3" />
-    <PackageReference Include="Iesi.Collections" Version="4.0.3" />
+    <PackageReference Include="Iesi.Collections" Version="4.0.4" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'!='Release'">
