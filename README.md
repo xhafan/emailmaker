@@ -1,1 +1,1 @@
-# EmailMaker
+EmailMaker - demo email marketing app demonstrating CoreDdd libs (https://github.com/xhafan/coreddd) and DatabaseBuilder (https://github.com/xhafan/databasebuilder) usage.
