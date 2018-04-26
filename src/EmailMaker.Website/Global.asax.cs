@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SQLite;
+using System.IO;
+using System.Reflection;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +26,7 @@ using EmailMaker.Controllers.Register.Castle;
 using EmailMaker.Domain.Register.Castle;
 using EmailMaker.Infrastructure.Register.Castle;
 using EmailMaker.Queries.Register.Castle;
+using Npgsql;
 using NServiceBus;
 
 namespace EmailMaker.Website
@@ -86,6 +94,8 @@ namespace EmailMaker.Website
             ControllerBuilder.Current.SetControllerFactory(new IoCControllerFactory());
             ModelBinders.Binders.DefaultBinder = new EnumConverterModelBinder();
 
+            _UpgradeDatabase();
+
             void _registerTransactionScopeStoragePerWebRequest()
             {
                 windsorContainer.Register(
@@ -101,6 +111,44 @@ namespace EmailMaker.Website
                         .ImplementedBy<Storage<DelayedDomainEventHandlingActions>>()
                         .LifeStyle.PerWebRequest);
             }
+        }
+
+        private void _UpgradeDatabase()
+        {
+            var connectionStringSettings = ConfigurationManager.ConnectionStrings["EmailMakerConnection"];
+            var connectionString = connectionStringSettings.ConnectionString;
+            var dbProviderName = connectionStringSettings.ProviderName;
+
+            var assemblyLocation = _GetAssemblyLocation();
+            var folderWithSqlFiles = $"{assemblyLocation}\\EmailMaker.Database\\{dbProviderName}";
+
+            var databaseBuilder = new DatabaseBuilder.DatabaseBuilder(_getDbConnection);
+            databaseBuilder.UpgradeDatabase(folderWithSqlFiles);
+
+            IDbConnection _getDbConnection()
+            {
+
+                switch (dbProviderName)
+                {
+                    case string x when x.Contains("sqlite"):
+                        return new SQLiteConnection(connectionString);
+                    case string x when x.Contains("sqlserver"):
+                        return new SqlConnection(connectionString);
+                    case string x when x.Contains("postgresql"):
+                        return new NpgsqlConnection(connectionString);
+                    default:
+                        throw new Exception("Unsupported NHibernate connection.driver_class");
+                }
+            }
+        }
+
+        // https://stackoverflow.com/a/283917/379279
+        private string _GetAssemblyLocation()
+        {
+            var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            var uri = new UriBuilder(codeBase);
+            var path = Uri.UnescapeDataString(uri.Path);
+            return Path.GetDirectoryName(path);
         }
     }
 }

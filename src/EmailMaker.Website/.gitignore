@@ -1,1 +1,5 @@
-/*.user
+connectionStrings.config
+connectionStrings.config.postgresql
+connectionStrings.config.sqlite
+connectionStrings.config.sqlserver
+hibernate.cfg.xml

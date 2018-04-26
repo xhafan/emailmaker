@@ -306,6 +306,10 @@
       <Project>{B6CA3CBC-8ABD-4CCC-8E38-44D624F2174B}</Project>
       <Name>EmailMaker.Queries</Name>
     </ProjectReference>
+    <ProjectReference Include="..\repositoryLinks\databasebuilder\src\DatabaseBuilder\DatabaseBuilder.csproj">
+      <Project>{EF879534-64C9-462D-90C9-99E6A3E2E5F2}</Project>
+      <Name>DatabaseBuilder</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Template\New.cshtml" />
@@ -399,4 +403,16 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.108.0\build\net40\System.Data.SQLite.Core.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>rmdir "$(OutDir)EmailMaker.Database" /S /Q &gt;nul 2&gt;nul
+xcopy $(SolutionDir)EmailMaker.Database EmailMaker.Database /E /I /Y &gt;nul</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if not exist $(ProjectDir)connectionStrings.config (
+    copy $(ProjectDir)connectionStrings.config.sqlite.example $(ProjectDir)connectionStrings.config
+)
+if not exist $(ProjectDir)hibernate.cfg.xml (
+    copy $(ProjectDir)hibernate.cfg.xml.sqlite $(ProjectDir)hibernate.cfg.xml
+)</PreBuildEvent>
+  </PropertyGroup>
 </Project>
