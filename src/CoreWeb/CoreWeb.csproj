@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
-    <PackageReference Include="CoreIoC" Version="3.0.14-beta" />
-    <PackageReference Include="CoreUtils" Version="3.0.14-beta" />
+    <PackageReference Include="CoreIoC" Version="3.0.15" />
+    <PackageReference Include="CoreUtils" Version="3.0.15" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
