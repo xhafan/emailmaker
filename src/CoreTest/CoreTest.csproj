@@ -4,7 +4,7 @@
     <TargetFrameworks>net461</TargetFrameworks>
     <Description>Test helpers for CoreDdd library</Description>
     <PackageTags>CoreDdd test helper</PackageTags>
-    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
+    <Configurations>Debug;Release;Repolinks-Debug</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,13 +13,13 @@
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
     <PackageReference Include="CoreDdd" Version="3.0.15" />
     <PackageReference Include="CoreIoC" Version="3.0.15" />
     <PackageReference Include="CoreUtils" Version="3.0.15" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd\CoreDdd.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />

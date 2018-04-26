@@ -139,7 +139,7 @@
     </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
     <Reference Include="CoreDdd">
       <HintPath>..\packages\CoreDdd.3.0.15\lib\net40\CoreDdd.dll</HintPath>
     </Reference>
@@ -162,7 +162,7 @@
       <HintPath>..\packages\CoreUtils.3.0.15\lib\net40\CoreUtils.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj">
       <Project>{919DBBB7-CEE7-42CD-BF9C-1955244EAA33}</Project>
       <Name>CoreDdd.Nhibernate.Register.Castle</Name>
@@ -352,7 +352,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug CoreDdd|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Repolinks-Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>

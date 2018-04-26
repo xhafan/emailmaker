@@ -4,15 +4,15 @@
     <TargetFramework>net461</TargetFramework>
     <Description>MVC Web helpers. Tutorial on http://xhafan.com/blog/coreddd-tutorial-real-life-ddd-tdd-asp-net-mvc-wpf-application-built-on-coreddd-library</Description>
     <PackageTags>MVC web helper</PackageTags>
-    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
+    <Configurations>Debug;Release;Repolinks-Debug</Configurations>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
     <PackageReference Include="CoreIoC" Version="3.0.15" />
     <PackageReference Include="CoreUtils" Version="3.0.15" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>

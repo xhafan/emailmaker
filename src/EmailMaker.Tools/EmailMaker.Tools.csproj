@@ -8,7 +8,7 @@
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject />
-    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
+    <Configurations>Debug;Release;Repolinks-Debug</Configurations>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
@@ -26,11 +26,11 @@
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
     <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.15" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
   </ItemGroup>
 

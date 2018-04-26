@@ -5,7 +5,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <Configurations>Debug;Release;Debug CoreDdd</Configurations>
+    <Configurations>Debug;Release;Repolinks-Debug</Configurations>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
@@ -32,7 +32,7 @@
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
     <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.15" />
     <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.0.15" />
     <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.15" />
@@ -45,7 +45,7 @@
     <PackageReference Include="CoreUtils" Version="3.0.15" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
+  <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate.Register.Ninject\CoreDdd.Nhibernate.Register.Ninject.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
