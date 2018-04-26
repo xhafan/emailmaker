@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using CoreDdd.Commands;
 using CoreDdd.Queries;
@@ -26,37 +27,40 @@ namespace EmailMaker.Controllers
             _commandExecutor = commandExecutor;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var emailTemplates = _queryExecutor.Execute<GetAllEmailTemplateQuery, EmailTemplateDetailsDto>(new GetAllEmailTemplateQuery{ UserId = UserId });           
+            var emailTemplates = await _queryExecutor.ExecuteAsync<GetAllEmailTemplateQuery, EmailTemplateDetailsDto>(
+                new GetAllEmailTemplateQuery{ UserId = await GetUserId() });           
             var model = new TemplateIndexModel { EmailTemplate = emailTemplates };
             return View(model);
         }
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {            
             var createdEmailTemplateId = default(int);
-            var command = new CreateEmailTemplateCommand { UserId = UserId };
+            var command = new CreateEmailTemplateCommand { UserId = await GetUserId() };
             _commandExecutor.CommandExecuted += args => createdEmailTemplateId = (int) args.Args;
-            _commandExecutor.Execute(command);
+            await _commandExecutor.ExecuteAsync(command);
 
+#pragma warning disable 4014
             return this.RedirectToAction(a => a.Edit(createdEmailTemplateId));
+#pragma warning restore 4014
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var emailTemplate = _GetEmailTemplate(id);
+            var emailTemplate = await _GetEmailTemplate(id);
             var model = new EmailTemplateEditModel {EmailTemplate = emailTemplate};
             return View(model);
         }
 
-        private EmailTemplateDto _GetEmailTemplate(int id)
+        private async Task<EmailTemplateDto> _GetEmailTemplate(int id)
         {
             var templateMessage = new GetEmailTemplateQuery {EmailTemplateId = id};
             var templatePartMessage = new GetEmailTemplatePartsQuery { EmailTemplateId = id };
 
-            var emailTemplateDtos = _queryExecutor.Execute<GetEmailTemplateQuery, EmailTemplateDto>(templateMessage);
-            var emailTemplatePartDtos = _queryExecutor.Execute<GetEmailTemplatePartsQuery, EmailTemplatePartDto>(templatePartMessage);
+            var emailTemplateDtos = await _queryExecutor.ExecuteAsync<GetEmailTemplateQuery, EmailTemplateDto>(templateMessage);
+            var emailTemplatePartDtos = await _queryExecutor.ExecuteAsync<GetEmailTemplatePartsQuery, EmailTemplatePartDto>(templatePartMessage);
             
             var emailTemplateDto = emailTemplateDtos.Single();
             emailTemplateDto.Parts = emailTemplatePartDtos;
@@ -65,33 +69,33 @@ namespace EmailMaker.Controllers
         }
 
         [HttpPost]
-        public void Save(SaveEmailTemplateCommand command)
+        public async Task Save(SaveEmailTemplateCommand command)
         {
-            _commandExecutor.Execute(command);
+            await _commandExecutor.ExecuteAsync(command);
         }
 
         [HttpPost]
-        public void CreateVariable(CreateVariableCommand command)
+        public async Task CreateVariable(CreateVariableCommand command)
         {
-            _commandExecutor.Execute(command);
+            await _commandExecutor.ExecuteAsync(command);
         }
 
         [HttpPost]
-        public void DeleteVariable(DeleteVariableCommand command)
+        public async Task DeleteVariable(DeleteVariableCommand command)
         {
-            _commandExecutor.Execute(command);
+            await _commandExecutor.ExecuteAsync(command);
         }
 
         [HttpPost]
-        public ActionResult GetEmailTemplate(int id)
+        public async Task<ActionResult> GetEmailTemplate(int id)
         {
-            return Json(_GetEmailTemplate(id));
+            return Json(await _GetEmailTemplate(id));
         }
 
-        public string GetHtml(int id)
+        public async Task<string> GetHtml(int id)
         {
             var partMessage = new GetEmailTemplatePartsQuery { EmailTemplateId = id };
-            var emailTemplatePartDtos = _queryExecutor.Execute<GetEmailTemplatePartsQuery, EmailTemplatePartDto>(partMessage);
+            var emailTemplatePartDtos = await _queryExecutor.ExecuteAsync<GetEmailTemplatePartsQuery, EmailTemplatePartDto>(partMessage);
 
             var sb = new StringBuilder();
             emailTemplatePartDtos.Each(part =>

@@ -20,13 +20,13 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
             _userRepository = A.Fake<IRepository<User>>();
 
             var handler = new CreateUserCommandHandler(_userRepository);
-            handler.Execute(new CreateUserCommand { EmailAddress = EmailAddress, Password = Password});
+            handler.ExecuteAsync(new CreateUserCommand { EmailAddress = EmailAddress, Password = Password}).Wait();
         }
 
         [Test]
         public void user_was_created()
         {
-            A.CallTo(() => _userRepository.Save(A<User>.That.Matches(p => p.EmailAddress == EmailAddress && p.Password == Password))).MustHaveHappened();
+            A.CallTo(() => _userRepository.SaveAsync(A<User>.That.Matches(p => p.EmailAddress == EmailAddress && p.Password == Password))).MustHaveHappened();
         }
 
     }

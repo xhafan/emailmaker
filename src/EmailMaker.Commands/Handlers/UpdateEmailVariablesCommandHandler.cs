@@ -1,4 +1,5 @@
-﻿using CoreDdd.Commands;
+﻿using System.Threading.Tasks;
+using CoreDdd.Commands;
 using CoreDdd.Domain.Repositories;
 using EmailMaker.Commands.Messages;
 using EmailMaker.Domain.Emails;
@@ -14,9 +15,9 @@ namespace EmailMaker.Commands.Handlers
             _emailRepository = emailRepository;
         }
 
-        public override void Execute(UpdateEmailVariablesCommand command)
+        public override async Task ExecuteAsync(UpdateEmailVariablesCommand command)
         {
-            var email = _emailRepository.Get(command.Email.EmailId);
+            var email = await _emailRepository.GetAsync(command.Email.EmailId);
             email.UpdateVariables(command.Email);
         }
     }

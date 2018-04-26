@@ -1,4 +1,5 @@
-﻿using CoreDdd.Commands;
+﻿using System.Threading.Tasks;
+using CoreDdd.Commands;
 using CoreDdd.Domain.Repositories;
 using EmailMaker.Commands.Messages;
 using EmailMaker.Domain.Emails;
@@ -17,11 +18,11 @@ namespace EmailMaker.Commands.Handlers
             _emailRepository = emailRepository;
         }
 
-        public override void Execute(CreateEmailCommand command)
+        public override async Task ExecuteAsync(CreateEmailCommand command)
         {
-            var emailTemplate = _emailTemplateRepository.Get(command.EmailTemplateId);
+            var emailTemplate = await _emailTemplateRepository.GetAsync(command.EmailTemplateId);
             var newEmail = new Email(emailTemplate);
-            _emailRepository.Save(newEmail);
+            await _emailRepository.SaveAsync(newEmail);
             RaiseCommandExecutedEvent(new CommandExecutedArgs { Args = newEmail.Id });
         }
     }

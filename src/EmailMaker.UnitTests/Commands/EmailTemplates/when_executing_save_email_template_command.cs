@@ -21,7 +21,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
 
             const int emailTemplateId = 23;
             var emailTemplateRepository = A.Fake<IRepository<EmailTemplate>>();
-            A.CallTo(() => emailTemplateRepository.Get(emailTemplateId)).Returns(_emailTemplate);
+            A.CallTo(() => emailTemplateRepository.GetAsync(emailTemplateId)).Returns(_emailTemplate);
 
             _emailTemplateDto = new EmailTemplateDto
                                     {
@@ -32,7 +32,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
                                   EmailTemplate = _emailTemplateDto,
                               };
             var handler = new SaveEmailTemplateCommandHandler(emailTemplateRepository);
-            handler.Execute(command);
+            handler.ExecuteAsync(command).Wait();
         }
 
         [Test]

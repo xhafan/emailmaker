@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CoreDdd.Commands;
 using CoreDdd.Domain.Repositories;
 using EmailMaker.Commands.Messages;
@@ -14,9 +15,9 @@ namespace EmailMaker.Commands.Handlers
             _userRepository = userRepository;
         }
 
-        public override void Execute(ChangePasswordForUserCommand command)
+        public override async Task ExecuteAsync(ChangePasswordForUserCommand command)
         {
-            var user = _userRepository.Get(command.UserId);
+            var user = await _userRepository.GetAsync(command.UserId);
             user.ChangePassword(command.OldPassword, command.NewPassword);
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CoreDdd.Commands;
 using CoreDdd.Domain.Repositories;
 using CoreDdd.Queries;
@@ -26,21 +27,21 @@ namespace EmailMaker.Commands.Handlers
             _recipientParser = recipientParser;
         }
 
-        public override void Execute(EnqueueEmailToBeSentCommand command)
+        public override async Task ExecuteAsync(EnqueueEmailToBeSentCommand command)
         {
-            var email = _emailRepository.Get(command.EmailId);
+            var email = await _emailRepository.GetAsync(command.EmailId);
             var emailAddressesAndNames = _recipientParser.Parse(command.Recipients);
-            var existingRecipients = _queryExecutor.Execute<GetExistingRecipientsQuery, Recipient>(
+            var existingRecipients = (await _queryExecutor.ExecuteAsync<GetExistingRecipientsQuery, Recipient>(
                 new GetExistingRecipientsQuery
                     {
                         RecipientEmailAddresses = emailAddressesAndNames.Keys
-                    }).ToDictionary(k => k.EmailAddress);
+                    })).ToDictionary(k => k.EmailAddress);
             var recipients = new HashSet<Recipient>(existingRecipients.Values);
             var recipientsToBeCreated = emailAddressesAndNames.Where(p => !existingRecipients.ContainsKey(p.Key));
-            recipientsToBeCreated.Each(r =>
+            recipientsToBeCreated.Each(async r =>
                                            {
                                                var newRecipient = new Recipient(r.Key, r.Value);
-                                               _recipientRepository.Save(newRecipient);
+                                               await _recipientRepository.SaveAsync(newRecipient);
                                                recipients.Add(newRecipient);
                                            });
             email.EnqueueEmailToBeSent(command.FromAddress, recipients, command.Subject);

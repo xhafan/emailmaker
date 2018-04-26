@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using CoreDdd.Queries;
 using EmailMaker.Dtos.Users;
@@ -16,15 +17,12 @@ namespace EmailMaker.Controllers.BaseController
             _queryExecutor = queryExecutor;
         }
 
-        public int UserId 
-        { 
-            get
-            {
-                // todo: fix this user id retrieval via cookie persistence or in identity
-                var message = new GetUserDetailsByEmailAddressQuery {EmailAddress = User.Identity.Name};
-                var user = _queryExecutor.Execute<GetUserDetailsByEmailAddressQuery, UserDto>(message).First();
-                return user.UserId;
-            }
+        protected async Task<int> GetUserId()
+        {
+            // todo: fix this user id retrieval via cookie persistence or in identity
+            var message = new GetUserDetailsByEmailAddressQuery {EmailAddress = User.Identity.Name};
+            var user = (await _queryExecutor.ExecuteAsync<GetUserDetailsByEmailAddressQuery, UserDto>(message)).Single();
+            return user.UserId;
         }
     }
 }

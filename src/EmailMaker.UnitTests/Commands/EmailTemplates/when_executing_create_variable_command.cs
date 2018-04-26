@@ -24,7 +24,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
             
             const int emailTemplateId = 23;
             var emailTemplateRepository = A.Fake<IRepository<EmailTemplate>>();
-            A.CallTo(() => emailTemplateRepository.Get(emailTemplateId)).Returns(_emailTemplate);
+            A.CallTo(() => emailTemplateRepository.GetAsync(emailTemplateId)).Returns(_emailTemplate);
 
             _htmlTemplatePartId = 47;
             _htmlStartIndex = 56;
@@ -41,7 +41,7 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
                                   Length = _length
                               };
             var handler = new CreateVariableCommandHandler(emailTemplateRepository);
-            handler.Execute(command);
+            handler.ExecuteAsync(command).Wait();
         }
 
         [Test]

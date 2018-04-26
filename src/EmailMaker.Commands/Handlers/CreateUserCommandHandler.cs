@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CoreDdd.Commands;
 using CoreDdd.Domain.Repositories;
 using EmailMaker.Commands.Messages;
@@ -14,10 +15,10 @@ namespace EmailMaker.Commands.Handlers
             _userRepository = userRepository;
         }
 
-        public override void Execute(CreateUserCommand command)
+        public override async Task ExecuteAsync(CreateUserCommand command)
         {
             var newUser = new User("", "", command.EmailAddress, command.Password);
-            _userRepository.Save(newUser);
+            await _userRepository.SaveAsync(newUser);
         }
     }
 }

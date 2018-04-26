@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;net461</TargetFrameworks>
+    <TargetFrameworks>net461</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -10,14 +10,6 @@
     <StartupObject />
     <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-    <PackageReference Include="Npgsql" Version="2.2.7" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-    <PackageReference Include="Npgsql" Version="3.2.7" />
-  </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="Npgsql" Version="3.2.7" />

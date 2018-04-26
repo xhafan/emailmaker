@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.Security;
 using CoreDdd.Commands;
 using CoreDdd.Queries;
@@ -28,14 +31,14 @@ namespace EmailMaker.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public async Task<ActionResult> LogOn(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 var message = new GetUserDetailsByEmailAddressQuery { EmailAddress = model.EmailAddress };
-                var userDetails  = _queryExecutor.Execute<GetUserDetailsByEmailAddressQuery, UserDto>(message).FirstOrDefault();
+                var userDetails  = (await _queryExecutor.ExecuteAsync<GetUserDetailsByEmailAddressQuery, UserDto>(message)).FirstOrDefault();
                 
-                if(userDetails != null)
+                if (userDetails != null)
                 {
                     if(userDetails.Password.Equals(model.Password.Trim()))
                     {
@@ -71,13 +74,13 @@ namespace EmailMaker.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 var command = new CreateUserCommand { EmailAddress = model.Email, Password = model.Password};
-                _commandExecutor.Execute(command);
+                await _commandExecutor.ExecuteAsync(command);
 
                 FormsAuthentication.SetAuthCookie(model.Email, false);
                 return RedirectToAction("Index", "Home");
@@ -101,13 +104,13 @@ namespace EmailMaker.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model)
+        public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
         {
             if (ModelState.IsValid)
             {
                 // todo: remove this query - remember id in the same way as name
                 var message = new GetUserDetailsByEmailAddressQuery { EmailAddress = User.Identity.Name };
-                var user = _queryExecutor.Execute<GetUserDetailsByEmailAddressQuery, UserDto>(message).First();
+                var user = (await _queryExecutor.ExecuteAsync<GetUserDetailsByEmailAddressQuery, UserDto>(message)).Single();
 
                 var command = new ChangePasswordForUserCommand
                                   {

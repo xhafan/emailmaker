@@ -30,14 +30,14 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
             const int emailId = 23;
             _email = A.Fake<Email>();
             var emailRepository = A.Fake<IRepository<Email>>();
-            A.CallTo(() => emailRepository.Get(emailId)).Returns(_email);
+            A.CallTo(() => emailRepository.GetAsync(emailId)).Returns(_email);
 
             var recipientParser = A.Fake<IRecipientParser>();
             A.CallTo(() => recipientParser.Parse(Recipients)).Returns(new Dictionary<string, string>{{AddressOne, NameOne}, {AddressTwo, NameTwo}});
 
             var queryExecutor = A.Fake<IQueryExecutor>();
             A.CallTo(() => queryExecutor.
-                    Execute<GetExistingRecipientsQuery, Recipient>(
+                    ExecuteAsync<GetExistingRecipientsQuery, Recipient>(
                     A<GetExistingRecipientsQuery>.That.Matches(p => p.RecipientEmailAddresses.Contains(AddressOne)
                                                                            &&
                                                                            p.RecipientEmailAddresses.Contains(AddressTwo))))
@@ -49,13 +49,13 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
             _recipientRepository = A.Fake<IRepository<Recipient>>();
 
             var handler = new EnqueueEmailToBeSentCommandHandler(emailRepository, recipientParser, queryExecutor, _recipientRepository);
-            handler.Execute(new EnqueueEmailToBeSentCommand
-                                {
-                                    EmailId = emailId,
-                                    FromAddress = FromAddress,
-                                    Recipients = Recipients,
-                                    Subject = Subject
-                                });
+            handler.ExecuteAsync(new EnqueueEmailToBeSentCommand
+            {
+                EmailId = emailId,
+                FromAddress = FromAddress,
+                Recipients = Recipients,
+                Subject = Subject
+            }).Wait();
         }
 
         [Test]
@@ -74,8 +74,8 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
         [Test]
         public void only_new_recipients_were_created()
         {
-            A.CallTo(() => _recipientRepository.Save(A<Recipient>.That.Matches(p => p.EmailAddress == AddressTwo && p.Name == NameTwo))).MustHaveHappened();
-            A.CallTo(() => _recipientRepository.Save(A<Recipient>.That.Matches(p => p.EmailAddress == AddressOne && p.Name == NameOne))).MustNotHaveHappened();
+            A.CallTo(() => _recipientRepository.SaveAsync(A<Recipient>.That.Matches(p => p.EmailAddress == AddressTwo && p.Name == NameTwo))).MustHaveHappened();
+            A.CallTo(() => _recipientRepository.SaveAsync(A<Recipient>.That.Matches(p => p.EmailAddress == AddressOne && p.Name == NameOne))).MustNotHaveHappened();
         }
 
     }

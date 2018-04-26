@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using CoreDdd.Commands;
 using CoreDdd.Queries;
@@ -27,26 +28,29 @@ namespace EmailMaker.Controllers
             _commandExecutor = commandExecutor;
         }
 
-        public ViewResult Index()
+        public async Task<ViewResult> Index()
         {
-            var emailTemplates = _queryExecutor.Execute<GetAllEmailTemplateQuery, EmailTemplateDetailsDto>(new GetAllEmailTemplateQuery { UserId = UserId});
+            var emailTemplates = await _queryExecutor.ExecuteAsync<GetAllEmailTemplateQuery, EmailTemplateDetailsDto>(
+                new GetAllEmailTemplateQuery { UserId = await GetUserId()});
             var model = new TemplateIndexModel { EmailTemplate = emailTemplates };
             return View(model);
         }
         
-        public ActionResult Create(int id)
+        public async Task<ActionResult> Create(int id)
         {
             var createdEmailId = default(int);
             var command = new CreateEmailCommand {EmailTemplateId = id};
             _commandExecutor.CommandExecuted += args => createdEmailId = (int)args.Args;
-            _commandExecutor.Execute(command);
+            await _commandExecutor.ExecuteAsync(command);
 
+#pragma warning disable 4014
             return this.RedirectToAction(a => a.EditVariables(createdEmailId));
+#pragma warning restore 4014
         }
 
-        public ActionResult EditVariables(int id)
+        public async Task<ActionResult> EditVariables(int id)
         {
-            var email = _GetEmail(id);
+            var email = await _GetEmail(id);
             var model = new EmailEditVariablesModel { Email = email };
             return View(model);
         }
@@ -70,19 +74,19 @@ namespace EmailMaker.Controllers
         }
 
         [HttpPost]
-        public ActionResult EnqueueEmailToBeSent(EnqueueEmailToBeSentCommand command)
+        public async Task<ActionResult> EnqueueEmailToBeSent(EnqueueEmailToBeSentCommand command)
         {
-            _commandExecutor.Execute(command);
+            await _commandExecutor.ExecuteAsync(command);
             return new EmptyResult();
         }
 
-        private EmailDto _GetEmail(int id)
+        private async Task<EmailDto> _GetEmail(int id)
         {
             var message = new GetEmailQuery { EmailId = id };
             var variablePartMessage = new GetEmailVariablePartsQuery { EmailId = id };
 
-            var emailDtos = _queryExecutor.Execute<GetEmailQuery, EmailDto>(message);
-            var variableEmailPartDtos = _queryExecutor.Execute<GetEmailVariablePartsQuery, EmailPartDto>(variablePartMessage);
+            var emailDtos = await _queryExecutor.ExecuteAsync<GetEmailQuery, EmailDto>(message);
+            var variableEmailPartDtos = await _queryExecutor.ExecuteAsync<GetEmailVariablePartsQuery, EmailPartDto>(variablePartMessage);
 
             var emailDto = emailDtos.Single();
             emailDto.Parts = variableEmailPartDtos;
@@ -91,21 +95,21 @@ namespace EmailMaker.Controllers
         }
 
         [HttpPost]
-        public void UpdateVariables(UpdateEmailVariablesCommand command)
+        public async Task UpdateVariables(UpdateEmailVariablesCommand command)
         {
-            _commandExecutor.Execute(command);
+            await _commandExecutor.ExecuteAsync(command);
         }
 
         [HttpPost]
-        public ActionResult GetEmail(int id)
+        public async Task<ActionResult> GetEmail(int id)
         {
-            return Json(_GetEmail(id));
+            return Json(await _GetEmail(id));
         }
  
-        public string GetHtml(int id)
+        public async Task<string> GetHtml(int id)
         {
             var partMessage = new GetEmailPartsQuery { EmailId = id };
-            var emailPartDtos = _queryExecutor.Execute<GetEmailPartsQuery, EmailPartDto>(partMessage);
+            var emailPartDtos = await _queryExecutor.ExecuteAsync<GetEmailPartsQuery, EmailPartDto>(partMessage);
 
             var sb = new StringBuilder();
             emailPartDtos.Each(part =>

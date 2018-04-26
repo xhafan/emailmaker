@@ -22,13 +22,13 @@ namespace EmailMaker.UnitTests.Commands.EmailTemplates
 
             var handler = new CreateEmailTemplateCommandHandler(_emailTemplateRepository);
             handler.CommandExecuted += args => _eventRaised = true;
-            handler.Execute(new CreateEmailTemplateCommand { UserId = UserId });
+            handler.ExecuteAsync(new CreateEmailTemplateCommand { UserId = UserId }).Wait();
         }
 
         [Test]
         public void email_template_was_saved()
         {
-            A.CallTo(() => _emailTemplateRepository.Save(A<EmailTemplate>.That.Matches(p => p.UserId == UserId))).MustHaveHappened();
+            A.CallTo(() => _emailTemplateRepository.SaveAsync(A<EmailTemplate>.That.Matches(p => p.UserId == UserId))).MustHaveHappened();
         }
 
         [Test]

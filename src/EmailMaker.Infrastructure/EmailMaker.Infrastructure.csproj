@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net461</TargetFrameworks>
+    <TargetFrameworks>net461</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-    <PackageReference Include="NHibernate" Version="4.1.1.4000" />
-    <PackageReference Include="FluentNHibernate" Version="2.0.3" />
-  </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="NHibernate" Version="5.1.1" />

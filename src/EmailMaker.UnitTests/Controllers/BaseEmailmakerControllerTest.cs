@@ -13,7 +13,7 @@ namespace EmailMaker.UnitTests.Controllers
         {
             base.Context();
 
-            A.CallTo(() => QueryExecutor.Execute<GetUserDetailsByEmailAddressQuery, UserDto>(A<GetUserDetailsByEmailAddressQuery>._))
+            A.CallTo(() => QueryExecutor.ExecuteAsync<GetUserDetailsByEmailAddressQuery, UserDto>(A<GetUserDetailsByEmailAddressQuery>._))
                 .Returns(new[] { new UserDto() });
         }
     }

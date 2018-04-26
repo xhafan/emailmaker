@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;net461</TargetFrameworks>
+    <TargetFramework>net461</TargetFramework>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
@@ -9,10 +9,10 @@
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="4.4.0" />
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.4" />
     <PackageReference Include="NServiceBus" version="3.2.6" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="Shouldly" Version="3.0.0" />
-    <PackageReference Include="ASP.NET.MVC" version="3.0.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">

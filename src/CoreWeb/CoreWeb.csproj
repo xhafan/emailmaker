@@ -1,15 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
     <Description>MVC Web helpers. Tutorial on http://xhafan.com/blog/coreddd-tutorial-real-life-ddd-tdd-asp-net-mvc-wpf-application-built-on-coreddd-library</Description>
     <PackageTags>MVC web helper</PackageTags>
     <Configurations>Debug;Release;Debug CoreDdd</Configurations>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ASP.NET.MVC" Version="3.0.0.1" />
-  </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug CoreDdd'">
     <PackageReference Include="CoreIoC" Version="3.0.14-beta" />
@@ -19,6 +15,14 @@
   <ItemGroup Condition="'$(Configuration)' == 'Debug CoreDdd'">
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'!='Release'">

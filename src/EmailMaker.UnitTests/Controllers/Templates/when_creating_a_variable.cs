@@ -17,13 +17,13 @@ namespace EmailMaker.UnitTests.Controllers.Templates
 
             var controller = new TemplateController(CommandExecutor, null);
             _createVariableCommand = new CreateVariableCommand();
-            controller.CreateVariable(_createVariableCommand);
+            controller.CreateVariable(_createVariableCommand).Wait();
         }
 
         [Test]
         public void command_was_executed()
         {
-            A.CallTo(() => CommandExecutor.Execute(_createVariableCommand)).MustHaveHappened();
+            A.CallTo(() => CommandExecutor.ExecuteAsync(_createVariableCommand)).MustHaveHappened();
         }
     }
 }
