@@ -62,9 +62,6 @@
     <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="DatabaseBuilder">
-      <HintPath>..\..\..\..\..\Users\admin\.nuget\packages\databasebuilder\1.0.1-beta\lib\net40\DatabaseBuilder.dll</HintPath>
-    </Reference>
     <Reference Include="FluentNHibernate, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentNHibernate.2.1.2\lib\net461\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -163,6 +160,9 @@
     </Reference>
     <Reference Include="CoreUtils">
       <HintPath>..\packages\CoreUtils.3.0.15\lib\net40\CoreUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="DatabaseBuilder">
+      <HintPath>..\packages\DatabaseBuilder.1.0.2-beta\lib\net40\DatabaseBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
