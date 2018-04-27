@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
+using System.Messaging;
 using System.Reflection;
 using System.Transactions;
 using System.Web;
@@ -55,6 +56,8 @@ namespace EmailMaker.Website
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            _CreateMsmqInputQueueForNServiceBus();
 
             var nserviceBusAssemblies = new[]
                                             {
@@ -110,6 +113,12 @@ namespace EmailMaker.Website
                         .ImplementedBy<Storage<DelayedDomainEventHandlingActions>>()
                         .LifeStyle.PerWebRequest);
             }
+        }
+
+        private void _CreateMsmqInputQueueForNServiceBus()
+        {
+            var queueName = $".\\private$\\{GetType().BaseType.Namespace.ToLower()}";
+            if (!MessageQueue.Exists(queueName)) MessageQueue.Create(queueName, transactional: true);
         }
 
         private void _UpgradeDatabase()
