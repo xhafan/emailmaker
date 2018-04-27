@@ -50,7 +50,7 @@
 
 <div id="editEmailTemplate">
     <div data-bind="template: { name: 'emailTemplateKoTemplate', data: emailTemplate() }"></div>
-    <iframe id="templateHtml" src="@(Html.BuildUrlFromExpressionWithoutParameters<TemplateController>(c => c.GetHtml(default(int))))/@(Model.EmailTemplate.EmailTemplateId)" width="900" height="800">
+    <iframe id="templateHtml" src="@(Html.BuildUrlFromExpressionWithoutParameters<TemplateController>(c => c.GetHtml(default(int))))/@(Model.EmailTemplate.EmailTemplateId)" width="800" height="800">
     </iframe>
 
     <script id="emailTemplateKoTemplate" type="text/html">

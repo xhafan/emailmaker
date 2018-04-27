@@ -48,5 +48,5 @@
     </table>
     <button data-bind="click: sendEmail">Send email</button>
 </div>
-<iframe id="emailHtml" src="@(Html.BuildUrlFromExpressionWithoutParameters<EmailController>(c => c.GetHtml(default(int))))/@(Model.EmailId)" width="900" height="800">
+<iframe id="emailHtml" src="@(Html.BuildUrlFromExpressionWithoutParameters<EmailController>(c => c.GetHtml(default(int))))/@(Model.EmailId)" width="800" height="800">
 </iframe>
