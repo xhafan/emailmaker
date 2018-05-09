@@ -8,11 +8,7 @@ namespace EmailMaker.Controllers.Register.Ninject
     {
         public override void Load()
         {
-#if NET40
             Kernel.Bind(x => x
-#else
-            KernelConfiguration.Bind(x => x
-#endif
                 .FromAssemblyContaining<EmailController>()
                 .SelectAllClasses()
                 .InheritedFrom<IController>()

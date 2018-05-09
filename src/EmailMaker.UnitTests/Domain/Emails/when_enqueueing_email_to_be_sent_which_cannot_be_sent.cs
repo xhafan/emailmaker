@@ -1,6 +1,4 @@
 using System;
-using CoreTest;
-using CoreUtils;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Domain.Emails.EmailStates;
 using EmailMaker.TestHelper.Builders;
@@ -11,7 +9,7 @@ using Shouldly;
 namespace EmailMaker.UnitTests.Domain.Emails
 {
     [TestFixture]
-    public class when_enqueueing_email_to_be_sent_which_cannot_be_sent : BaseTest
+    public class when_enqueueing_email_to_be_sent_which_cannot_be_sent
     {
         private Email _email;
         private const string FromAddress = "from address";

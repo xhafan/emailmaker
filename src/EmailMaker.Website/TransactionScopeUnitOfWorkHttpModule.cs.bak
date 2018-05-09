@@ -9,7 +9,7 @@ using Rebus.TransactionScopes;
 namespace EmailMaker.Website
 {
     // register TransactionScopeUnitOfWorkHttpModule in the web.config (system.webServer -> modules)
-    // transaction scope is needed to send messages to EmailMaker service only when the DB transaction successfully commits
+    // transaction scope is needed to send nservicebus messages to EmailMaker service only when the DB transaction successfully commits
     // https://stackoverflow.com/a/8169117/379279
     public class TransactionScopeUnitOfWorkHttpModule : IHttpModule
     {

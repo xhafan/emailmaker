@@ -1,10 +1,10 @@
-﻿using CoreNserviceBusTest.Extensions;
+﻿using RebusTestExtensions.Extensions;
 using EmailMaker.Domain.EventHandlers;
 using EmailMaker.Domain.Events.Emails;
 using EmailMaker.Messages;
 using FakeItEasy;
-using NServiceBus;
 using NUnit.Framework;
+using Rebus.Bus;
 using Shouldly;
 
 namespace EmailMaker.UnitTests.Domain.EventHandlers
@@ -34,5 +34,4 @@ namespace EmailMaker.UnitTests.Domain.EventHandlers
             _message.EmailId.ShouldBe(EmailId);
         }
     }
-
 }

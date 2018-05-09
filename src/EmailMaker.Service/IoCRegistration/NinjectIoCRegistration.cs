@@ -5,7 +5,6 @@ using CoreIoC.Ninject;
 using EmailMaker.Infrastructure.Register.Ninject;
 using EmailMaker.Queries.Register.Ninject;
 using Ninject;
-using NServiceBus;
 
 namespace EmailMaker.Service.IoCRegistration
 {
@@ -25,11 +24,6 @@ namespace EmailMaker.Service.IoCRegistration
             );
             IoC.Initialize(new NinjectContainer(kernel));
             return kernel;
-        }
-
-        public static Configure Builder(this Configure config, IKernel kernel)
-        {
-            return config.NinjectBuilder(kernel);
         }
     }
 }

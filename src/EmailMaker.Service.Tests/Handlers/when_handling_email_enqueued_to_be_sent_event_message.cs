@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CoreDdd.Domain.Repositories;
-using CoreNserviceBusTest.Extensions;
+using RebusTestExtensions.Extensions;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Messages;
 using EmailMaker.Service.Handlers;
 using EmailMaker.TestHelper.Builders;
 using FakeItEasy;
-using NServiceBus;
 using NUnit.Framework;
+using Rebus.Bus;
 using Shouldly;
 
 namespace EmailMaker.Service.Tests.Handlers
@@ -33,7 +34,7 @@ namespace EmailMaker.Service.Tests.Handlers
         private readonly List<SendEmailForEmailRecipientMessage> _sentMessages = new List<SendEmailForEmailRecipientMessage>();
 
         [SetUp]
-        public void Context()
+        public async Task Context()
         {
             _email = A.Fake<Email>();
             var emailParts = new EmailPart[0];
@@ -52,16 +53,16 @@ namespace EmailMaker.Service.Tests.Handlers
             A.CallTo(() => _email.Subject).Returns(Subject);
 
             var emailRepository = A.Fake<IRepository<Email>>();
-            A.CallTo(() => emailRepository.Get(EmailId)).Returns(_email);
+            A.CallTo(() => emailRepository.GetAsync(EmailId)).Returns(_email);
 
             var emailHtmlBuilder = A.Fake<IEmailHtmlBuilder>();
             A.CallTo(() => emailHtmlBuilder.BuildHtmlEmail(emailParts)).Returns(EmailHtml);
 
-            _bus = A.Fake<IBus>();
-            _bus.ExpectMessagesSentLocally<SendEmailForEmailRecipientMessage>(x => _sentMessages.AddRange(x));
+            _bus = A.Fake<IBus>();            
+            _bus.ExpectMessageSentLocal<SendEmailForEmailRecipientMessage>(x => _sentMessages.Add(x));
 
             var handler = new EmailEnqueuedToBeSentEventMessageHandler(emailRepository, emailHtmlBuilder, _bus);
-            handler.Handle(new EmailEnqueuedToBeSentEventMessage {EmailId = EmailId});
+            await handler.Handle(new EmailEnqueuedToBeSentEventMessage {EmailId = EmailId});
 
         }
 

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using Castle.Core.Smtp;
 using EmailMaker.Messages;
 using EmailMaker.Service.Handlers;
@@ -21,20 +22,20 @@ namespace EmailMaker.Service.Tests.Handlers
         private IEmailSender _emailSender;
 
         [SetUp]
-        public void Context()
+        public async Task Context()
         {
             _emailSender = A.Fake<IEmailSender>();
             var handler = new SendEmailForEmailRecipientMessageHandler(_emailSender);
-            handler.Handle(new SendEmailForEmailRecipientMessage
-                               {
-                                   EmailId = EmailId,
-                                   RecipientId = RecipientId,
-                                   EmailHtml = EmailHtml,
-                                   FromAddress = FromAddress,
-                                   RecipientEmailAddress = RecipientEmailAddress,
-                                   RecipientName = RecipientName,
-                                   Subject = Subject
-                               });
+            await handler.Handle(new SendEmailForEmailRecipientMessage
+            {
+                EmailId = EmailId,
+                RecipientId = RecipientId,
+                EmailHtml = EmailHtml,
+                FromAddress = FromAddress,
+                RecipientEmailAddress = RecipientEmailAddress,
+                RecipientName = RecipientName,
+                Subject = Subject
+            });
 
         }
 

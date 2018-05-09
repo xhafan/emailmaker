@@ -1,12 +1,14 @@
-﻿using CoreDdd.Domain.Repositories;
+﻿using System.Threading.Tasks;
+using CoreDdd.Domain.Repositories;
 using CoreUtils.Extensions;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Messages;
-using NServiceBus;
+using Rebus.Bus;
+using Rebus.Handlers;
 
 namespace EmailMaker.Service.Handlers
 {
-    public class EmailEnqueuedToBeSentEventMessageHandler : IMessageHandler<EmailEnqueuedToBeSentEventMessage>
+    public class EmailEnqueuedToBeSentEventMessageHandler : IHandleMessages<EmailEnqueuedToBeSentEventMessage>
     {
         private readonly IEmailHtmlBuilder _emailHtmlBuilder;
         private readonly IBus _bus;
@@ -19,11 +21,11 @@ namespace EmailMaker.Service.Handlers
             _emailHtmlBuilder = emailHtmlBuilder;
         }
 
-        public void Handle(EmailEnqueuedToBeSentEventMessage message)
+        public async Task Handle(EmailEnqueuedToBeSentEventMessage message)
         {
-            var email = _emailRepository.Get(message.EmailId);
+            var email = await _emailRepository.GetAsync(message.EmailId);
             var emailHtml = _emailHtmlBuilder.BuildHtmlEmail(email.Parts);
-            email.EmailRecipients.Each(x => _bus.SendLocal(new SendEmailForEmailRecipientMessage
+            email.EmailRecipients.Each(async x => await _bus.SendLocal(new SendEmailForEmailRecipientMessage
                                                                           {
                                                                               EmailId = email.Id,
                                                                               RecipientId = x.Recipient.Id,

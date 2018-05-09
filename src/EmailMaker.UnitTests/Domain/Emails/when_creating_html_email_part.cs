@@ -1,4 +1,3 @@
-using CoreTest;
 using EmailMaker.Domain.Emails;
 using NUnit.Framework;
 using Shouldly;
@@ -6,7 +5,7 @@ using Shouldly;
 namespace EmailMaker.UnitTests.Domain.Emails
 {
     [TestFixture]
-    public class when_creating_html_email_part : BaseTest
+    public class when_creating_html_email_part
     {
         private const string Html = "html";
         private HtmlEmailPart _htmlEmailPart;

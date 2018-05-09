@@ -1,10 +1,6 @@
-﻿using System;
-using NServiceBus;
-
-namespace EmailMaker.Messages
+﻿namespace EmailMaker.Messages
 {
-    [Serializable]
-    public class EmailEnqueuedToBeSentEventMessage : IMessage
+    public class EmailEnqueuedToBeSentEventMessage
     {
         public int EmailId { get; set; }
     }

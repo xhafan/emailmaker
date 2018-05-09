@@ -9,11 +9,7 @@ namespace EmailMaker.Commands.Register.Ninject
     {
         public override void Load()
         {
-#if NET40
             Kernel.Bind(x => x
-#else
-            KernelConfiguration.Bind(x => x
-#endif
                 .FromAssemblyContaining<CreateEmailCommandHandler>()
                 .SelectAllClasses()
                 .InheritedFrom(typeof(ICommandHandler<>))

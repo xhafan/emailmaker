@@ -1,10 +1,9 @@
 using System;
-using NServiceBus;
 
 namespace EmailMaker.Messages
 {
     [Serializable]
-    public class SendEmailForEmailRecipientMessage : IMessage
+    public class SendEmailForEmailRecipientMessage
     {
         public int EmailId { get; set; }
         public int RecipientId { get; set; }

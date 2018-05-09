@@ -11,7 +11,7 @@ namespace EmailMaker.Website
     {
         public void Init(HttpApplication application)
         {
-            DomainEvents.EnableDelayedDomainEventHandling(); // nservicebus messages sent from domain event handlers would not be sent if the main DB transaction rolls back
+            DomainEvents.EnableDelayedDomainEventHandling(); // messages sent from domain event handlers would not be sent if the main DB transaction rolls back
 
             application.BeginRequest += Application_BeginRequest;
             application.EndRequest += Application_EndRequest;

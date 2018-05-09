@@ -6,10 +6,6 @@
     <Configurations>Debug;Release;Repolinks-Debug</Configurations>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NServiceBus" version="3.2.6" />
-  </ItemGroup>
-
   <PropertyGroup Condition="'$(Configuration)'!='Release'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>

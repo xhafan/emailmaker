@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreTest", "CoreTest\CoreTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailMaker.Service.Tests", "EmailMaker.Service.Tests\EmailMaker.Service.Tests.csproj", "{0A3294D7-05DD-49E9-9A3E-7D5B530F9FCB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNserviceBusTest", "CoreNserviceBusTest\CoreNserviceBusTest.csproj", "{60E5A375-9CD0-48C8-9620-F0BE12B8D084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RebusTestExtensions", "RebusTestExtensions\RebusTestExtensions.csproj", "{60E5A375-9CD0-48C8-9620-F0BE12B8D084}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWeb", "CoreWeb\CoreWeb.csproj", "{84703BD6-F546-4EEE-BB43-18201771C3B0}"
 EndProject

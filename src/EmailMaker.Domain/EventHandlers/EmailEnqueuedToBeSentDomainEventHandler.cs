@@ -1,7 +1,7 @@
 ﻿using CoreDdd.Domain.Events;
 using EmailMaker.Domain.Events.Emails;
 using EmailMaker.Messages;
-using NServiceBus;
+using Rebus.Bus;
 
 namespace EmailMaker.Domain.EventHandlers
 {
@@ -14,10 +14,10 @@ namespace EmailMaker.Domain.EventHandlers
             _bus = bus;
         }
 
-        public void Handle(EmailEnqueuedToBeSentDomainEvent domainEvent)
+        public void Handle(EmailEnqueuedToBeSentDomainEvent domainEvent) // todo: cannot be async - would throw async used in incorrect place in the request handling pipeline
         {
             var message = new EmailEnqueuedToBeSentEventMessage { EmailId = domainEvent.EmailId };
-            _bus.Send(message);
+            _bus.Send(message).Wait();
         }
     }
 }

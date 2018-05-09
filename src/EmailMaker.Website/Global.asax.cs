@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
-using System.Messaging;
 using System.Reflection;
 using System.Transactions;
 using System.Web;
@@ -25,9 +24,11 @@ using EmailMaker.Commands.Register.Castle;
 using EmailMaker.Controllers.Register.Castle;
 using EmailMaker.Domain.Register.Castle;
 using EmailMaker.Infrastructure.Register.Castle;
+using EmailMaker.Messages;
 using EmailMaker.Queries.Register.Castle;
 using Npgsql;
-using NServiceBus;
+using Rebus.Config;
+using Rebus.Routing.TypeBased;
 
 namespace EmailMaker.Website
 {
@@ -57,24 +58,8 @@ namespace EmailMaker.Website
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            _CreateMsmqInputQueueForNServiceBus();
-
-            var nserviceBusAssemblies = new[]
-                                            {
-                                                typeof (IMessage).Assembly,
-                                                typeof (Configure).Assembly,
-                                            };
             var windsorContainer = new WindsorContainer();
-            Configure
-                .With(nserviceBusAssemblies)
-                .Log4Net()
-                .CastleWindsorBuilder(windsorContainer)
-                .BinarySerializer()
-                .MsmqTransport()
-                .UnicastBus()
-                .LoadMessageHandlers()
-                .CreateBus()
-                .Start();
+            _configureBus(windsorContainer);
 
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerWebRequest);
 
@@ -113,12 +98,14 @@ namespace EmailMaker.Website
                         .ImplementedBy<Storage<DelayedDomainEventHandlingActions>>()
                         .LifeStyle.PerWebRequest);
             }
-        }
 
-        private void _CreateMsmqInputQueueForNServiceBus()
-        {
-            var queueName = $".\\private$\\{GetType().BaseType.Namespace.ToLower()}";
-            if (!MessageQueue.Exists(queueName)) MessageQueue.Create(queueName, transactional: true);
+            void _configureBus(WindsorContainer container)
+            {
+                Configure.With(new CastleWindsorContainerAdapter(container))
+                    .Transport(t => t.UseMsmq("EmailMaker.Website"))
+                    .Routing(r => r.TypeBased().MapAssemblyOf<EmailEnqueuedToBeSentEventMessage>("EmailMaker.Service"))
+                    .Start();
+            }
         }
 
         private void _UpgradeDatabase()

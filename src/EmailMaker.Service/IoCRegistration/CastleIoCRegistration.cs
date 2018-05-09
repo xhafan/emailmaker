@@ -6,7 +6,6 @@ using CoreIoC;
 using CoreIoC.Castle;
 using EmailMaker.Infrastructure.Register.Castle;
 using EmailMaker.Queries.Register.Castle;
-using NServiceBus;
 
 namespace EmailMaker.Service.IoCRegistration
 {
@@ -25,11 +24,6 @@ namespace EmailMaker.Service.IoCRegistration
             );
             IoC.Initialize(new CastleContainer(windsorContainer));
             return windsorContainer;
-        }
-
-        public static Configure Builder(this Configure config, IWindsorContainer container)
-        {
-            return config.CastleWindsorBuilder(container);
         }
     }
 }

@@ -21,7 +21,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -78,20 +78,26 @@
     <Reference Include="Microsoft.Web.Mvc">
       <HintPath>..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=5.1.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.5.1.1\lib\net461\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Npgsql, Version=3.2.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.3.2.7\lib\net451\Npgsql.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus, Version=3.2.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.3.2.6\lib\net40\NServiceBus.dll</HintPath>
+    <Reference Include="Rebus, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.5.0.0-b10\lib\net45\Rebus.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NServiceBus.3.2.6\lib\net40\NServiceBus.Core.dll</HintPath>
+    <Reference Include="Rebus.CastleWindsor, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.Castle.Windsor.4.1.0\lib\net45\Rebus.CastleWindsor.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.ObjectBuilder.CastleWindsor">
-      <HintPath>..\packages\NServiceBus.CastleWindsor.3.2.6\lib\net40\NServiceBus.ObjectBuilder.CastleWindsor.dll</HintPath>
+    <Reference Include="Rebus.Msmq, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.Msmq.4.0.0\lib\net45\Rebus.Msmq.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebus.TransactionScopes, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.TransactionScopes.4.0.1\lib\net451\Rebus.TransactionScopes.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.1.2\lib\net45\Remotion.Linq.dll</HintPath>
@@ -305,6 +311,10 @@
     <ProjectReference Include="..\EmailMaker.Infrastructure\EmailMaker.Infrastructure.csproj">
       <Project>{4EC67C85-CA58-4ECC-BDAA-836A67C030C5}</Project>
       <Name>EmailMaker.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmailMaker.Messages\EmailMaker.Messages.csproj">
+      <Project>{5FF5C804-51CA-4D7F-81F5-DEE992EA018C}</Project>
+      <Name>EmailMaker.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\EmailMaker.Queries.Register.Castle\EmailMaker.Queries.Register.Castle.csproj">
       <Project>{1F1EC8F2-45C8-4681-A5FA-8C93CABEF9CE}</Project>

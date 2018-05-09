@@ -1,5 +1,4 @@
 using CoreDdd.Domain.Repositories;
-using CoreTest;
 using EmailMaker.Commands.Handlers;
 using EmailMaker.Commands.Messages;
 using EmailMaker.Domain.Users;
@@ -9,7 +8,7 @@ using NUnit.Framework;
 namespace EmailMaker.UnitTests.Commands.EmailTemplates
 {
     [TestFixture]
-    public class when_executing_change_password_for_user_command : BaseTest
+    public class when_executing_change_password_for_user_command
     {
         private IRepository<User> _userRepository;
         private const int UserId = 23;

@@ -1,4 +1,3 @@
-using CoreTest;
 using EmailMaker.Domain.Emails;
 using FakeItEasy;
 using NUnit.Framework;
@@ -7,7 +6,7 @@ using Shouldly;
 namespace EmailMaker.UnitTests.Domain.Emails
 {
     [TestFixture]
-    public class when_creating_email_recipient : BaseTest
+    public class when_creating_email_recipient
     {
         private Recipient _recipient;
         private EmailRecipient _emailRecipient;
