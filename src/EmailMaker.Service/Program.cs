@@ -25,6 +25,7 @@ namespace EmailMaker.Service
 
             Configure.With(handlerActivator)
                 .Transport(t => t.UseMsmq("EmailMaker.Service"))
+                //.Transport(t => t.UseRabbitMq("amqp://localhost", "EmailMaker.Service"))
                 .Routing(r => r.TypeBased().MapAssemblyOf<SendEmailForEmailRecipientMessage>("EmailMaker.Service"))
                 .Options(o => {
                     o.EnableUnitOfWork(

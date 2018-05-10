@@ -28,6 +28,7 @@
   <ItemGroup>
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
     <PackageReference Include="log4net" Version="1.2.10" />
+    <PackageReference Include="Rebus.RabbitMQ" Version="4.4.2" />
     <PackageReference Include="Rebus.UnitOfWork" Version="4.0.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
     <PackageReference Include="Rebus" Version="5.0.0-b10" />

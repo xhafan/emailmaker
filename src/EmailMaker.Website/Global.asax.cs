@@ -103,6 +103,7 @@ namespace EmailMaker.Website
             {
                 Configure.With(new CastleWindsorContainerAdapter(container))
                     .Transport(t => t.UseMsmq("EmailMaker.Website"))
+                    //.Transport(t => t.UseRabbitMq("amqp://localhost", "EmailMaker.Website"))
                     .Routing(r => r.TypeBased().MapAssemblyOf<EmailEnqueuedToBeSentEventMessage>("EmailMaker.Service"))
                     .Start();
             }
