@@ -79,10 +79,10 @@ namespace EmailMaker.Domain.EmailTemplates
                 switch (part.PartType)
                 {
                     case PartType.Html:
-                        SetHtml(part.PartId, part.Html);
+                        _setHtml(part.PartId, part.Html);
                         break;
                     case PartType.Variable:
-                        SetVariableValue(part.PartId, part.VariableValue);
+                        _setVariableValue(part.PartId, part.VariableValue);
                         break;
                     default:
                         throw new EmailMakerException("Unknown email template part type: " + part.PartType);
@@ -90,13 +90,13 @@ namespace EmailMaker.Domain.EmailTemplates
             });
             Name = emailTemplateDto.Name;
 
-            void SetHtml(int htmlTemplatePartId, string html)
+            void _setHtml(int htmlTemplatePartId, string html)
             {
                 var htmlTemplatePart = _GetHtmlPart(htmlTemplatePartId);
                 htmlTemplatePart.SetHtml(html);
             }
 
-            void SetVariableValue(int variablePartId, string value)
+            void _setVariableValue(int variablePartId, string value)
             {
                 _GetVariablePart(variablePartId).SetValue(value);
             }
