@@ -437,10 +437,10 @@
 xcopy $(SolutionDir)EmailMaker.Database EmailMaker.Database /E /I /Y &gt;nul</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if not exist $(SolutionDir)\EmailMaker.WebsiteCore\hibernate.cfg.xml (
+    <PreBuildEvent>if not exist $(SolutionDir)EmailMaker.WebsiteCore\hibernate.cfg.xml (
     copy $(SolutionDir)EmailMaker.WebsiteCore\hibernate.cfg.xml.sqlite $(SolutionDir)EmailMaker.WebsiteCore\hibernate.cfg.xml
 )
-xcopy $(SolutionDir)EmailMaker.WebsiteCore\hibernate.cfg.xml $(ProjectDir)hibernate.cfg.xml /D /Y
+copy $(SolutionDir)EmailMaker.WebsiteCore\hibernate.cfg.xml $(ProjectDir)hibernate.cfg.xml /Y
 </PreBuildEvent>
   </PropertyGroup>
 </Project>
