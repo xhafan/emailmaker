@@ -1,7 +1,7 @@
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Castle.Core.Smtp;
 using EmailMaker.Messages;
+using EmailMaker.Service.EmailSenders;
 using Rebus.Handlers;
 
 namespace EmailMaker.Service.Handlers
@@ -15,9 +15,7 @@ namespace EmailMaker.Service.Handlers
             _emailSender = emailSender;
         }
 
-#pragma warning disable 1998 // async function without await expression
         public async Task Handle(SendEmailForEmailRecipientMessage message)
-#pragma warning restore 1998 // async function without await expression
         {
             var fromMailAddress = new MailAddress(message.FromAddress);
             var toMailAddress = new MailAddress(message.RecipientEmailAddress, message.RecipientName);
@@ -27,7 +25,7 @@ namespace EmailMaker.Service.Handlers
                                       Body = message.EmailHtml,
                                       IsBodyHtml = true
                                   };
-            _emailSender.Send(mailMessage);
+            await _emailSender.SendAsync(mailMessage);
         }
     }
 }

@@ -1,7 +1,14 @@
-using System.Web.Mvc;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+
+#if NETCOREAPP
+using Microsoft.AspNetCore.Mvc;
+#endif
+
+#if NETFRAMEWORK 
+using System.Web.Mvc;
+#endif
 
 namespace EmailMaker.Controllers.Register.Castle
 {
@@ -11,7 +18,7 @@ namespace EmailMaker.Controllers.Register.Castle
         {
             container.Register(Classes
                                    .FromAssemblyContaining<EmailController>()
-                                   .BasedOn<IController>()
+                                   .BasedOn<ControllerBase>()
                                    .Configure(x => x.LifestyleTransient()));
         }
     }

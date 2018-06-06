@@ -10,7 +10,7 @@ using EmailMaker.Domain.EmailTemplates.VariableTypes;
 using EmailMaker.Domain.NhibernateMapping.Emails;
 using EmailMaker.Dtos.Emails;
 using EmailMaker.Infrastructure.Conventions;
-using HibernatingRhinos.Profiler.Appender.NHibernate;
+// using HibernatingRhinos.Profiler.Appender.NHibernate; todo
 
 namespace EmailMaker.Infrastructure
 {
@@ -25,7 +25,7 @@ namespace EmailMaker.Infrastructure
             : base(mapDtoAssembly)
         {
 #if DEBUG || REPOLINKS_DEBUG
-            NHibernateProfiler.Initialize();
+            //NHibernateProfiler.Initialize(); // todo
 #endif
         }
 

@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Configurations>Debug;Release;Repolinks-Debug</Configurations>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+    <UserSecretsId>1c57a64a-6733-47c0-9fd9-a78f2759648c</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Castle.Core" Version="4.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Npgsql" Version="4.0.0" />
+    <PackageReference Include="Rebus" Version="5.0.0-b12" />
+    <PackageReference Include="Rebus.Castle.Windsor" Version="4.1.0" />
+    <PackageReference Include="Rebus.Ninject" Version="3.0.0" />
+    <PackageReference Include="Rebus.RabbitMQ" Version="5.0.0-b01" />
+    <PackageReference Include="Rebus.TransactionScopes" Version="4.1.0" />
+    <PackageReference Include="Rebus.UnitOfWork" Version="4.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.16" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.16" />
+    <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.16" />
+    <PackageReference Include="CoreDdd" Version="3.0.16" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.0.16" />
+    <PackageReference Include="CoreIoC" Version="3.0.16" />
+    <PackageReference Include="CoreUtils" Version="3.0.16" />
+    <PackageReference Include="DatabaseBuilder" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate.Register.Castle\CoreDdd.Nhibernate.Register.Castle.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Register.Castle\CoreDdd.Register.Castle.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd\CoreDdd.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC.Castle\CoreIoC.Castle.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
+    <ProjectReference Include="..\repositoryLinks\databasebuilder\src\DatabaseBuilder\DatabaseBuilder.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EmailMaker.Commands.Register.Castle\EmailMaker.Commands.Register.Castle.csproj" />
+    <ProjectReference Include="..\EmailMaker.Controllers.Register.Castle\EmailMaker.Controllers.Register.Castle.csproj" />
+    <ProjectReference Include="..\EmailMaker.Domain.Register.Castle\EmailMaker.Domain.Register.Castle.csproj" />
+    <ProjectReference Include="..\EmailMaker.Infrastructure.Register.Castle\EmailMaker.Infrastructure.Register.Castle.csproj" />
+    <ProjectReference Include="..\EmailMaker.Messages\EmailMaker.Messages.csproj" />
+    <ProjectReference Include="..\EmailMaker.Queries.Register.Castle\EmailMaker.Queries.Register.Castle.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="hibernate.cfg.xml.postgresql" />
+    <None Remove="hibernate.cfg.xml.sqlite" />
+    <None Remove="hibernate.cfg.xml.sqlserver" />
+    <None Remove="set_postgresql_db.bat" />
+    <None Remove="set_sqlite_db.bat" />
+    <None Remove="set_sql_server_db.bat" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Castle.Facilities.AspNetCore">
+      <HintPath>..\dlls\Castle.Facilities.AspNetCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\dlls\Castle.Windsor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Copy SourceFiles="$(ProjectDir)hibernate.cfg.xml.sqlite" DestinationFiles="$(ProjectDir)hibernate.cfg.xml" Condition="!Exists('$(ProjectDir)hibernate.cfg.xml')" />
+    <Copy SourceFiles="$(ProjectDir)appsettings.json.example" DestinationFiles="$(ProjectDir)appsettings.json" Condition="!Exists('$(ProjectDir)appsettings.json')" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <DatabaseFiles Include="$(SolutionDir)EmailMaker.Database/**/*.*" />
+    </ItemGroup>
+    <RemoveDir Directories="$(OutDir)EmailMaker.Database" />
+    <Copy SourceFiles="@(DatabaseFiles)" DestinationFolder="$(TargetDir)EmailMaker.Database/%(RecursiveDir)" />
+  </Target>
+
+</Project>

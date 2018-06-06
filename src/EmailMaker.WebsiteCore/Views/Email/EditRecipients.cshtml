@@ -1,0 +1,57 @@
+﻿@model EmailMaker.Controllers.ViewModels.EmailEditRecipientsModel
+@using EmailMaker.Controllers;
+
+@{
+    ViewData["Title"] = "EmailEditRecipients";
+}
+@section Scripts {
+
+    <script type="text/javascript">
+        var editRecipientsModel;
+
+        $(document).ready(function() {
+            var fromAddresses = _.map(@Html.Raw(Json.Serialize(Model.FromAddresses)),
+                function(address) { return htmlEncode(address); });
+            var toAddresses = @Html.Raw(Json.Serialize(Model.ToAddresses));
+            var toAddressesString = toAddresses.join(", ");
+            editRecipientsModel = {
+                fromAddresses: fromAddresses,
+                selectedFromAddress: ko.observable(),
+                toAddresses: ko.observable(toAddresses),
+                toAddressesString: ko.observable(toAddressesString),
+                sendEmail: function() {
+                    $.postJson(
+                        "@Url.Action("EnqueueEmailToBeSent", "Email")",
+                        {
+                            EmailId: @Model.EmailId,
+                            FromAddress: editRecipientsModel.selectedFromAddress(),
+                            Recipients: editRecipientsModel.toAddressesString()
+                        },
+                        function() {
+                            reloadIframe("templateHtml");
+                        });
+                }
+            };
+
+            ko.applyBindings(editRecipientsModel, document.getElementById("editRecipients"));
+        });
+    </script>
+}
+
+<h2>Edit recipients</h2>
+
+<div id="editRecipients">
+    <table>
+        <tr>
+            <td>From:</td>
+            <td><select data-bind="options: fromAddresses, value: selectedFromAddress"></select></td>
+        </tr>
+        <tr>
+            <td>To:</td>
+            <td><textarea data-bind="value: toAddressesString"></textarea></td>            
+        </tr>
+    </table>
+    <button data-bind="click: sendEmail">Send email</button>
+</div>
+<iframe id="emailHtml" src="@Url.Action("GetHtml", "Email", new { id = Model.EmailId})" width="800" height="800">
+</iframe>

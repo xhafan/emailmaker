@@ -17,11 +17,9 @@ namespace EmailMaker.UnitTests.Domain.Emails
         public void Context()
         {
             var template = EmailTemplateBuilder.New.Build();
-            var state = A.Fake<EmailState>();
-            A.CallTo(() => state.CanSend).Returns(true);
             var email = new EmailBuilder()
                 .WithEmailTemplate(template)
-                .WithState(state)
+                .WithState(EmailState.Draft)
                 .WithRecipient(new Recipient("email", "name"))
                 .Build();
 

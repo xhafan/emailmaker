@@ -1,0 +1,20 @@
+{
+  "name": "EmailMaker",
+  "homepage": "https://github.com/xhafan/emailmaker",
+  "authors": [
+    "xhafan"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

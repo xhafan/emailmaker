@@ -13,6 +13,7 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using CoreDdd.Domain.Events;
+using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
 using CoreIoC;
@@ -32,7 +33,7 @@ using Rebus.Routing.TypeBased;
 
 namespace EmailMaker.Website
 {
-    public class UnitOfWorkApplication : HttpApplication
+    public class EmailMakerWebsiteApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
@@ -101,22 +102,42 @@ namespace EmailMaker.Website
 
             void _configureBus(WindsorContainer container)
             {
-                Configure.With(new CastleWindsorContainerAdapter(container))
-                    .Transport(t => t.UseMsmq("EmailMaker.Website"))
-                    //.Transport(t => t.UseRabbitMq("amqp://localhost", "EmailMaker.Website"))
-                    .Routing(r => r.TypeBased().MapAssemblyOf<EmailEnqueuedToBeSentEventMessage>("EmailMaker.Service"))
+                var rebusConfigurer = Configure.With(new CastleWindsorContainerAdapter(container));
+
+                var rebusInputQueueName = ConfigurationManager.AppSettings["RebusInputQueueName"];
+                var rebusTransport = ConfigurationManager.AppSettings["RebusTransport"];
+
+                switch (rebusTransport)
+                {
+                    case "MSMQ":
+                        rebusConfigurer.Transport(t => t.UseMsmq(rebusInputQueueName));
+                    break;
+                    case "RabbitMQ":
+                        var rebusRabbitMqConnectionString = ConfigurationManager.AppSettings["RebusRabbitMqConnectionString"];
+                        rebusConfigurer.Transport(t =>
+                            t.UseRabbitMq(rebusRabbitMqConnectionString, rebusInputQueueName));
+                        break;
+                    default:
+                        throw new Exception($"Unknown rebus transport: {rebusTransport}");
+                }
+
+                var rebusEmailMakerServiceQueueName = ConfigurationManager.AppSettings["RebusEmailMakerServiceQueueName"];
+                rebusConfigurer
+                    .Routing(r => r.TypeBased().MapAssemblyOf<EmailEnqueuedToBeSentEventMessage>(rebusEmailMakerServiceQueueName))
                     .Start();
             }
         }
 
         private void _UpgradeDatabase()
         {
-            var connectionStringSettings = ConfigurationManager.ConnectionStrings["EmailMakerConnection"];
-            var connectionString = connectionStringSettings.ConnectionString;
-            var dbProviderName = connectionStringSettings.ProviderName;
+            var configuration = IoC.Resolve<INhibernateConfigurator>().GetConfiguration();
+
+            var connectionString = configuration.Properties["connection.connection_string"];
+            var connectionDriverClass = configuration.Properties["connection.driver_class"];
+            var dbProviderName = _GetDbProviderName(connectionDriverClass);
 
             var assemblyLocation = _GetAssemblyLocation();
-            var folderWithSqlFiles = $"{assemblyLocation}\\EmailMaker.Database\\{dbProviderName}";
+            var folderWithSqlFiles = Path.Combine(assemblyLocation, "EmailMaker.Database", dbProviderName);
 
             var databaseBuilder = new DatabaseBuilder.DatabaseBuilder(_getDbConnection);
             databaseBuilder.UpgradeDatabase(folderWithSqlFiles);
@@ -135,6 +156,21 @@ namespace EmailMaker.Website
                     default:
                         throw new Exception("Unsupported NHibernate connection.driver_class");
                 }
+            }
+        }
+
+        private string _GetDbProviderName(string connectionDriverClass)
+        {
+            switch (connectionDriverClass)
+            {
+                case string x when x.Contains("Npgsql"):
+                    return "postgresql";
+                case string x when x.Contains("SQLite"):
+                    return "sqlite";
+                case string x when x.Contains("SqlClient"):
+                    return "sqlserver";
+                default:
+                    throw new Exception("Unsupported NHibernate connection.driver_class");
             }
         }
 

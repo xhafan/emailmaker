@@ -4,13 +4,14 @@ using CoreIoC;
 using CoreIoC.Ninject;
 using EmailMaker.Infrastructure.Register.Ninject;
 using EmailMaker.Queries.Register.Ninject;
+using EmailMaker.Service.EmailSenders;
 using Ninject;
 
 namespace EmailMaker.Service.IoCRegistration
 {
     public static class NinjectIoCRegistration
     {
-        public static IKernel RegisterIoCServices()
+        public static IKernel RegisterServicesIntoIoC()
         {
             var kernel = new StandardKernel();
             NhibernateBindings.SetUnitOfWorkLifeStyle(x => x.InThreadScope());

@@ -1,0 +1,15 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Rebus": {
+    "InputQueueName": "EmailMaker.Website",
+    "EmailMakerServiceQueueName": "EmailMaker.Service",
+    "RabbitMQ": {
+      "ConnectionString": "amqp://admin:password01@localhost"
+    }
+  }
+}

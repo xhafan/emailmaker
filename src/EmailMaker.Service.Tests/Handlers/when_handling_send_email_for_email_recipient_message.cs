@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Castle.Core.Smtp;
 using EmailMaker.Messages;
+using EmailMaker.Service.EmailSenders;
 using EmailMaker.Service.Handlers;
 using FakeItEasy;
 using NUnit.Framework;
@@ -42,7 +42,7 @@ namespace EmailMaker.Service.Tests.Handlers
         [Test]
         public void email_was_sent()
         {
-            A.CallTo(() => _emailSender.Send(A<MailMessage>.That.Matches(p => _MatchMailMessage(p)))).MustHaveHappened();        
+            A.CallTo(() => _emailSender.SendAsync(A<MailMessage>.That.Matches(p => _MatchMailMessage(p)))).MustHaveHappened();        
         }
 
         private bool _MatchMailMessage(MailMessage p)

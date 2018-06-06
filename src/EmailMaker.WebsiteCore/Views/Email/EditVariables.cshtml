@@ -1,0 +1,51 @@
+﻿@model EmailMaker.Controllers.ViewModels.EmailEditVariablesModel
+@using EmailMaker.Dtos
+
+@{
+    ViewData["Title"] = "EditVariables";
+}
+@section Scripts {
+    <script type="text/javascript">
+        var editVariablesModel;
+
+        $(document).ready(function() {
+            editVariablesModel = {
+                Email: ko.observable(@Html.Raw(Json.Serialize(Model.Email))),
+                updateVariables: function() {
+                    $.postJson(
+                        "@Url.Action("UpdateVariables", "Email")",
+                        {
+                            Email: editVariablesModel.Email()
+                        },
+                        function() {
+                            window.location.href =
+                                "@Url.Action("EditRecipients", "Email", new { id = Model.Email.EmailId })";
+                            //reloadIframe("emailHtml");
+                        });
+                }
+            };
+            ko.applyBindings(editVariablesModel, document.getElementById("editVariables"));
+        });
+    </script>
+}
+
+<h2>Edit variables</h2>
+
+<div id="editVariables">
+    <table data-bind="template: { name: 'EmailKoTemplate', foreach: Email().Parts }">
+    </table>
+    <button data-bind="click: updateVariables">Next</button>
+</div>
+<iframe id="emailHtml" src="@Url.Action("GetHtml", "Email", new { id = Model.Email.EmailId})" width="800" height="800">
+</iframe>
+
+<script id="EmailKoTemplate" type="text/html">
+    {{if PartType == @((int)PartType.Variable)}} 
+        <tr>
+            <td>Value</td>
+            <td><input type="text" data-bind="value: VariableValue" /></td>
+        </tr>
+    {{/if}}
+</script>
+
+

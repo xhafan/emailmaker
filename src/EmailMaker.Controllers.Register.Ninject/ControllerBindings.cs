@@ -1,6 +1,13 @@
-using System.Web.Mvc;
 using Ninject.Extensions.Conventions;
 using Ninject.Modules;
+
+#if NETCOREAPP
+using Microsoft.AspNetCore.Mvc;
+#endif
+
+#if NETFRAMEWORK 
+using System.Web.Mvc;
+#endif
 
 namespace EmailMaker.Controllers.Register.Ninject
 {
@@ -11,7 +18,7 @@ namespace EmailMaker.Controllers.Register.Ninject
             Kernel.Bind(x => x
                 .FromAssemblyContaining<EmailController>()
                 .SelectAllClasses()
-                .InheritedFrom<IController>()
+                .InheritedFrom<ControllerBase>()
                 .BindAllInterfaces()
                 .Configure(y => y.InTransientScope()));
         }

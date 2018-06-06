@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Configurations>Debug;Release;Repolinks-Debug</Configurations>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+  <ItemGroup>
     <PackageReference Include="NHibernate" Version="5.1.1" />
     <PackageReference Include="FluentNHibernate" Version="2.1.2" />
   </ItemGroup>

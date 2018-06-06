@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using CoreDdd.Commands;
 using CoreDdd.Queries;
 using CoreUtils.Extensions;
@@ -13,7 +12,14 @@ using EmailMaker.Dtos;
 using EmailMaker.Dtos.EmailTemplates;
 using EmailMaker.Dtos.Emails;
 using EmailMaker.Queries.Messages;
-using MvcContrib;
+
+#if NETCOREAPP
+using Microsoft.AspNetCore.Mvc;
+#endif
+
+#if NETFRAMEWORK 
+using System.Web.Mvc;
+#endif
 
 namespace EmailMaker.Controllers
 {
@@ -44,7 +50,7 @@ namespace EmailMaker.Controllers
             await _commandExecutor.ExecuteAsync(command);
 
 #pragma warning disable 4014
-            return this.RedirectToAction(a => a.EditVariables(createdEmailId));
+            return RedirectToAction<EmailController>(a => a.EditVariables(createdEmailId));
 #pragma warning restore 4014
         }
 
@@ -62,11 +68,13 @@ namespace EmailMaker.Controllers
                                 EmailId = id,
                                 FromAddresses = new[]
                                                     {
-                                                        User.Identity.Name                                                  
+                                                        // todo: User.Identity.Name
+                                                        "martin@test.com"
                                                     },
                                 ToAddresses = new[]
                                                   {
-                                                      User.Identity.Name 
+                                                      // todo: User.Identity.Name 
+                                                      "martin@test.com"
                                                   },
                                 Subject = "subject"
                             };
@@ -74,7 +82,11 @@ namespace EmailMaker.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EnqueueEmailToBeSent(EnqueueEmailToBeSentCommand command)
+        public async Task<ActionResult> EnqueueEmailToBeSent(
+#if NETCOREAPP 
+            [FromBody] 
+#endif
+            EnqueueEmailToBeSentCommand command)
         {
             await _commandExecutor.ExecuteAsync(command);
             return new EmptyResult();
@@ -95,7 +107,11 @@ namespace EmailMaker.Controllers
         }
 
         [HttpPost]
-        public async Task UpdateVariables(UpdateEmailVariablesCommand command)
+        public async Task UpdateVariables(
+#if NETCOREAPP
+            [FromBody] 
+#endif            
+            UpdateEmailVariablesCommand command)
         {
             await _commandExecutor.ExecuteAsync(command);
         }

@@ -1,0 +1,96 @@
+﻿@model EmailMaker.Controllers.ViewModels.EmailTemplateEditModel
+@using EmailMaker.Dtos
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@section Scripts {
+    <script type="text/javascript">
+        var editTemplateModel;
+
+        $(document).ready(function() {
+            editTemplateModel = {
+                emailTemplate: ko.observable(@Html.Raw(Json.Serialize(Model.EmailTemplate))),
+                saveTemplate: function() {
+                    $.postJson("@Url.Action("Save", "Template")",
+                        {
+                            EmailTemplate: editTemplateModel.emailTemplate()
+                        },
+                        function() {
+                            reloadIframe("templateHtml");
+                        });
+                },
+                createVariable: function() {
+                    var htmlBlockTextArea = document.getElementById("partId_" + this.PartId);
+                    var textSelectionInfo = getTextSelectionIndexesFromTextArea(htmlBlockTextArea);
+                    $.postJson("@Url.Action("CreateVariable", "Template")",
+                        {
+                            HtmlTemplatePartId: this.PartId,
+                            HtmlStartIndex: textSelectionInfo.startIndex,
+                            Length: textSelectionInfo.endIndex - textSelectionInfo.startIndex,
+                            EmailTemplate: editTemplateModel.emailTemplate()
+                        },
+                        editTemplateModel.reloadEmailTemplate);
+                },
+                reloadEmailTemplate: function() {
+                    $.post("@Url.Action("GetEmailTemplate", "Template")",
+                        { id: editTemplateModel.emailTemplate().EmailTemplateId },
+                        function(data) {
+                            editTemplateModel.emailTemplate(data);
+                        });
+                },
+                deleteVariable: function() {
+                    $.postJson("@Url.Action("DeleteVariable", "Template")",
+                        {
+                            VariablePartId: this.PartId,
+                            EmailTemplate: editTemplateModel.emailTemplate()
+                        },
+                        editTemplateModel.reloadEmailTemplate);
+                }
+            };
+            ko.applyBindings(editTemplateModel, document.getElementById("editEmailTemplate"));
+        });
+    </script>
+}
+    <h2>Edit</h2>
+
+    <div id="editEmailTemplate">
+        <div data-bind="template: { name: 'emailTemplateKoTemplate', data: emailTemplate() }"></div>
+        <iframe id="templateHtml" src="@Url.Action("GetHtml", "Template", new { id = Model.EmailTemplate.EmailTemplateId})" width="800" height="800"></iframe>
+
+        <script id="emailTemplateKoTemplate" type="text/html">
+            Template name:
+            <input type="text" data-bind="value: Name" />
+            {{each(i, p) Parts}}
+            <div data-bind="template: { name: 'emailPartTemplate', data: p }"></div>
+            {{/each}}
+            <button data-bind="click: editTemplateModel.saveTemplate">Save</button>
+        </script>
+        <script id="emailPartTemplate" type="text/html">
+            {{if PartType == @((int)PartType.Html)}}
+            <fieldset class="htmlBlock">
+                <legend>Html block</legend>
+                <textarea data-bind="value: Html" id="partId_${PartId}"></textarea>
+                <button data-bind="click: editTemplateModel.createVariable">Create variable</button>
+            </fieldset>
+            {{/if}}
+            {{if PartType == @((int)PartType.Variable)}}
+            <fieldset class="variable">
+                <legend>Variable</legend>
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td>Default value</td>
+                        <td><input type="text" data-bind="value: VariableValue" /></td>
+                    </tr>
+                </table>
+                <button data-bind="click: editTemplateModel.deleteVariable">Delete variable</button>
+            </fieldset>
+            {{/if}}
+        </script>
+    </div>
+
+

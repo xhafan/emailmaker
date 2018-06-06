@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using CoreDdd.Commands;
 using CoreDdd.Queries;
 using CoreUtils.Extensions;
@@ -12,7 +11,14 @@ using EmailMaker.Core;
 using EmailMaker.Dtos;
 using EmailMaker.Dtos.EmailTemplates;
 using EmailMaker.Queries.Messages;
-using MvcContrib;
+
+#if NETCOREAPP
+using Microsoft.AspNetCore.Mvc;
+#endif
+
+#if NETFRAMEWORK 
+using System.Web.Mvc;
+#endif
 
 namespace EmailMaker.Controllers
 {
@@ -43,7 +49,7 @@ namespace EmailMaker.Controllers
             await _commandExecutor.ExecuteAsync(command);
 
 #pragma warning disable 4014
-            return this.RedirectToAction(a => a.Edit(createdEmailTemplateId));
+            return RedirectToAction<TemplateController>(a => a.Edit(createdEmailTemplateId));
 #pragma warning restore 4014
         }
 
@@ -69,19 +75,31 @@ namespace EmailMaker.Controllers
         }
 
         [HttpPost]
-        public async Task Save(SaveEmailTemplateCommand command)
+        public async Task Save(
+#if NETCOREAPP
+            [FromBody] 
+#endif
+            SaveEmailTemplateCommand command)
         {
             await _commandExecutor.ExecuteAsync(command);
         }
 
         [HttpPost]
-        public async Task CreateVariable(CreateVariableCommand command)
+        public async Task CreateVariable(
+#if NETCOREAPP
+            [FromBody] 
+#endif
+            CreateVariableCommand command)
         {
             await _commandExecutor.ExecuteAsync(command);
         }
 
         [HttpPost]
-        public async Task DeleteVariable(DeleteVariableCommand command)
+        public async Task DeleteVariable(
+#if NETCOREAPP
+            [FromBody] 
+#endif
+            DeleteVariableCommand command)
         {
             await _commandExecutor.ExecuteAsync(command);
         }

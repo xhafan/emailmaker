@@ -1,0 +1,22 @@
+﻿@model TemplateIndexModel
+@using EmailMaker.Controllers.ViewModels
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Send email</h2>
+
+<table>
+    <tr>
+        <th>Template Name</th>
+    </tr>  
+    @foreach (var item in Model.EmailTemplate)
+    {
+        <tr>
+            <td>
+                <a asp-controller="Email" asp-action="Create" asp-route-id="@item.EmailTemplateId">@item.Name</a>
+            </td>
+        </tr>        
+    }   
+</table>

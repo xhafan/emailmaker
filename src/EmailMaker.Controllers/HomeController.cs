@@ -1,10 +1,19 @@
-using System.Web.Mvc;
+using System.Diagnostics;
 using CoreDdd.Queries;
 using EmailMaker.Controllers.BaseController;
+using EmailMaker.Controllers.ViewModels;
+
+#if NETCOREAPP
+using Microsoft.AspNetCore.Mvc;
+#endif
+
+#if NETFRAMEWORK 
+using System.Web.Mvc;
+#endif
 
 namespace EmailMaker.Controllers
 {
-    public class HomeController : AuthenticatedController 
+    public class HomeController : AuthenticatedController
     {
         public HomeController(IQueryExecutor queryExecutor) : base(queryExecutor)
         {
@@ -12,12 +21,14 @@ namespace EmailMaker.Controllers
 
         public ActionResult Index()
         {
-           return View();
-        }
-
-        public ActionResult About()
-        {
             return View();
         }
+
+#if NETCOREAPP
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+#endif
     }
 }

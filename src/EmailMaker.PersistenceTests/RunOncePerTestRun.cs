@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
+using System.IO;
 using System.Reflection;
 using System.Threading;
 using Castle.Windsor;
@@ -55,7 +56,7 @@ namespace EmailMaker.PersistenceTests
                 var dbProviderName = connectionStringSettings.ProviderName;
 
                 var assemblyLocation = _GetAssemblyLocation();
-                var folderWithSqlFiles = $"{assemblyLocation}\\EmailMaker.Database\\{dbProviderName}";
+                var folderWithSqlFiles = Path.Combine(assemblyLocation, "EmailMaker.Database", dbProviderName);
 
                 var databaseBuilder = new DatabaseBuilder.DatabaseBuilder(_getDbConnection);
                 databaseBuilder.UpgradeDatabase(folderWithSqlFiles);
@@ -81,7 +82,7 @@ namespace EmailMaker.PersistenceTests
         private string _GetAssemblyLocation()
         {
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-            var indexOfLastBackslash = assemblyLocation.LastIndexOf("\\", StringComparison.Ordinal);
+            var indexOfLastBackslash = assemblyLocation.LastIndexOf(Path.DirectorySeparatorChar);
             return assemblyLocation.Substring(0, indexOfLastBackslash);
         }
 

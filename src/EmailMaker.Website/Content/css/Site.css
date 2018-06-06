@@ -311,6 +311,7 @@ body {
 .htmlBlock label {
     display: block;
     font-weight: bold;
+}
 /* Styles for editor and display helpers
 ----------------------------------------------------------*/
 .display-label, 
