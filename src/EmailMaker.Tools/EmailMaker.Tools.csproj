@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\EmailMaker.Website\hibernate.cfg.xml" Link="hibernate.cfg.xml">
+    <Content Include="..\EmailMaker.WebsiteCore\hibernate.cfg.xml" Link="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
