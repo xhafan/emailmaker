@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.AspNetCore</name>
+    </assembly>
+    <members>
+        <member name="M:Castle.Facilities.AspNetCore.Activators.CrossWiredComponentActivator.ApplyConcerns(System.Collections.Generic.IEnumerable{Castle.Core.IDecommissionConcern},System.Object)">
+            <summary>
+            We are overriding disposables to not be tracked, this is because cross-wired components are tracked by implicit scopes that call dispose from ServiceProviders. 
+            </summary>
+            <param name="steps">All decomission concerns are fine except DisposalConcern</param>
+            <param name="instance">The cross wired instance</param>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationExtensions.AddWindsor(Microsoft.Extensions.DependencyInjection.IServiceCollection,Castle.Windsor.IWindsorContainer,System.Action{Castle.Facilities.AspNetCore.WindsorRegistrationOptions},System.Func{System.IServiceProvider})">
+            <summary>
+            Sets up framework level activators for Controllers, TagHelpers and ViewComponents and adds additional sub dependency resolvers
+            </summary>
+            <param name="services">ASP.NET Core service collection from Microsoft.Extensions.DependencyInjection</param>
+            <param name="container">Windsor container which activators call resolve against</param>
+            <param name="configure">Configuration options for controlling registration and lifestyles of controllers, tagHelpers and viewComponents</param>
+            <param name="serviceProviderFactory">Optional factory for creating a custom service provider</param>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationExtensions.CrossWired``1(Castle.MicroKernel.Registration.ComponentRegistration{``0},System.Type,Castle.Windsor.IWindsorContainer,Microsoft.Extensions.DependencyInjection.IServiceCollection,Castle.Core.LifestyleType)">
+            <summary>
+            For making types available to the IServiceCollection using 'late bound' factories which resolve from Windsor. This makes things like the @Inject directive in Razor work.
+            </summary>
+            <param name="registration">The component registration that gets copied across to the IServiceCollection</param>
+            <param name="serviceType">The type of the service, we could use T but sometimes the compiler infers this as type 'object'</param>
+            <param name="container">Windsor container which 'activators'/'cross wired' components resolve from</param>
+            <param name="serviceCollection">ASP.NET Core service collection from Microsoft.Extensions.DependencyInjection</param>
+            <param name="lifestyleType">The lifestyle type that needs to be copied across, only Singleton, Scoped and Transient are supported</param>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationExtensions.CrossWired``1(Castle.MicroKernel.Registration.ComponentRegistration{``0},Castle.Windsor.IWindsorContainer,Microsoft.Extensions.DependencyInjection.IServiceCollection,Castle.Core.LifestyleType)">
+            <summary>
+            For making types available to the IServiceCollection using 'late bound' factories resolved via Windsor. This makes things like the @Inject directive in Razor work.
+            </summary>
+            <param name="registration">The component registration that gets copied across to the IServiceCollection</param>
+            <param name="container">Windsor container which 'activators'/'cross wired' components resolve from</param>
+            <param name="serviceCollection">ASP.NET Core service collection from Microsoft.Extensions.DependencyInjection</param>
+            <param name="lifestyleType">The lifestyle type that needs to be copied across, only Singleton, Scoped and Transient are supported</param>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationExtensions.CrossWired``1(Castle.MicroKernel.Registration.BasedOnDescriptor,Castle.Windsor.IWindsorContainer,Microsoft.Extensions.DependencyInjection.IServiceCollection,Castle.Core.LifestyleType)">
+            <summary>
+            For making types available to the IServiceCollection using 'late bound' factories resolved via Windsor. This makes things like the @Inject directive in Razor work.
+            </summary>
+            <param name="basedOn">The component registration that gets copied across to the IServiceCollection</param>
+            <param name="container">Windsor container which 'activators'/'cross wired' components resolve from</param>
+            <param name="serviceCollection">ASP.NET Core service collection from Microsoft.Extensions.DependencyInjection</param>
+            <param name="lifestyleType">The lifestyle type that needs to be copied across, only Singleton, Scoped and Transient are supported</param>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationExtensions.UseMiddlewareFromWindsor``1(Microsoft.AspNetCore.Builder.IApplicationBuilder,Castle.Windsor.IWindsorContainer)">
+            <summary>
+            For registering middleware that consumes services in the constructor known to Castle Windsor. You can use 
+            conventional methods for registering your middleware but then you have to re-register your dependencies
+            in the ASP.NET IServiceCollection. You should avoid doing this if possible and use this extension instead. 
+            </summary>
+            <typeparam name="T">Type of service that implements Microsoft.AspNetCore.Http.IMiddleware</typeparam>
+            <param name="app">Application builder</param>
+            <param name="container">Windsor container</param>
+        </member>
+        <member name="T:Castle.Facilities.AspNetCore.WindsorRegistrationOptions">
+            <summary>
+            For overriding default registration and lifestyles behaviour
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationOptions.UseEntryAssembly(System.Reflection.Assembly)">
+            <summary>
+            Use this method to specify where controllers, tagHelpers and viewComponents are registered from. Use this method
+            if the facility starts throwing ComponentNotFoundExceptions because of problems with GetEntryAssembly/GetCallingAssembly.
+            You can optionally use RegisterControllers/RegisterTagHelpers/RegisterViewComponents if you need more fine grained
+            control for sourcing these framework components.
+            </summary>
+            <param name="entryAssembly"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationOptions.RegisterControllers(System.Reflection.Assembly,Castle.Core.LifestyleType)">
+            <summary>
+            Use this method to customise the registration/lifestyle of controllers.
+            </summary>
+            <param name="controllersAssembly">Assembly where the controllers are defined. Defaults to Assembly.GetCallingAssembly().</param>
+            <param name="lifestyleType">The lifestyle of the controllers. Defaults to LifestyleType.Scoped.</param>
+            <returns>WindsorRegistrationOptions as a fluent interface</returns>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationOptions.RegisterTagHelpers(System.Reflection.Assembly,Castle.Core.LifestyleType)">
+            <summary>
+            Use this method to customise the registration/lifestyle of tagHelpers.
+            </summary>
+            <param name="tagHelpersAssembly">Assembly where the tag helpers are defined. Defaults to Assembly.GetCallingAssembly().</param>
+            <param name="lifestyleType">The lifestyle of the tag helpers. Defaults to LifestyleType.Scoped.</param>
+            <returns>WindsorRegistrationOptions as a fluent interface</returns>
+        </member>
+        <member name="M:Castle.Facilities.AspNetCore.WindsorRegistrationOptions.RegisterViewComponents(System.Reflection.Assembly,Castle.Core.LifestyleType)">
+            <summary>
+            Use this method to customise the registration/lifestyle of view components.
+            </summary>
+            <param name="viewComponentsAssembly">Assembly where the view components are defined. Defaults to Assembly.GetCallingAssembly().</param>
+            <param name="lifestyleType">The lifestyle of the view components. Defaults to LifestyleType.Scoped.</param>
+            <returns>WindsorRegistrationOptions as a fluent interface</returns>
+        </member>
+    </members>
+</doc>
