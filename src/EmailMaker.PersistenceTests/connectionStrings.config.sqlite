@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<connectionStrings>
-  <add 
-    name="EmailMakerPersistenceTestsConnection" 
-    connectionString="Data Source=EmailMakerPersistenceTests.db;New=True;" 
-    providerName="sqlite"
-    />
-</connectionStrings>

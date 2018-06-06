@@ -35,7 +35,7 @@ namespace EmailMaker.Controllers.BaseController
 //            var message = new GetUserDetailsByEmailAddressQuery {EmailAddress = User.Identity.Name};
 //            var user = (await _queryExecutor.ExecuteAsync<GetUserDetailsByEmailAddressQuery, UserDto>(message)).Single();
 //            return user.UserId;
-            return 101;
+            return -1;
         }
 
         //within a controller or base controller

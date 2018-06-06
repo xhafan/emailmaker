@@ -7,5 +7,5 @@
 /*.user
 repositoryLinks
 obj
-EmailMaker.Website/hibernate.cfg.xml
+/*/hibernate.cfg.xml
 /*/appsettings.json

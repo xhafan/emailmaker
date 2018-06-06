@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreIoC;
 using CoreIoC.Castle;
@@ -51,9 +52,11 @@ namespace EmailMaker.PersistenceTests
 
             void _buildDatabase()
             {
-                var connectionStringSettings = ConfigurationManager.ConnectionStrings["EmailMakerPersistenceTestsConnection"];
-                var connectionString = connectionStringSettings.ConnectionString;
-                var dbProviderName = connectionStringSettings.ProviderName;
+                var configuration = IoC.Resolve<INhibernateConfigurator>().GetConfiguration();
+
+                var connectionString = configuration.Properties["connection.connection_string"];
+                var connectionDriverClass = configuration.Properties["connection.driver_class"];
+                var dbProviderName = _GetDbProviderName(connectionDriverClass);
 
                 var assemblyLocation = _GetAssemblyLocation();
                 var folderWithSqlFiles = Path.Combine(assemblyLocation, "EmailMaker.Database", dbProviderName);
@@ -76,6 +79,21 @@ namespace EmailMaker.PersistenceTests
                             throw new Exception("Unsupported NHibernate connection.driver_class");
                     }
                 }
+            }
+        }
+
+        private string _GetDbProviderName(string connectionDriverClass)
+        {
+            switch (connectionDriverClass)
+            {
+                case string x when x.Contains("Npgsql"):
+                    return "postgresql";
+                case string x when x.Contains("SQLite"):
+                    return "sqlite";
+                case string x when x.Contains("SqlClient"):
+                    return "sqlserver";
+                default:
+                    throw new Exception($"Unsupported NHibernate connection.driver_class: {connectionDriverClass}");
             }
         }
 

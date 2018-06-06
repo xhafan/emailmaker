@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -55,9 +55,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="connectionStrings.config.postgresql" />
-    <None Remove="connectionStrings.config.sqlite" />
-    <None Remove="connectionStrings.config.sqlserver" />
     <None Remove="hibernate.cfg.xml.postgresql" />
     <None Remove="hibernate.cfg.xml.sqlite" />
     <None Remove="hibernate.cfg.xml.sqlserver" />
@@ -67,18 +64,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="App.config" />
-    <None Update="connectionStrings.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Copy SourceFiles="$(ProjectDir)hibernate.cfg.xml.sqlite" DestinationFiles="$(ProjectDir)hibernate.cfg.xml" Condition="!Exists('$(ProjectDir)hibernate.cfg.xml')" />
+  </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="rmdir &quot;$(OutDir)\EmailMaker.Database&quot; /S /Q &gt;nul 2&gt;nul&#xD;&#xA;xcopy $(SolutionDir)\EmailMaker.Database &quot;$(OutDir)\EmailMaker.Database&quot; /E /I /Y &gt;nul" />
