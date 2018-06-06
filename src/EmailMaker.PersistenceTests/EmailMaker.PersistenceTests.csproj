@@ -55,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="hibernate.cfg.xml" />
     <None Remove="hibernate.cfg.xml.postgresql" />
     <None Remove="hibernate.cfg.xml.sqlite" />
     <None Remove="hibernate.cfg.xml.sqlserver" />
@@ -68,9 +69,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="hibernate.cfg.xml">
+    <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
