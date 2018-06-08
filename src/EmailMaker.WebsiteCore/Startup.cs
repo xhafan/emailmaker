@@ -68,8 +68,8 @@ namespace EmailMaker.WebsiteCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //app.UseMiddlewareFromWindsor<TransactionScopeUnitOfWorkMiddleware>(_windsorContainer);
-            app.UseMiddlewareFromWindsor<UnitOfWorkMiddleware>(_windsorContainer);
+            app.UseMiddlewareFromWindsor<TransactionScopeUnitOfWorkMiddleware>(_windsorContainer);
+            //app.UseMiddlewareFromWindsor<UnitOfWorkMiddleware>(_windsorContainer);
 
             if (env.IsDevelopment())
             {
