@@ -30,7 +30,7 @@
     <PackageReference Include="CoreIoC.Castle" Version="3.0.16" />
     <PackageReference Include="CoreIoC" Version="3.0.16" />
     <PackageReference Include="CoreUtils" Version="3.0.16" />
-    <PackageReference Include="DatabaseBuilder" Version="1.0.3" />
+    <PackageReference Include="DatabaseBuilder" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">

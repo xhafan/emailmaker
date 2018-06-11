@@ -184,7 +184,7 @@
       <HintPath>..\packages\CoreUtils.3.0.16\lib\net40\CoreUtils.dll</HintPath>
     </Reference>
     <Reference Include="DatabaseBuilder">
-      <HintPath>..\packages\DatabaseBuilder.1.0.3\lib\net40\DatabaseBuilder.dll</HintPath>
+      <HintPath>..\packages\DatabaseBuilder.1.0.4\lib\net40\DatabaseBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
