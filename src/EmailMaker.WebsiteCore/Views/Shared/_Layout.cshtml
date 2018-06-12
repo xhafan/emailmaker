@@ -65,7 +65,10 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-        @* todo: this section is missing knockout js reference and site.min.js is empty *@
+        @* todo: minify and bundle legacy scripts *@
+        <script src="~/lib/legacy/jquery.tmpl.js"></script>
+        <script src="~/lib/legacy/knockout-1.1.2.js"></script>
+        <script src="~/lib/legacy/underscore.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)

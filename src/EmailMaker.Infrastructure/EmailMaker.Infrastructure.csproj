@@ -11,7 +11,7 @@
     <PackageReference Include="FluentNHibernate" Version="2.1.2" />
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
-<!-- todo    <PackageReference Include="NHibernateProfiler" Version="5.0.5023" /> -->
+    <PackageReference Include="NHibernateProfiler.Appender" Version="5.0.5023" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">

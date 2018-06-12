@@ -23,6 +23,7 @@ RUN dotnet restore EmailMaker.WebsiteCore/EmailMaker.WebsiteCore.csproj
 COPY . .
 WORKDIR /src/EmailMaker.WebsiteCore
 RUN dotnet build EmailMaker.WebsiteCore.csproj -c Release -o /app
+COPY EmailMaker.Database /app/EmailMaker.Database
 
 FROM build AS publish
 RUN dotnet publish EmailMaker.WebsiteCore.csproj -c Release -o /app
