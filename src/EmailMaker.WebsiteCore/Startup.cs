@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
 using System.Reflection;
-using System.Transactions;
 using Castle.Facilities.AspNetCore;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -37,7 +36,7 @@ using Rebus.Routing.TypeBased;
 
 namespace EmailMaker.WebsiteCore
 {
-    public class Startup
+	public class Startup
     {
         private readonly WindsorContainer _windsorContainer = new WindsorContainer();
 
@@ -68,9 +67,6 @@ namespace EmailMaker.WebsiteCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseMiddlewareFromWindsor<TransactionScopeUnitOfWorkMiddleware>(_windsorContainer);
-            //app.UseMiddlewareFromWindsor<UnitOfWorkMiddleware>(_windsorContainer);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -79,6 +75,9 @@ namespace EmailMaker.WebsiteCore
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseMiddlewareFromWindsor<TransactionScopeUnitOfWorkMiddleware>(_windsorContainer, new { isolationLevel = IsolationLevel.ReadCommitted });
+            //app.UseMiddlewareFromWindsor<UnitOfWorkMiddleware>(_windsorContainer, new { isolationLevel = IsolationLevel.ReadCommitted });
 
             app.UseStaticFiles();
 
@@ -118,8 +117,8 @@ namespace EmailMaker.WebsiteCore
             void _registerTransactionScopeStoragePerWebRequest()
             {
                 _windsorContainer.Register(
-                    Component.For<IStorage<TransactionScope>>()
-                        .ImplementedBy<Storage<TransactionScope>>()
+                    Component.For<IStorage<System.Transactions.TransactionScope>>()
+                        .ImplementedBy<Storage<System.Transactions.TransactionScope>>()
                         .LifestyleScoped());
             }
 

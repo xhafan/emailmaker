@@ -12,13 +12,28 @@ namespace EmailMaker.WebsiteCore.Middleware
     // https://stackoverflow.com/a/8169117/379279
     public class TransactionScopeUnitOfWorkMiddleware : IMiddleware
     {
+        private readonly IsolationLevel _isolationLevel;
+
+        public TransactionScopeUnitOfWorkMiddleware(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        {
+            _isolationLevel = isolationLevel;
+        }
+
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            _BeginRequest();
+            try
+            {
+                _BeginRequest();
 
-            await next.Invoke(context);
+                await next.Invoke(context);
 
-            _EndRequest();
+                _EndRequest();
+            }
+            catch
+            {
+                _HandleErrorInRequest();
+                throw;
+            }
         }
 
         private void _BeginRequest()
@@ -32,8 +47,6 @@ namespace EmailMaker.WebsiteCore.Middleware
 
         private void _EndRequest()
         {
-            //if (HttpContext.Current.Server.GetLastError() != null) return; // todo: check out asp.net core error handling
-
             var unitOfWork = GetUnitOfWorkPerWebRequest();
             unitOfWork.Commit();
 
@@ -42,14 +55,14 @@ namespace EmailMaker.WebsiteCore.Middleware
             transactionScope.Dispose();
         }
 
-        //        private void Application_Error(Object source, EventArgs e) // todo: check out asp.net core error handling
-        //        {
-        //            var unitOfWork = GetUnitOfWorkPerWebRequest();
-        //            unitOfWork.Rollback();
-        //
-        //            var transactionScope = GetTransactionScopePerWebRequest();
-        //            transactionScope.Dispose();
-        //        }
+        private void _HandleErrorInRequest()
+        {
+            var unitOfWork = GetUnitOfWorkPerWebRequest();
+            unitOfWork.Rollback();
+        
+            var transactionScope = GetTransactionScopePerWebRequest();
+            transactionScope.Dispose();
+        }
 
         private IUnitOfWork GetUnitOfWorkPerWebRequest()
         {
@@ -63,7 +76,7 @@ namespace EmailMaker.WebsiteCore.Middleware
             {
                 var newTransactionScope = new TransactionScope(
                     TransactionScopeOption.Required,
-                    new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted},
+                    new TransactionOptions {IsolationLevel = _isolationLevel},
                     TransactionScopeAsyncFlowOption.Enabled
                     );
                 transactionScopeStorage.Set(newTransactionScope);

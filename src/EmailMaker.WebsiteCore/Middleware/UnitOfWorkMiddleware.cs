@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using CoreDdd.Domain.Events;
 using CoreDdd.UnitOfWorks;
@@ -9,30 +10,39 @@ namespace EmailMaker.WebsiteCore.Middleware
 {
     public class UnitOfWorkMiddleware : IMiddleware
     {
-        public UnitOfWorkMiddleware()
+        private readonly IsolationLevel _isolationLevel;
+
+        public UnitOfWorkMiddleware(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
+            _isolationLevel = isolationLevel;
             DomainEvents.EnableDelayedDomainEventHandling(); // make sure messages sent from domain event handlers will not be sent if the main DB transaction rolls back
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            _BeginRequest();
+            try
+            {
+                _BeginRequest();
 
-            await next.Invoke(context);
+                await next.Invoke(context);
 
-            _EndRequest();
+                _EndRequest();
+            }
+            catch
+            {
+                _HandleErrorInRequest();
+                throw;
+            }
         }
 
         private void _BeginRequest()
         {
             var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.BeginTransaction();            
+            unitOfWork.BeginTransaction(_isolationLevel);            
         }
 
         private void _EndRequest()
         {
-            //if (HttpContext.Current.Server.GetLastError() != null) return; // todo: check out asp.net core error handling
-
             var unitOfWork = GetUnitOfWorkPerWebRequest();
             unitOfWork.Commit();
 
@@ -45,7 +55,7 @@ namespace EmailMaker.WebsiteCore.Middleware
 
             try
             {
-                unitOfWork.BeginTransaction();
+                unitOfWork.BeginTransaction(_isolationLevel);
 
                 domainEventHandlingAction();
 
@@ -57,12 +67,12 @@ namespace EmailMaker.WebsiteCore.Middleware
                 throw;
             }
         }
-        //
-        //        private void Application_Error(Object source, EventArgs e) // todo: check out asp.net core error handling
-        //        {
-        //            var unitOfWork = GetUnitOfWorkPerWebRequest();
-        //            unitOfWork.Rollback();
-        //        }
+
+        private void _HandleErrorInRequest()
+        {
+            var unitOfWork = GetUnitOfWorkPerWebRequest();
+            unitOfWork.Rollback();
+        }
 
         private IUnitOfWork GetUnitOfWorkPerWebRequest()
         {

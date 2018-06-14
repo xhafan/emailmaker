@@ -6,13 +6,15 @@ using CoreIoC;
 using CoreUtils.Storages;
 using Rebus.TransactionScopes;
 
-namespace EmailMaker.Website
+namespace EmailMaker.Website.HttpModules
 {
     // register TransactionScopeUnitOfWorkHttpModule in the web.config (system.webServer -> modules)
     // transaction scope is needed to send messages to EmailMaker service only when the DB transaction successfully commits
     // https://stackoverflow.com/a/8169117/379279
     public class TransactionScopeUnitOfWorkHttpModule : IHttpModule
     {
+        private const IsolationLevel DefaultIsolationLevel = IsolationLevel.ReadCommitted;
+
         public void Init(HttpApplication application)
         {
             application.BeginRequest += Application_BeginRequest;
@@ -66,7 +68,7 @@ namespace EmailMaker.Website
             {
                 var newTransactionScope = new TransactionScope(
                     TransactionScopeOption.Required,
-                    new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted},
+                    new TransactionOptions {IsolationLevel = DefaultIsolationLevel},
                     TransactionScopeAsyncFlowOption.Enabled
                     );
                 transactionScopeStoragePerWebRequest.Set(newTransactionScope);

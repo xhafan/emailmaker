@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Data;
 using System.Web;
 using CoreDdd.Domain.Events;
 using CoreDdd.UnitOfWorks;
 using CoreIoC;
 
-namespace EmailMaker.Website
+namespace EmailMaker.Website.HttpModules
 {
     // register UnitOfWorkHttpModule in the web.config (system.webServer -> modules)
     public class UnitOfWorkHttpModule : IHttpModule
     {
+        private const IsolationLevel DefaultIsolationLevel = IsolationLevel.ReadCommitted;
+
         public void Init(HttpApplication application)
         {
             DomainEvents.EnableDelayedDomainEventHandling(); // messages sent from domain event handlers would not be sent if the main DB transaction rolls back
@@ -21,7 +24,7 @@ namespace EmailMaker.Website
         private void Application_BeginRequest(Object source, EventArgs e)
         {
             var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.BeginTransaction();            
+            unitOfWork.BeginTransaction(DefaultIsolationLevel);            
         }
 
         private void Application_EndRequest(Object source, EventArgs e)
@@ -40,7 +43,7 @@ namespace EmailMaker.Website
 
             try
             {
-                unitOfWork.BeginTransaction();
+                unitOfWork.BeginTransaction(DefaultIsolationLevel);
 
                 domainEventHandlingAction();
 
