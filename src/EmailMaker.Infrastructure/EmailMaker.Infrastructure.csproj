@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.16" />
-    <PackageReference Include="CoreDdd" Version="3.0.16" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.17" />
+    <PackageReference Include="CoreDdd" Version="3.0.17" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
