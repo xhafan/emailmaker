@@ -8,56 +8,45 @@ using Microsoft.AspNetCore.Http;
 
 namespace EmailMaker.WebsiteCore.Middleware
 {
-    public class UnitOfWorkMiddleware : IMiddleware
+    public class UnitOfWorkMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore?
     {
+        private readonly RequestDelegate _next;
         private readonly IsolationLevel _isolationLevel;
 
-        public UnitOfWorkMiddleware(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public UnitOfWorkMiddleware(RequestDelegate next, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
+            _next = next;
             _isolationLevel = isolationLevel;
             DomainEvents.EnableDelayedDomainEventHandling(); // make sure messages sent from domain event handlers will not be sent if the main DB transaction rolls back
         }
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public async Task InvokeAsync(HttpContext context)
         {
-            try
-            {
-                _BeginRequest();
-
-                await next.Invoke(context);
-
-                _EndRequest();
-            }
-            catch
-            {
-                _HandleErrorInRequest();
-                throw;
-            }
-        }
-
-        private void _BeginRequest()
-        {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.BeginTransaction(_isolationLevel);            
-        }
-
-        private void _EndRequest()
-        {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.Commit();
-
-            DomainEvents.RaiseDelayedEvents(_DomainEventHandlingSurroundingTransaction);
-        }
-
-        private void _DomainEventHandlingSurroundingTransaction(Action domainEventHandlingAction)
-        {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
+            var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
 
             try
             {
-                unitOfWork.BeginTransaction(_isolationLevel);
+                await _ExecuteActionInsideUnitOfWork(unitOfWork, () => _next.Invoke(context));
 
-                domainEventHandlingAction();
+                DomainEvents.RaiseDelayedEvents(async domainEventHandlingAction => await _ExecuteActionInsideUnitOfWork(unitOfWork, () =>
+                 {
+                     domainEventHandlingAction();
+                     return Task.CompletedTask;
+                 }));
+            }
+            finally
+            {
+                IoC.Release(unitOfWork);
+            }
+        }
+
+        private async Task _ExecuteActionInsideUnitOfWork(IUnitOfWork unitOfWork, Func<Task> unitOfWorkAction)
+        {
+            unitOfWork.BeginTransaction(_isolationLevel);
+
+            try
+            {
+                await unitOfWorkAction();
 
                 unitOfWork.Commit();
             }
@@ -68,13 +57,7 @@ namespace EmailMaker.WebsiteCore.Middleware
             }
         }
 
-        private void _HandleErrorInRequest()
-        {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.Rollback();
-        }
-
-        private IUnitOfWork GetUnitOfWorkPerWebRequest()
+        private IUnitOfWork _ResolveUnitOfWorkPerWebRequest()
         {
             return IoC.Resolve<IUnitOfWork>();
         }

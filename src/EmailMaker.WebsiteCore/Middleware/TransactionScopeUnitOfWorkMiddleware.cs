@@ -2,7 +2,6 @@
 using System.Transactions;
 using CoreDdd.UnitOfWorks;
 using CoreIoC;
-using CoreUtils.Storages;
 using Microsoft.AspNetCore.Http;
 using Rebus.TransactionScopes;
 
@@ -10,78 +9,57 @@ namespace EmailMaker.WebsiteCore.Middleware
 {
     // transaction scope is needed to send messages to EmailMaker service only when the DB transaction successfully commits
     // https://stackoverflow.com/a/8169117/379279
-    public class TransactionScopeUnitOfWorkMiddleware : IMiddleware
+    public class TransactionScopeUnitOfWorkMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore? - move Rebus out of this
     {
+        private readonly RequestDelegate _next;
         private readonly IsolationLevel _isolationLevel;
 
-        public TransactionScopeUnitOfWorkMiddleware(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public TransactionScopeUnitOfWorkMiddleware(RequestDelegate next, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
+            _next = next;
             _isolationLevel = isolationLevel;
         }
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public async Task InvokeAsync(HttpContext context)
         {
-            try
+            using (var transactionScope = _CreateTransactionScope())
             {
-                _BeginRequest();
+                transactionScope.EnlistRebus();
 
-                await next.Invoke(context);
+                var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
+                unitOfWork.BeginTransaction();
 
-                _EndRequest();
+                try
+                {
+                    await _next.Invoke(context);
+
+                    unitOfWork.Commit();
+                    transactionScope.Complete();
+                }
+                catch
+                {
+                    unitOfWork.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    IoC.Release(unitOfWork);
+                }
             }
-            catch
-            {
-                _HandleErrorInRequest();
-                throw;
-            }
         }
 
-        private void _BeginRequest()
-        {            
-            var transactionScope = GetTransactionScopePerWebRequest();
-            transactionScope.EnlistRebus();
-
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.BeginTransaction();
-        }
-
-        private void _EndRequest()
-        {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.Commit();
-
-            var transactionScope = GetTransactionScopePerWebRequest();
-            transactionScope.Complete();
-            transactionScope.Dispose();
-        }
-
-        private void _HandleErrorInRequest()
-        {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.Rollback();
-        
-            var transactionScope = GetTransactionScopePerWebRequest();
-            transactionScope.Dispose();
-        }
-
-        private IUnitOfWork GetUnitOfWorkPerWebRequest()
+        private IUnitOfWork _ResolveUnitOfWorkPerWebRequest()
         {
             return IoC.Resolve<IUnitOfWork>();
         }
 
-        private TransactionScope GetTransactionScopePerWebRequest()
+        private TransactionScope _CreateTransactionScope()
         {
-            var transactionScopeStorage = IoC.Resolve<IStorage<TransactionScope>>();
-            if (transactionScopeStorage.Get() == null)
-            {
-                var newTransactionScope = new TransactionScope(
-                    TransactionScopeOption.Required,
-                    new TransactionOptions {IsolationLevel = _isolationLevel},
-                    TransactionScopeAsyncFlowOption.Enabled
-                    );
-                transactionScopeStorage.Set(newTransactionScope);
-            }
-            return transactionScopeStorage.Get();
+            return new TransactionScope(
+                TransactionScopeOption.Required,
+                new TransactionOptions {IsolationLevel = _isolationLevel},
+                TransactionScopeAsyncFlowOption.Enabled
+            );
         }
     }
 }

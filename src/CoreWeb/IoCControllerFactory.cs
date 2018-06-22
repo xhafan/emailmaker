@@ -13,7 +13,15 @@ namespace CoreWeb
             {
                 return base.GetControllerInstance(requestContext, null);
             }
-            return (IController)IoC.Resolve(controllerType);
-        }       
+
+            var controller = (IController)IoC.Resolve(controllerType);
+            return controller;
+        }
+
+        public override void ReleaseController(IController controller)
+        {
+            IoC.Release(controller);
+            base.ReleaseController(controller);
+        }
     }
 }
