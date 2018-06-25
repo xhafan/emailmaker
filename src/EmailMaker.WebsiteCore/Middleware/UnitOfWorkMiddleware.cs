@@ -30,8 +30,8 @@ namespace EmailMaker.WebsiteCore.Middleware
 
                 DomainEvents.RaiseDelayedEvents(async domainEventHandlingAction => await _ExecuteActionInsideUnitOfWork(unitOfWork, () =>
                  {
-                     domainEventHandlingAction();
-                     return Task.CompletedTask;
+                     domainEventHandlingAction(); // todo: make it really async
+                     return Task.CompletedTask; // todo: when async remove this line
                  }));
             }
             finally

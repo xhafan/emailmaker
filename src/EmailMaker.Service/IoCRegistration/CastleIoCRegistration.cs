@@ -7,6 +7,7 @@ using CoreIoC.Castle;
 using EmailMaker.Infrastructure.Register.Castle;
 using EmailMaker.Queries.Register.Castle;
 using EmailMaker.Service.EmailSenders;
+using Rebus.CastleWindsor;
 
 namespace EmailMaker.Service.IoCRegistration
 {
@@ -15,7 +16,7 @@ namespace EmailMaker.Service.IoCRegistration
         public static IWindsorContainer RegisterServicesIntoIoC()
         {
             var windsorContainer = new WindsorContainer();
-            NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerThread);
+            NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerRebusMessage());
             windsorContainer.Install(
                 FromAssembly.Containing<QueryExecutorInstaller>(),
                 FromAssembly.Containing<EmailSenderInstaller>(),

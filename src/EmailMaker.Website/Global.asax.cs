@@ -75,7 +75,7 @@ namespace EmailMaker.Website
                 );
 
             _registerTransactionScopeStoragePerWebRequest();
-            _registerDelayedDomainEventHandlingActionsStoragePerWebRequest();
+            _registerDelayedDomainEventHandlingItemsStoragePerWebRequest();
 
             IoC.Initialize(new CastleContainer(windsorContainer));
 
@@ -92,11 +92,12 @@ namespace EmailMaker.Website
                         .LifeStyle.PerWebRequest);
             }
 
-            void _registerDelayedDomainEventHandlingActionsStoragePerWebRequest()
+            // this is needed only when UnitOfWorkHttpModule is used instead of TransactionScopeUnitOfWorkHttpModule
+            void _registerDelayedDomainEventHandlingItemsStoragePerWebRequest()
             {
                 windsorContainer.Register(
-                    Component.For<IStorage<DelayedDomainEventHandlingActions>>()
-                        .ImplementedBy<Storage<DelayedDomainEventHandlingActions>>()
+                    Component.For<IStorage<DelayedDomainEventHandlingItems>>()
+                        .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
                         .LifeStyle.PerWebRequest);
             }
 

@@ -25,7 +25,7 @@ namespace EmailMaker.Service
 
         public static void Cleanup(IMessageContext messageContext, IUnitOfWork unitOfWork)
         {
-            unitOfWork.Dispose();
+            IoC.Release(unitOfWork);
         }
     }
 }

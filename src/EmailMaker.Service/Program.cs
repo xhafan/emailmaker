@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Castle.MicroKernel.Registration;
 using CoreDdd.Nhibernate.Configurations;
 using CoreIoC;

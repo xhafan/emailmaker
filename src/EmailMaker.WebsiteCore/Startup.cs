@@ -107,7 +107,7 @@ namespace EmailMaker.WebsiteCore
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
             );
 
-            _registerDelayedDomainEventHandlingActionsStoragePerWebRequest();
+            _registerDelayedDomainEventHandlingItemsStoragePerWebRequest();
 
             IoC.Initialize(new CastleContainer(_windsorContainer));
 
@@ -115,15 +115,15 @@ namespace EmailMaker.WebsiteCore
         }
 
         // this is needed only when UnitOfWorkMiddleware is used instead of TransactionScopeUnitOfWorkMiddleware
-            void _registerDelayedDomainEventHandlingActionsStoragePerWebRequest() 
+        private void _registerDelayedDomainEventHandlingItemsStoragePerWebRequest() 
         {
             _windsorContainer.Register(
-                Component.For<IStorage<DelayedDomainEventHandlingActions>>()
-                    .ImplementedBy<Storage<DelayedDomainEventHandlingActions>>()
+                Component.For<IStorage<DelayedDomainEventHandlingItems>>()
+                    .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
                     .LifestyleScoped());
         }
 
-            void _configureBus(WindsorContainer container)
+        private void _configureBus(WindsorContainer container)
         {
             var rebusInputQueueName = AppSettings.Configuration["Rebus:InputQueueName"];
             var rebusEmailMakerServiceQueueName = AppSettings.Configuration["Rebus:EmailMakerServiceQueueName"];
@@ -133,7 +133,6 @@ namespace EmailMaker.WebsiteCore
                 .Transport(t => t.UseRabbitMq(rebusRabbitMqConnectionString, rebusInputQueueName))
                 .Routing(r => r.TypeBased().MapAssemblyOf<EmailEnqueuedToBeSentEventMessage>(rebusEmailMakerServiceQueueName))
                 .Start();
-            }
         }
 
         private void _UpgradeDatabase()

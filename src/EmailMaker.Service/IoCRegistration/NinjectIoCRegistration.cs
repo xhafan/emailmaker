@@ -14,7 +14,7 @@ namespace EmailMaker.Service.IoCRegistration
         public static IKernel RegisterServicesIntoIoC()
         {
             var kernel = new StandardKernel();
-            NhibernateBindings.SetUnitOfWorkLifeStyle(x => x.InThreadScope());
+            NhibernateBindings.SetUnitOfWorkLifeStyle(x => x.InThreadScope()); // todo: here should be "per rebus message" (see PerRebusMessage for CastleIoCRegistration)
 
             kernel.Load(
                 typeof(QueryExecutorBindings).Assembly,
