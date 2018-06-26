@@ -11,7 +11,7 @@ namespace EmailMaker.Website.HttpModules
     // register TransactionScopeUnitOfWorkHttpModule in the web.config (system.webServer -> modules)
     // transaction scope is needed to send messages to EmailMaker service only when the DB transaction successfully commits
     // https://stackoverflow.com/a/8169117/379279
-    public class TransactionScopeUnitOfWorkHttpModule : IHttpModule
+    public class TransactionScopeUnitOfWorkHttpModule : IHttpModule // todo: move rebus out of this
     {
         private const IsolationLevel DefaultIsolationLevel = IsolationLevel.ReadCommitted;
 
@@ -24,10 +24,10 @@ namespace EmailMaker.Website.HttpModules
 
         private void Application_BeginRequest(Object source, EventArgs e)
         {
-            var transactionScope = GetTransactionScopePerWebRequest();
+            var transactionScope = _CreateTransactionScopePerWebRequest();
             transactionScope.EnlistRebus();
 
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
+            var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
             unitOfWork.BeginTransaction();
         }
 
@@ -35,45 +35,79 @@ namespace EmailMaker.Website.HttpModules
         {
             if (HttpContext.Current.Server.GetLastError() != null) return;
 
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.Commit();
+            var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
+            try
+            {
+                unitOfWork.Commit();
+            }
+            finally
+            {
+                IoC.Release(unitOfWork);
+            }
 
-            var transactionScope = GetTransactionScopePerWebRequest();
-            transactionScope.Complete();
-            transactionScope.Dispose();
+            var transactionScopeStorage = _GetTransactionScopeStoragePerWebRequest();
+            var transactionScope = transactionScopeStorage.Get();
+            try
+            {
+                transactionScope.Complete();
+                transactionScope.Dispose();
+            }
+            finally
+            {
+                IoC.Release(transactionScopeStorage);
+            }
         }
 
         private void Application_Error(Object source, EventArgs e)
         {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.Rollback();
+            var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
+            try
+            {
+                unitOfWork.Rollback();
+            }
+            finally
+            {
+                IoC.Release(unitOfWork);
+            }
 
-            var transactionScope = GetTransactionScopePerWebRequest();
-            transactionScope.Dispose();
+            var transactionScopeStorage = _GetTransactionScopeStoragePerWebRequest();
+            var transactionScope = transactionScopeStorage.Get();
+            try
+            {
+                transactionScope.Dispose();
+            }
+            finally
+            {
+                IoC.Release(transactionScopeStorage);
+            }
         }
 
         public void Dispose()
         {
         }
 
-        private IUnitOfWork GetUnitOfWorkPerWebRequest()
+        private IUnitOfWork _ResolveUnitOfWorkPerWebRequest()
         {
             return IoC.Resolve<IUnitOfWork>();
         }
 
-        private TransactionScope GetTransactionScopePerWebRequest()
+        private TransactionScope _CreateTransactionScopePerWebRequest()
         {
-            var transactionScopeStoragePerWebRequest = IoC.Resolve<IStorage<TransactionScope>>();
-            if (transactionScopeStoragePerWebRequest.Get() == null)
-            {
-                var newTransactionScope = new TransactionScope(
+            var transactionScopeStoragePerWebRequest = _GetTransactionScopeStoragePerWebRequest();
+            if (transactionScopeStoragePerWebRequest.Get() != null) throw new Exception("Transaction scope already exist");
+
+            var newTransactionScope = new TransactionScope(
                     TransactionScopeOption.Required,
                     new TransactionOptions {IsolationLevel = DefaultIsolationLevel},
                     TransactionScopeAsyncFlowOption.Enabled
                     );
-                transactionScopeStoragePerWebRequest.Set(newTransactionScope);
-            }
-            return transactionScopeStoragePerWebRequest.Get();
+            transactionScopeStoragePerWebRequest.Set(newTransactionScope);
+            return newTransactionScope;
+        }
+
+        private IStorage<TransactionScope> _GetTransactionScopeStoragePerWebRequest()
+        {
+            return IoC.Resolve<IStorage<TransactionScope>>();
         }
     }
 }

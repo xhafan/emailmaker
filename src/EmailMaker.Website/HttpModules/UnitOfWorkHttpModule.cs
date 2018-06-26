@@ -23,7 +23,7 @@ namespace EmailMaker.Website.HttpModules
 
         private void Application_BeginRequest(Object source, EventArgs e)
         {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
+            var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
             unitOfWork.BeginTransaction(DefaultIsolationLevel);            
         }
 
@@ -31,16 +31,21 @@ namespace EmailMaker.Website.HttpModules
         {
             if (HttpContext.Current.Server.GetLastError() != null) return;
 
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.Commit();
+            var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
+            try
+            {
+                unitOfWork.Commit();
 
-            DomainEvents.RaiseDelayedEvents(_DomainEventHandlingSurroundingTransaction);
+                DomainEvents.RaiseDelayedEvents(domainEventHandlingAction => _DomainEventHandlingSurroundingTransaction(unitOfWork, domainEventHandlingAction));
+            }
+            finally
+            {
+                IoC.Release(unitOfWork);
+            }
         }
 
-        private void _DomainEventHandlingSurroundingTransaction(Action domainEventHandlingAction)
+        private void _DomainEventHandlingSurroundingTransaction(IUnitOfWork unitOfWork, Action domainEventHandlingAction)
         {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-
             try
             {
                 unitOfWork.BeginTransaction(DefaultIsolationLevel);
@@ -58,15 +63,22 @@ namespace EmailMaker.Website.HttpModules
 
         private void Application_Error(Object source, EventArgs e)
         {
-            var unitOfWork = GetUnitOfWorkPerWebRequest();
-            unitOfWork.Rollback();
+            var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
+            try
+            {
+                unitOfWork.Rollback();
+            }
+            finally
+            {
+                IoC.Release(unitOfWork);
+            }
         }
 
         public void Dispose()
         {
         }
 
-        private IUnitOfWork GetUnitOfWorkPerWebRequest()
+        private IUnitOfWork _ResolveUnitOfWorkPerWebRequest()
         {
             return IoC.Resolve<IUnitOfWork>();
         }
