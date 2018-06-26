@@ -1,2 +1,2 @@
-This folder contains custom built Castle Windsor project from aspnet-core-windsor-final branch.
+This folder contains custom built Castle Windsor project from https://github.com/fir3pho3nixx/Windsor/tree/aspnet-core-windsor-final
 Once Castle Windsor ASP.NET Core support is released to nuget, this folder will be deleted.

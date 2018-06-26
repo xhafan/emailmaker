@@ -50,6 +50,9 @@ namespace EmailMaker.WebsiteCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            // Setup component model contributors for making windsor services available to IServiceProvider
+            _windsorContainer.AddFacility<AspNetCoreFacility>(f => f.CrossWiresInto(services));
+
             // Add framework services.
             services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); // avoid json camel case, https://stackoverflow.com/a/38202543/379279
@@ -67,6 +70,8 @@ namespace EmailMaker.WebsiteCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            _windsorContainer.GetFacility<AspNetCoreFacility>().RegistersMiddlewareInto(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,8 +81,11 @@ namespace EmailMaker.WebsiteCore
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseMiddleware<TransactionScopeUnitOfWorkMiddleware>(System.Transactions.IsolationLevel.ReadCommitted);
-            //app.UseMiddleware<UnitOfWorkMiddleware>(IsolationLevel.ReadCommitted);
+            _windsorContainer.Register(
+                Component.For<TransactionScopeUnitOfWorkMiddleware>()
+                        .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(System.Transactions.IsolationLevel.Serializable))
+                        .LifestyleSingleton().AsMiddleware()
+                );
 
             app.UseStaticFiles();
 

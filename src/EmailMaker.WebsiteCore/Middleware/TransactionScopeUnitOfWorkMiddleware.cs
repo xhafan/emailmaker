@@ -9,18 +9,16 @@ namespace EmailMaker.WebsiteCore.Middleware
 {
     // transaction scope is needed to send messages to EmailMaker service only when the DB transaction successfully commits
     // https://stackoverflow.com/a/8169117/379279
-    public class TransactionScopeUnitOfWorkMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore? - move Rebus out of this
+    public class TransactionScopeUnitOfWorkMiddleware : IMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore? - move Rebus out of this
     {
-        private readonly RequestDelegate _next;
         private readonly IsolationLevel _isolationLevel;
 
-        public TransactionScopeUnitOfWorkMiddleware(RequestDelegate next, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public TransactionScopeUnitOfWorkMiddleware(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
-            _next = next;
             _isolationLevel = isolationLevel;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             using (var transactionScope = _CreateTransactionScope())
             {
@@ -31,7 +29,7 @@ namespace EmailMaker.WebsiteCore.Middleware
 
                 try
                 {
-                    await _next.Invoke(context);
+                    await next.Invoke(context);
 
                     unitOfWork.Commit();
                     transactionScope.Complete();
@@ -57,7 +55,7 @@ namespace EmailMaker.WebsiteCore.Middleware
         {
             return new TransactionScope(
                 TransactionScopeOption.Required,
-                new TransactionOptions {IsolationLevel = _isolationLevel},
+                new TransactionOptions { IsolationLevel = _isolationLevel },
                 TransactionScopeAsyncFlowOption.Enabled
             );
         }
