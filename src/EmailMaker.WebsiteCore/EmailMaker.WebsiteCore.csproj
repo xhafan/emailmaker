@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -86,9 +86,11 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <ItemGroup>
       <DatabaseFiles Include="$(SolutionDir)EmailMaker.Database/**/*.*" />
+      <CustomCastleWindsorFiles Include="$(SolutionDir)dlls/Castle.Windsor.*" />
     </ItemGroup>
     <RemoveDir Directories="$(OutDir)EmailMaker.Database" />
     <Copy SourceFiles="@(DatabaseFiles)" DestinationFolder="$(TargetDir)EmailMaker.Database/%(RecursiveDir)" />
+    <Copy SourceFiles="@(CustomCastleWindsorFiles)" DestinationFolder="$(TargetDir)" />
   </Target>
 
 </Project>

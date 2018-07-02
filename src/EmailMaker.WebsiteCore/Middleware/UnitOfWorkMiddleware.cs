@@ -8,25 +8,23 @@ using Microsoft.AspNetCore.Http;
 
 namespace EmailMaker.WebsiteCore.Middleware
 {
-    public class UnitOfWorkMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore?
+    public class UnitOfWorkMiddleware : IMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore?
     {
-        private readonly RequestDelegate _next;
         private readonly IsolationLevel _isolationLevel;
 
-        public UnitOfWorkMiddleware(RequestDelegate next, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public UnitOfWorkMiddleware(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
-            _next = next;
             _isolationLevel = isolationLevel;
             DomainEvents.EnableDelayedDomainEventHandling(); // make sure messages sent from domain event handlers will not be sent if the main DB transaction rolls back
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
 
             try
             {
-                await _ExecuteActionInsideUnitOfWork(unitOfWork, () => _next.Invoke(context));
+                await _ExecuteActionInsideUnitOfWork(unitOfWork, () => next.Invoke(context));
 
                 DomainEvents.RaiseDelayedEvents(async domainEventHandlingAction => await _ExecuteActionInsideUnitOfWork(unitOfWork, () =>
                  {
