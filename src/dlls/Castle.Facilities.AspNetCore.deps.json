@@ -7,9 +7,9 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Castle.Facilities.AspNetCore/4.1.2": {
+      "Castle.Facilities.AspNetCore/4.2.1": {
         "dependencies": {
-          "Castle.Windsor": "4.1.2",
+          "Castle.Windsor": "4.2.1",
           "Microsoft.AspNetCore": "2.0.1",
           "Microsoft.AspNetCore.Mvc": "2.0.2",
           "Microsoft.AspNetCore.Mvc.Razor": "2.0.2",
@@ -2269,7 +2269,7 @@
           }
         }
       },
-      "Castle.Windsor/4.1.2": {
+      "Castle.Windsor/4.2.1": {
         "dependencies": {
           "Castle.Core": "4.2.0",
           "Microsoft.Extensions.DependencyModel": "2.0.3",
@@ -2285,7 +2285,7 @@
     }
   },
   "libraries": {
-    "Castle.Facilities.AspNetCore/4.1.2": {
+    "Castle.Facilities.AspNetCore/4.2.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -3592,7 +3592,7 @@
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
     },
-    "Castle.Windsor/4.1.2": {
+    "Castle.Windsor/4.2.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
