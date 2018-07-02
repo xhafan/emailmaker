@@ -11,7 +11,7 @@ namespace EmailMaker.Website.HttpModules
     // register TransactionScopeUnitOfWorkHttpModule in the web.config (system.webServer -> modules)
     // transaction scope is needed to send messages to EmailMaker service only when the DB transaction successfully commits
     // https://stackoverflow.com/a/8169117/379279
-    public class TransactionScopeUnitOfWorkHttpModule : IHttpModule // todo: move rebus out of this
+    public class TransactionScopeUnitOfWorkHttpModule : IHttpModule
     {
         private const IsolationLevel DefaultIsolationLevel = IsolationLevel.ReadCommitted;
 

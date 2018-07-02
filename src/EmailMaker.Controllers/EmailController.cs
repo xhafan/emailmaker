@@ -64,16 +64,8 @@ namespace EmailMaker.Controllers
             var model = new EmailEditRecipientsModel
                             {
                                 EmailId = id,
-                                FromAddresses = new[]
-                                                    {
-                                                        // todo: User.Identity.Name
-                                                        "martin@test.com"
-                                                    },
-                                ToAddresses = new[]
-                                                  {
-                                                      // todo: User.Identity.Name 
-                                                      "martin@test.com"
-                                                  },
+                                FromAddresses = new[] { GetUserEmailAddress() },
+                                ToAddresses = new[] { GetUserEmailAddress() },
                                 Subject = "subject"
                             };
             return View(model);
