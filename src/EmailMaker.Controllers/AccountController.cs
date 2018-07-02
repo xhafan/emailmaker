@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CoreDdd.Commands;
@@ -9,12 +7,22 @@ using EmailMaker.Commands.Messages;
 using EmailMaker.Controllers.ViewModels;
 using EmailMaker.Dtos.Users;
 using EmailMaker.Queries.Messages;
+
+#if NETCOREAPP
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+#endif
 
-namespace EmailMaker.WebsiteCore.Controllers
+#if NETFRAMEWORK 
+using System.Web.Mvc;
+using System.Web.Security;
+#endif
+
+namespace EmailMaker.Controllers
 {
     public class AccountController : Controller
     {
@@ -44,6 +52,7 @@ namespace EmailMaker.WebsiteCore.Controllers
                 {
                     if (userDto.Password.Equals(model.Password.Trim()))
                     {
+#if NETCOREAPP
                         var identity = new ClaimsIdentity(GetUserClaims(userDto), CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
 
@@ -52,7 +61,10 @@ namespace EmailMaker.WebsiteCore.Controllers
                             IsPersistent = model.RememberMe,
                             ExpiresUtc = DateTime.UtcNow.AddDays(2) // todo: configure this value
                         });
-
+#endif
+#if NETFRAMEWORK
+                        FormsAuthentication.SetAuthCookie(_GetAuthenticationCookieUserName(userDto), model.RememberMe);
+#endif
                         if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                             && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                         {
@@ -69,6 +81,7 @@ namespace EmailMaker.WebsiteCore.Controllers
             return View(model);
         }
 
+#if NETCOREAPP
         private IEnumerable<Claim> GetUserClaims(UserDto user)
         {
             var claims = new List<Claim>();
@@ -78,11 +91,28 @@ namespace EmailMaker.WebsiteCore.Controllers
             claims.Add(new Claim(ClaimTypes.Email, user.EmailAddress));
             return claims;
         }
+#endif
 
-        public async Task<ActionResult> LogOff()
+#if NETFRAMEWORK
+        private string _GetAuthenticationCookieUserName(UserDto userDto)
         {
-            await HttpContext.SignOutAsync();
+            return userDto.EmailAddress + "|" + userDto.UserId;
+        }        
+#endif
 
+#if NETCOREAPP
+        public async Task<ActionResult> LogOff()
+#endif
+#if NETFRAMEWORK
+        public ActionResult LogOff()
+#endif
+        {
+#if NETCOREAPP
+            await HttpContext.SignOutAsync();
+#endif
+#if NETFRAMEWORK
+            FormsAuthentication.SignOut();
+#endif
             return RedirectToAction("Index", "Home");
         }
 
@@ -104,13 +134,17 @@ namespace EmailMaker.WebsiteCore.Controllers
                 var userDto = new UserDto
                 {
                     UserId = createdUserId,
-                    EmailAddress = model.Email,
-                    Password = model.Password
+                    EmailAddress = model.Email
                 };
+
+#if NETCOREAPP
                 var identity = new ClaimsIdentity(GetUserClaims(userDto), CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
+#endif
+#if NETFRAMEWORK
+                FormsAuthentication.SetAuthCookie(_GetAuthenticationCookieUserName(userDto), false);
+#endif
                 return RedirectToAction("Index", "Home");
             }
 
@@ -145,9 +179,14 @@ namespace EmailMaker.WebsiteCore.Controllers
 
         protected int GetUserId()
         {
+#if NETCOREAPP
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = int.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
             return userId;
+#endif
+#if NETFRAMEWORK
+            return int.Parse(User.Identity.Name.Split('|')[1]);
+#endif
         }
 
         public ActionResult ChangePasswordSuccess()

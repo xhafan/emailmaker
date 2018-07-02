@@ -23,7 +23,6 @@ using EmailMaker.Infrastructure;
 using EmailMaker.Infrastructure.Register.Castle;
 using EmailMaker.Messages;
 using EmailMaker.Queries.Register.Castle;
-using EmailMaker.WebsiteCore.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -119,20 +118,11 @@ namespace EmailMaker.WebsiteCore
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
             );
 
-            _RegisterAdditionalControllers();
             _RegisterDelayedDomainEventHandlingItemsStoragePerWebRequest();
 
             IoC.Initialize(new CastleContainer(_windsorContainer));
 
             _UpgradeDatabase();
-        }
-
-        private void _RegisterAdditionalControllers()
-        {
-            _windsorContainer.Register(Classes
-                .FromAssemblyContaining<AccountController>()
-                .BasedOn<ControllerBase>()
-                .Configure(x => x.LifestyleTransient()));
         }
 
         // this is needed only when UnitOfWorkMiddleware is used instead of TransactionScopeUnitOfWorkMiddleware
