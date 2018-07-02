@@ -27,7 +27,7 @@ namespace EmailMaker.Controllers
         private readonly ICommandExecutor _commandExecutor;
         private readonly IQueryExecutor _queryExecutor;
 
-        public TemplateController(ICommandExecutor commandExecutor, IQueryExecutor queryExecutor) : base(queryExecutor)
+        public TemplateController(ICommandExecutor commandExecutor, IQueryExecutor queryExecutor)
         {
             _queryExecutor = queryExecutor;
             _commandExecutor = commandExecutor;
@@ -36,7 +36,7 @@ namespace EmailMaker.Controllers
         public async Task<ActionResult> Index()
         {
             var emailTemplates = await _queryExecutor.ExecuteAsync<GetAllEmailTemplateQuery, EmailTemplateDetailsDto>(
-                new GetAllEmailTemplateQuery{ UserId = await GetUserId() });           
+                new GetAllEmailTemplateQuery{ UserId = GetUserId() });           
             var model = new TemplateIndexModel { EmailTemplate = emailTemplates };
             return View(model);
         }
@@ -44,13 +44,11 @@ namespace EmailMaker.Controllers
         public async Task<ActionResult> Create()
         {            
             var createdEmailTemplateId = default(int);
-            var command = new CreateEmailTemplateCommand { UserId = await GetUserId() };
+            var command = new CreateEmailTemplateCommand { UserId = GetUserId() };
             _commandExecutor.CommandExecuted += args => createdEmailTemplateId = (int) args.Args;
             await _commandExecutor.ExecuteAsync(command);
 
-#pragma warning disable 4014
-            return RedirectToAction<TemplateController>(a => a.Edit(createdEmailTemplateId));
-#pragma warning restore 4014
+            return RedirectToAction("Edit", "Template", new { id = createdEmailTemplateId });
         }
 
         public async Task<ActionResult> Edit(int id)

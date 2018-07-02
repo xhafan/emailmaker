@@ -23,11 +23,14 @@ using EmailMaker.Infrastructure;
 using EmailMaker.Infrastructure.Register.Castle;
 using EmailMaker.Messages;
 using EmailMaker.Queries.Register.Castle;
+using EmailMaker.WebsiteCore.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EmailMaker.WebsiteCore.Middleware;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Npgsql;
@@ -50,6 +53,15 @@ namespace EmailMaker.WebsiteCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            // https://stackoverflow.com/a/49047358/379279
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                    options =>
+                    {
+                        options.LoginPath = "/Account/LogOn";
+                        options.LogoutPath = "/Account/LogOff";
+                    });
+
             // Add framework services.
             services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); // avoid json camel case, https://stackoverflow.com/a/38202543/379279
@@ -81,7 +93,7 @@ namespace EmailMaker.WebsiteCore
 
             app.UseStaticFiles();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
@@ -107,15 +119,24 @@ namespace EmailMaker.WebsiteCore
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
             );
 
-            _registerDelayedDomainEventHandlingItemsStoragePerWebRequest();
+            _RegisterAdditionalControllers();
+            _RegisterDelayedDomainEventHandlingItemsStoragePerWebRequest();
 
             IoC.Initialize(new CastleContainer(_windsorContainer));
 
             _UpgradeDatabase();
         }
 
+        private void _RegisterAdditionalControllers()
+        {
+            _windsorContainer.Register(Classes
+                .FromAssemblyContaining<AccountController>()
+                .BasedOn<ControllerBase>()
+                .Configure(x => x.LifestyleTransient()));
+        }
+
         // this is needed only when UnitOfWorkMiddleware is used instead of TransactionScopeUnitOfWorkMiddleware
-        private void _registerDelayedDomainEventHandlingItemsStoragePerWebRequest() 
+        private void _RegisterDelayedDomainEventHandlingItemsStoragePerWebRequest() 
         {
             _windsorContainer.Register(
                 Component.For<IStorage<DelayedDomainEventHandlingItems>>()

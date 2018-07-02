@@ -19,6 +19,7 @@ namespace EmailMaker.Commands.Handlers
         {
             var newUser = new User("", "", command.EmailAddress, command.Password);
             await _userRepository.SaveAsync(newUser);
+            RaiseCommandExecutedEvent(new CommandExecutedArgs { Args = newUser.Id });
         }
     }
 }

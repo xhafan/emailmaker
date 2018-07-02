@@ -1,0 +1,12 @@
+<ul class="nav navbar-nav navbar-right">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li><a asp-controller="Account" asp-action="ChangePassword">Hello @User.Identity.Name</a></li>
+        <li><a asp-controller="Account" asp-action="LogOff">Logoff</a></li>
+    }
+    else
+    {
+        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+        <li><a asp-controller="Account" asp-action="LogOn">Logon</a></li>
+    }
+</ul>

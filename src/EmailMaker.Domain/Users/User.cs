@@ -8,7 +8,7 @@ namespace EmailMaker.Domain.Users
         public virtual string FirstName { get; protected set; }
         public virtual string LastName { get; protected set; }
         public virtual string EmailAddress { get; protected set; }
-        public virtual string Password { get; protected set; }
+        public virtual string Password { get; protected set; } // todo: should be password hash
 
         protected User(){}
 

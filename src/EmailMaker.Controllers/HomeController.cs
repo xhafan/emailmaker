@@ -15,7 +15,7 @@ namespace EmailMaker.Controllers
 {
     public class HomeController : AuthenticatedController
     {
-        public HomeController(IQueryExecutor queryExecutor) : base(queryExecutor)
+        public HomeController(IQueryExecutor queryExecutor)
         {
         }
 
