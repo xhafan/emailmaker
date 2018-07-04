@@ -1,4 +1,5 @@
-﻿using Castle.Windsor;
+﻿using Castle.Facilities.TypedFactory;
+using Castle.Windsor;
 using Castle.Windsor.Installer;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
@@ -17,6 +18,8 @@ namespace EmailMaker.Service.IoCRegistration
         {
             var windsorContainer = new WindsorContainer();
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerRebusMessage());
+
+            windsorContainer.AddFacility<TypedFactoryFacility>();
             windsorContainer.Install(
                 FromAssembly.Containing<QueryExecutorInstaller>(),
                 FromAssembly.Containing<EmailSenderInstaller>(),

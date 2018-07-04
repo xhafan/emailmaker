@@ -9,6 +9,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
@@ -64,6 +65,7 @@ namespace EmailMaker.Website
 
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerWebRequest);
 
+            windsorContainer.AddFacility<TypedFactoryFacility>();
             windsorContainer.Install(
                 FromAssembly.Containing<ControllerInstaller>(),
                 FromAssembly.Containing<QueryExecutorInstaller>(),
