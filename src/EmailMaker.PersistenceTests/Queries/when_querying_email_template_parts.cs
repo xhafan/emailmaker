@@ -23,7 +23,7 @@ namespace EmailMaker.PersistenceTests.Queries
         {
             _persistEmailTemplate();
 
-            var queryHandler = new GetEmailTemplatePartsQueryHandler();
+            var queryHandler = new GetEmailTemplatePartsQueryHandler(UnitOfWork);
             _result = queryHandler.Execute<EmailTemplatePartDto>(new GetEmailTemplatePartsQuery { EmailTemplateId = _emailTemplate.Id });
 
             void _persistEmailTemplate()

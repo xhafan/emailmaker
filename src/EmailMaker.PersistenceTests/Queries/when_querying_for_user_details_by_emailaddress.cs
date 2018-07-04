@@ -26,7 +26,7 @@ namespace EmailMaker.PersistenceTests.Queries
            _user = new User(FirstName, LastName, EmailAddress, Password);
             Save(_user);
 
-            var queryHandler = new GetUserDetailsByEmailAddressQueryHandler();
+            var queryHandler = new GetUserDetailsByEmailAddressQueryHandler(UnitOfWork);
             _results = queryHandler.Execute<UserDto>(new GetUserDetailsByEmailAddressQuery { EmailAddress = EmailAddress });
         }
         

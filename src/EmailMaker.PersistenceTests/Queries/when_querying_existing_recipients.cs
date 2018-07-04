@@ -28,7 +28,7 @@ namespace EmailMaker.PersistenceTests.Queries
             _recipientTwo = new Recipient(EmailAddressTwo, "name2");
             Save(_recipientTwo);        
 
-            var queryHandler = new GetExistingRecipientsQueryHandler();
+            var queryHandler = new GetExistingRecipientsQueryHandler(UnitOfWork);
             _result = queryHandler.Execute<Recipient>(new GetExistingRecipientsQuery
             {
                 RecipientEmailAddresses = new[]

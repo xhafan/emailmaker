@@ -1,4 +1,5 @@
 using CoreDdd.Nhibernate.Queries;
+using CoreDdd.Nhibernate.UnitOfWorks;
 using EmailMaker.Dtos;
 using EmailMaker.Dtos.Emails;
 using EmailMaker.Queries.Messages;
@@ -8,6 +9,11 @@ namespace EmailMaker.Queries.Handlers
 {
     public class GetEmailVariablePartsQueryHandler : BaseQueryOverHandler<GetEmailVariablePartsQuery>
     {
+        public GetEmailVariablePartsQueryHandler(NhibernateUnitOfWork unitOfWork)
+            : base(unitOfWork)
+        {
+        }
+
         protected override IQueryOver GetQueryOver<TResult>(GetEmailVariablePartsQuery query)
         {
             return Session.QueryOver<EmailPartDto>()
