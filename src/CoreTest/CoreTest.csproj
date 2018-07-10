@@ -14,9 +14,9 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd" Version="3.0.19" />
-    <PackageReference Include="CoreIoC" Version="3.0.19" />
-    <PackageReference Include="CoreUtils" Version="3.0.19" />
+    <PackageReference Include="CoreDdd" Version="3.0.20" />
+    <PackageReference Include="CoreIoC" Version="3.0.20" />
+    <PackageReference Include="CoreUtils" Version="3.0.20" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">

@@ -23,13 +23,13 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.19" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.19" />
-    <PackageReference Include="CoreDdd" Version="3.0.19" />
-    <PackageReference Include="CoreIoC.Castle" Version="3.0.19" />
-    <PackageReference Include="CoreIoC" Version="3.0.19" />
-    <PackageReference Include="CoreUtils" Version="3.0.19" />
-    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.0.19" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.20" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.20" />
+    <PackageReference Include="CoreDdd" Version="3.0.20" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.0.20" />
+    <PackageReference Include="CoreIoC" Version="3.0.20" />
+    <PackageReference Include="CoreUtils" Version="3.0.20" />
+    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.0.20" />
     <PackageReference Include="DatabaseBuilder" Version="1.0.4" />
   </ItemGroup>
 

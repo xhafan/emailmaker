@@ -169,25 +169,25 @@
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
     <Reference Include="CoreDdd">
-      <HintPath>..\packages\CoreDdd.3.0.19\lib\net45\CoreDdd.dll</HintPath>
+      <HintPath>..\packages\CoreDdd.3.0.20\lib\net45\CoreDdd.dll</HintPath>
     </Reference>
     <Reference Include="CoreDdd.Nhibernate">
-      <HintPath>..\packages\CoreDdd.Nhibernate.3.0.19\lib\net461\CoreDdd.Nhibernate.dll</HintPath>
+      <HintPath>..\packages\CoreDdd.Nhibernate.3.0.20\lib\net461\CoreDdd.Nhibernate.dll</HintPath>
     </Reference>
     <Reference Include="CoreDdd.Nhibernate.Register.Castle">
-      <HintPath>..\packages\CoreDdd.Nhibernate.Register.Castle.3.0.19\lib\net45\CoreDdd.Nhibernate.Register.Castle.dll</HintPath>
+      <HintPath>..\packages\CoreDdd.Nhibernate.Register.Castle.3.0.20\lib\net45\CoreDdd.Nhibernate.Register.Castle.dll</HintPath>
     </Reference>
     <Reference Include="CoreDdd.Register.Castle">
-      <HintPath>..\packages\CoreDdd.Register.Castle.3.0.19\lib\net45\CoreDdd.Register.Castle.dll</HintPath>
+      <HintPath>..\packages\CoreDdd.Register.Castle.3.0.20\lib\net45\CoreDdd.Register.Castle.dll</HintPath>
     </Reference>
     <Reference Include="CoreIoC">
-      <HintPath>..\packages\CoreIoC.3.0.19\lib\net40\CoreIoC.dll</HintPath>
+      <HintPath>..\packages\CoreIoC.3.0.20\lib\net40\CoreIoC.dll</HintPath>
     </Reference>
     <Reference Include="CoreIoC.Castle">
-      <HintPath>..\packages\CoreIoC.Castle.3.0.19\lib\net45\CoreIoC.Castle.dll</HintPath>
+      <HintPath>..\packages\CoreIoC.Castle.3.0.20\lib\net45\CoreIoC.Castle.dll</HintPath>
     </Reference>
     <Reference Include="CoreUtils">
-      <HintPath>..\packages\CoreUtils.3.0.19\lib\net40\CoreUtils.dll</HintPath>
+      <HintPath>..\packages\CoreUtils.3.0.20\lib\net40\CoreUtils.dll</HintPath>
     </Reference>
     <Reference Include="DatabaseBuilder">
       <HintPath>..\packages\DatabaseBuilder.1.0.4\lib\net40\DatabaseBuilder.dll</HintPath>
