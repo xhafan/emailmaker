@@ -21,7 +21,7 @@ namespace EmailMaker.Tools
 
             string _getDbDriverName()
             {
-                var configuration = new EmailMakerNhibernateConfigurator(mapDtoAssembly: false).GetConfiguration();
+                var configuration = new EmailMakerNhibernateConfigurator(shouldMapDtos: false).GetConfiguration();
                 var connectionDriverClass = configuration.Properties["connection.driver_class"];
 
                 switch (connectionDriverClass)
