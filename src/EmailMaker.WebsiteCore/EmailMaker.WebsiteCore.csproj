@@ -19,7 +19,7 @@
     <PackageReference Include="Rebus.RabbitMQ" Version="5.0.0-b01" />
     <PackageReference Include="Rebus.TransactionScopes" Version="4.1.0" />
     <PackageReference Include="Rebus.UnitOfWork" Version="4.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
   </ItemGroup>
 
