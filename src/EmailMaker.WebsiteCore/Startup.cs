@@ -123,10 +123,9 @@ namespace EmailMaker.WebsiteCore
 
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.Scoped());
 
-            _windsorContainer.AddFacility<TypedFactoryFacility>();
             _windsorContainer.Install(
                 FromAssembly.Containing<ControllerInstaller>(),
-                FromAssembly.Containing<QueryExecutorInstaller>(),
+                FromAssembly.Containing<QueryAndCommandExecutorInstaller>(),
                 FromAssembly.Containing<CommandHandlerInstaller>(),
                 FromAssembly.Containing<EventHandlerInstaller>(),
                 FromAssembly.Containing<QueryHandlerInstaller>(),

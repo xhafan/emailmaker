@@ -58,5 +58,16 @@ namespace EmailMaker.Infrastructure
         {
             yield return typeof(EmailStateSubclassConvention).Assembly;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+#if DEBUG || REPOLINKS_DEBUG
+                NHibernateProfiler.Shutdown();
+#endif
+            }
+            base.Dispose(disposing);
+        }
     }
 }

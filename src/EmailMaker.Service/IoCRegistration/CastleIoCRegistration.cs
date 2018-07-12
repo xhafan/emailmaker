@@ -19,9 +19,8 @@ namespace EmailMaker.Service.IoCRegistration
             var windsorContainer = new WindsorContainer();
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerRebusMessage());
 
-            windsorContainer.AddFacility<TypedFactoryFacility>();
             windsorContainer.Install(
-                FromAssembly.Containing<QueryExecutorInstaller>(),
+                FromAssembly.Containing<QueryAndCommandExecutorInstaller>(),
                 FromAssembly.Containing<EmailSenderInstaller>(),
                 FromAssembly.Containing<QueryHandlerInstaller>(),
                 FromAssembly.Containing<NhibernateInstaller>(),
