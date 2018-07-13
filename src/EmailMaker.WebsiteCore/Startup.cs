@@ -94,6 +94,7 @@ namespace EmailMaker.WebsiteCore
             }
 
             _windsorContainer.Register(
+                Component.For<IUnitOfWorkFactory>().AsFactory(),
                 Component.For<TransactionScopeUnitOfWorkMiddleware>()
                         .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(System.Transactions.IsolationLevel.Serializable))
                         .LifestyleSingleton().AsMiddleware()

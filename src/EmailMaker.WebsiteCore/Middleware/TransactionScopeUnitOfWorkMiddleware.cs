@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Transactions;
-using CoreDdd.UnitOfWorks;
-using CoreIoC;
 using Microsoft.AspNetCore.Http;
 using Rebus.TransactionScopes;
 
@@ -12,9 +10,14 @@ namespace EmailMaker.WebsiteCore.Middleware
     public class TransactionScopeUnitOfWorkMiddleware : IMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore? - move Rebus out of this
     {
         private readonly IsolationLevel _isolationLevel;
+        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
-        public TransactionScopeUnitOfWorkMiddleware(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public TransactionScopeUnitOfWorkMiddleware(
+            IUnitOfWorkFactory unitOfWorkFactory, 
+            IsolationLevel isolationLevel = IsolationLevel.ReadCommitted
+            )
         {
+            _unitOfWorkFactory = unitOfWorkFactory;
             _isolationLevel = isolationLevel;
         }
 
@@ -24,7 +27,7 @@ namespace EmailMaker.WebsiteCore.Middleware
             {
                 transactionScope.EnlistRebus();
 
-                var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
+                var unitOfWork = _unitOfWorkFactory.Create();
                 unitOfWork.BeginTransaction();
 
                 try
@@ -41,14 +44,9 @@ namespace EmailMaker.WebsiteCore.Middleware
                 }
                 finally
                 {
-                    IoC.Release(unitOfWork);
+                    _unitOfWorkFactory.Release(unitOfWork);
                 }
             }
-        }
-
-        private IUnitOfWork _ResolveUnitOfWorkPerWebRequest()
-        {
-            return IoC.Resolve<IUnitOfWork>();
         }
 
         private TransactionScope _CreateTransactionScope()
