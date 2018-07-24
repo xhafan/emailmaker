@@ -11,16 +11,21 @@ namespace EmailMaker.WebsiteCore.Middleware
     public class UnitOfWorkMiddleware : IMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore?
     {
         private readonly IsolationLevel _isolationLevel;
+        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
-        public UnitOfWorkMiddleware(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public UnitOfWorkMiddleware(
+            IUnitOfWorkFactory unitOfWorkFactory,
+            IsolationLevel isolationLevel = IsolationLevel.ReadCommitted
+            )
         {
+            _unitOfWorkFactory = unitOfWorkFactory;
             _isolationLevel = isolationLevel;
             DomainEvents.EnableDelayedDomainEventHandling(); // make sure messages sent from domain event handlers will not be sent if the main DB transaction rolls back
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var unitOfWork = _ResolveUnitOfWorkPerWebRequest();
+            var unitOfWork = _unitOfWorkFactory.Create();
 
             try
             {
@@ -46,18 +51,13 @@ namespace EmailMaker.WebsiteCore.Middleware
             {
                 await unitOfWorkAction();
 
-                unitOfWork.Commit();
+                await unitOfWork.CommitAsync();
             }
             catch
             {
-                unitOfWork.Rollback();
+                await unitOfWork.RollbackAsync();
                 throw;
             }
-        }
-
-        private IUnitOfWork _ResolveUnitOfWorkPerWebRequest()
-        {
-            return IoC.Resolve<IUnitOfWork>();
         }
     }
 }

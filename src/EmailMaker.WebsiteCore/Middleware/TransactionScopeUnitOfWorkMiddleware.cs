@@ -9,8 +9,8 @@ namespace EmailMaker.WebsiteCore.Middleware
     // https://stackoverflow.com/a/8169117/379279
     public class TransactionScopeUnitOfWorkMiddleware : IMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore? - move Rebus out of this
     {
-        private readonly IsolationLevel _isolationLevel;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+        private readonly IsolationLevel _isolationLevel;
 
         public TransactionScopeUnitOfWorkMiddleware(
             IUnitOfWorkFactory unitOfWorkFactory, 
@@ -34,12 +34,12 @@ namespace EmailMaker.WebsiteCore.Middleware
                 {
                     await next.Invoke(context);
 
-                    unitOfWork.Commit();
+                    await unitOfWork.CommitAsync();
                     transactionScope.Complete();
                 }
                 catch
                 {
-                    unitOfWork.Rollback();
+                    await unitOfWork.RollbackAsync();
                     throw;
                 }
                 finally

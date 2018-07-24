@@ -96,13 +96,14 @@ namespace EmailMaker.WebsiteCore
             _windsorContainer.Register(
                 Component.For<IUnitOfWorkFactory>().AsFactory(),
                 Component.For<TransactionScopeUnitOfWorkMiddleware>()
-                        .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(System.Transactions.IsolationLevel.Serializable))
+                        .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(System.Transactions.IsolationLevel.ReadCommitted))
                         .LifestyleSingleton().AsMiddleware()
             );
 
 //            _windsorContainer.Register(
+//                Component.For<IUnitOfWorkFactory>().AsFactory(),
 //                Component.For<UnitOfWorkMiddleware>()
-//                         .DependsOn(Dependency.OnValue<IsolationLevel>(IsolationLevel.Serializable))
+//                         .DependsOn(Dependency.OnValue<IsolationLevel>(IsolationLevel.ReadCommitted))
 //                         .LifestyleSingleton().AsMiddleware()
 //            );
 
