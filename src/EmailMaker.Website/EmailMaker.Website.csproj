@@ -184,7 +184,7 @@
       <HintPath>..\packages\CoreIoC.3.0.23\lib\net40\CoreIoC.dll</HintPath>
     </Reference>
     <Reference Include="CoreIoC.Castle">
-      <HintPath>..\packages\CoreIoC.Castle.3.0.23\lib\net461\CoreIoC.Castle.dll</HintPath>
+      <HintPath>..\packages\CoreIoC.Castle.3.0.23\lib\net45\CoreIoC.Castle.dll</HintPath>
     </Reference>
     <Reference Include="CoreUtils">
       <HintPath>..\packages\CoreUtils.3.0.23\lib\net40\CoreUtils.dll</HintPath>
