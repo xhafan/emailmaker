@@ -10,8 +10,8 @@ namespace EmailMaker.WebsiteCore.Middleware
     public class TransactionScopeUnitOfWorkMiddleware : IMiddleware // todo: extract into a standalone nuget package CoreDdd.AspNetCore?
     {
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
-        private readonly Action<TransactionScope> _transactionScopeAfterCreateAction;
         private readonly IsolationLevel _isolationLevel;
+        private readonly Action<TransactionScope> _transactionScopeAfterCreateAction;
 
         public TransactionScopeUnitOfWorkMiddleware(
             IUnitOfWorkFactory unitOfWorkFactory,
