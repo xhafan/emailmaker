@@ -35,6 +35,7 @@ using Newtonsoft.Json.Serialization;
 using Npgsql;
 using Rebus.Config;
 using Rebus.Routing.TypeBased;
+using Rebus.TransactionScopes;
 
 namespace EmailMaker.WebsiteCore
 {
@@ -111,7 +112,12 @@ namespace EmailMaker.WebsiteCore
                 _windsorContainer.Register(
                     Component.For<IUnitOfWorkFactory>().AsFactory(),
                     Component.For<TransactionScopeUnitOfWorkMiddleware>()
-                        .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(System.Transactions.IsolationLevel.ReadCommitted))
+                        .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(
+                            System.Transactions.IsolationLevel.ReadCommitted
+                            ))
+                        .DependsOn(Dependency.OnValue<Action<System.Transactions.TransactionScope>>(
+                            (Action<System.Transactions.TransactionScope>)(transactionScope => transactionScope.EnlistRebus())
+                            ))
                         .LifestyleSingleton().AsMiddleware()
                 );
 

@@ -3,7 +3,6 @@ using System.Data;
 using System.Threading.Tasks;
 using CoreDdd.Domain.Events;
 using CoreDdd.UnitOfWorks;
-using CoreIoC;
 using Microsoft.AspNetCore.Http;
 
 namespace EmailMaker.WebsiteCore.Middleware
@@ -38,7 +37,7 @@ namespace EmailMaker.WebsiteCore.Middleware
             }
             finally
             {
-                IoC.Release(unitOfWork);
+                _unitOfWorkFactory.Release(unitOfWork);
             }
         }
 
