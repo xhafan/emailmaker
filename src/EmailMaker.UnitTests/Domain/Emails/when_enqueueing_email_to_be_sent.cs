@@ -30,11 +30,11 @@ namespace EmailMaker.UnitTests.Domain.Emails
         [SetUp]
         public void Context()
         {
-            var container = A.Fake<IContainer>();
+            var domainEventHandlerFactory = A.Fake<IDomainEventHandlerFactory>();
             _fakeDomainEventHandler = new FakeEmailEnqueuedToBeSentDomainEventHandler();
-            A.CallTo(() => container.ResolveAll<IDomainEventHandler<EmailEnqueuedToBeSentDomainEvent>>())
+            A.CallTo(() => domainEventHandlerFactory.Create<EmailEnqueuedToBeSentDomainEvent>())
                 .Returns(new[] { _fakeDomainEventHandler });
-            IoC.Initialize(container);
+            DomainEvents.Initialize(domainEventHandlerFactory);
 
             var template = EmailTemplateBuilder.New.Build();
             _email = new EmailBuilder()

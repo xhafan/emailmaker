@@ -9,7 +9,6 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
@@ -67,7 +66,7 @@ namespace EmailMaker.Website
 
             windsorContainer.Install(
                 FromAssembly.Containing<ControllerInstaller>(),
-                FromAssembly.Containing<QueryAndCommandExecutorInstaller>(),
+                FromAssembly.Containing<QueryExecutorInstaller>(),
                 FromAssembly.Containing<CommandHandlerInstaller>(),
                 FromAssembly.Containing<EventHandlerInstaller>(),
                 FromAssembly.Containing<QueryHandlerInstaller>(),
@@ -75,8 +74,8 @@ namespace EmailMaker.Website
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
                 );
 
-            _registerTransactionScopeStoragePerWebRequest();
-            _registerDelayedDomainEventHandlingItemsStoragePerWebRequest();
+            _setupTransactionScopeUnitOfWork();
+            //_setupDelayedDomainEventHandlingForUnitOfWork();
 
             IoC.Initialize(new CastleContainer(windsorContainer));
 
@@ -85,21 +84,29 @@ namespace EmailMaker.Website
 
             _UpgradeDatabase();
 
-            void _registerTransactionScopeStoragePerWebRequest()
+            void _setupTransactionScopeUnitOfWork()
             {
+                // call this method only when TransactionScopeUnitOfWorkHttpModule is used instead of UnitOfWorkHttpModule (see web.config system.webServer -> modules)
                 windsorContainer.Register(
                     Component.For<IStorage<TransactionScope>>()
                         .ImplementedBy<Storage<TransactionScope>>()
                         .LifeStyle.PerWebRequest);
+
+                DomainEvents.Initialize(windsorContainer.Resolve<IDomainEventHandlerFactory>());
             }
 
-            // this is needed only when UnitOfWorkHttpModule is used instead of TransactionScopeUnitOfWorkHttpModule
-            void _registerDelayedDomainEventHandlingItemsStoragePerWebRequest()
+            void _setupDelayedDomainEventHandlingForUnitOfWork()
             {
+                // call this method only when UnitOfWorkHttpModule is used instead of TransactionScopeUnitOfWorkHttpModule (see web.config system.webServer -> modules)
                 windsorContainer.Register(
                     Component.For<IStorage<DelayedDomainEventHandlingItems>>()
                         .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
                         .LifeStyle.PerWebRequest);
+
+                DomainEvents.InitializeWithDelayedDomainEventHandling(
+                    windsorContainer.Resolve<IDomainEventHandlerFactory>(),
+                    windsorContainer.Resolve<IStorageFactory>()
+                );
             }
 
             void _configureBus(WindsorContainer container)

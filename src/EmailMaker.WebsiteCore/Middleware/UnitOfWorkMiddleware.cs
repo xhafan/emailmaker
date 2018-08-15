@@ -20,7 +20,6 @@ namespace EmailMaker.WebsiteCore.Middleware
         {
             _unitOfWorkFactory = unitOfWorkFactory;
             _isolationLevel = isolationLevel;
-            DomainEvents.EnableDelayedDomainEventHandling(); // make sure messages sent from domain event handlers will not be sent if the main DB transaction rolls back
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)

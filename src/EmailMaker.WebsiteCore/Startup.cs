@@ -30,7 +30,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EmailMaker.WebsiteCore.Middleware;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Npgsql;
@@ -93,19 +92,8 @@ namespace EmailMaker.WebsiteCore
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            _windsorContainer.Register(
-                Component.For<IUnitOfWorkFactory>().AsFactory(),
-                Component.For<TransactionScopeUnitOfWorkMiddleware>()
-                        .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(System.Transactions.IsolationLevel.ReadCommitted))
-                        .LifestyleSingleton().AsMiddleware()
-            );
-
-//            _windsorContainer.Register(
-//                Component.For<IUnitOfWorkFactory>().AsFactory(),
-//                Component.For<UnitOfWorkMiddleware>()
-//                         .DependsOn(Dependency.OnValue<IsolationLevel>(IsolationLevel.ReadCommitted))
-//                         .LifestyleSingleton().AsMiddleware()
-//            );
+            _setupTransactionScopeUnitOfWork();
+            //_setupDelayedDomainEventHandlingForUnitOfWork();
 
             app.UseStaticFiles();
 
@@ -117,6 +105,38 @@ namespace EmailMaker.WebsiteCore
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            void _setupTransactionScopeUnitOfWork()
+            {
+                _windsorContainer.Register(
+                    Component.For<IUnitOfWorkFactory>().AsFactory(),
+                    Component.For<TransactionScopeUnitOfWorkMiddleware>()
+                        .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(System.Transactions.IsolationLevel.ReadCommitted))
+                        .LifestyleSingleton().AsMiddleware()
+                );
+
+                DomainEvents.Initialize(_windsorContainer.Resolve<IDomainEventHandlerFactory>());
+            }
+
+            void _setupDelayedDomainEventHandlingForUnitOfWork()
+            {
+                _windsorContainer.Register(
+                    Component.For<IUnitOfWorkFactory>().AsFactory(),
+                    Component.For<UnitOfWorkMiddleware>()
+                        .DependsOn(Dependency.OnValue<IsolationLevel>(IsolationLevel.ReadCommitted))
+                        .LifestyleSingleton().AsMiddleware()
+                );
+
+                _windsorContainer.Register(
+                    Component.For<IStorage<DelayedDomainEventHandlingItems>>()
+                        .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
+                        .LifestyleScoped());
+
+                DomainEvents.InitializeWithDelayedDomainEventHandling(
+                    _windsorContainer.Resolve<IDomainEventHandlerFactory>(),
+                    _windsorContainer.Resolve<IStorageFactory>()
+                    );
+            }
         }
 
         private void _RegisterApplicationComponents()
@@ -127,28 +147,17 @@ namespace EmailMaker.WebsiteCore
 
             _windsorContainer.Install(
                 FromAssembly.Containing<ControllerInstaller>(),
-                FromAssembly.Containing<QueryAndCommandExecutorInstaller>(),
+                FromAssembly.Containing<QueryExecutorInstaller>(),
                 FromAssembly.Containing<CommandHandlerInstaller>(),
                 FromAssembly.Containing<EventHandlerInstaller>(),
                 FromAssembly.Containing<QueryHandlerInstaller>(),
                 FromAssembly.Containing<NhibernateInstaller>(),
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
             );
-
-            _RegisterDelayedDomainEventHandlingItemsStoragePerWebRequest();
-
+            
             IoC.Initialize(new CastleContainer(_windsorContainer));
 
             _UpgradeDatabase();
-        }
-
-        // this is needed only when UnitOfWorkMiddleware is used instead of TransactionScopeUnitOfWorkMiddleware
-        private void _RegisterDelayedDomainEventHandlingItemsStoragePerWebRequest() 
-        {
-            _windsorContainer.Register(
-                Component.For<IStorage<DelayedDomainEventHandlingItems>>()
-                    .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
-                    .LifestyleScoped());
         }
 
         private void _configureBus(WindsorContainer container)

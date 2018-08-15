@@ -20,7 +20,7 @@ namespace EmailMaker.Service.IoCRegistration
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerRebusMessage());
 
             windsorContainer.Install(
-                FromAssembly.Containing<QueryAndCommandExecutorInstaller>(),
+                FromAssembly.Containing<QueryExecutorInstaller>(),
                 FromAssembly.Containing<EmailSenderInstaller>(),
                 FromAssembly.Containing<QueryHandlerInstaller>(),
                 FromAssembly.Containing<NhibernateInstaller>(),

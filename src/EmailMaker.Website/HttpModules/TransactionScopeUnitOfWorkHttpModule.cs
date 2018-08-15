@@ -107,7 +107,7 @@ namespace EmailMaker.Website.HttpModules
 
         private IStorage<TransactionScope> _GetTransactionScopeStoragePerWebRequest()
         {
-            return IoC.Resolve<IStorage<TransactionScope>>();
+            return IoC.Resolve<IStorage<TransactionScope>>(); // todo: move this into http context?
         }
     }
 }
