@@ -34,28 +34,11 @@ namespace EmailMaker.Website.HttpModules
             {
                 unitOfWork.Commit();
 
-                DomainEvents.RaiseDelayedEvents(domainEventHandlingAction => _DomainEventHandlingSurroundingTransaction(unitOfWork, domainEventHandlingAction));
+                DomainEvents.RaiseDelayedEvents();
             }
             finally
             {
                 IoC.Release(unitOfWork);
-            }
-        }
-
-        private void _DomainEventHandlingSurroundingTransaction(IUnitOfWork unitOfWork, Action domainEventHandlingAction)
-        {
-            try
-            {
-                unitOfWork.BeginTransaction(DefaultIsolationLevel);
-
-                domainEventHandlingAction();
-
-                unitOfWork.Commit();
-            }
-            catch
-            {
-                unitOfWork.Rollback();
-                throw;
             }
         }
 

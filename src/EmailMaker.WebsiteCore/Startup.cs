@@ -9,10 +9,12 @@ using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using CoreDdd.AspNetCore.Middleware;
 using CoreDdd.Domain.Events;
 using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
+using CoreDdd.UnitOfWorks;
 using CoreIoC;
 using CoreIoC.Castle;
 using CoreUtils.Storages;
@@ -28,7 +30,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EmailMaker.WebsiteCore.Middleware;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
@@ -94,7 +95,7 @@ namespace EmailMaker.WebsiteCore
             }
 
             _setupTransactionScopeUnitOfWork();
-            //_setupDelayedDomainEventHandlingForUnitOfWork();
+            //_setupUnitOfWorkWithDelayedDomainEventHandling();
 
             app.UseStaticFiles();
 
@@ -110,7 +111,6 @@ namespace EmailMaker.WebsiteCore
             void _setupTransactionScopeUnitOfWork()
             {
                 _windsorContainer.Register(
-                    Component.For<IUnitOfWorkFactory>().AsFactory(),
                     Component.For<TransactionScopeUnitOfWorkMiddleware>()
                         .DependsOn(Dependency.OnValue<System.Transactions.IsolationLevel>(
                             System.Transactions.IsolationLevel.ReadCommitted
@@ -124,10 +124,9 @@ namespace EmailMaker.WebsiteCore
                 DomainEvents.Initialize(_windsorContainer.Resolve<IDomainEventHandlerFactory>());
             }
 
-            void _setupDelayedDomainEventHandlingForUnitOfWork()
+            void _setupUnitOfWorkWithDelayedDomainEventHandling()
             {
                 _windsorContainer.Register(
-                    Component.For<IUnitOfWorkFactory>().AsFactory(),
                     Component.For<UnitOfWorkMiddleware>()
                         .DependsOn(Dependency.OnValue<IsolationLevel>(IsolationLevel.ReadCommitted))
                         .LifestyleSingleton().AsMiddleware()

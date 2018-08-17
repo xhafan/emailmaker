@@ -12,6 +12,7 @@ using Shouldly;
 
 namespace EmailMaker.UnitTests.Domain.Emails
 {
+    // todo: refactor domain events setup - extract the code into some helper reusable test helper class
     [TestFixture]
     public class when_enqueueing_email_to_be_sent
     {

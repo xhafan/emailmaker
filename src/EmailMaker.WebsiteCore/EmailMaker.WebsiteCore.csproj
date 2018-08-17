@@ -42,6 +42,7 @@
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC.Castle\CoreIoC.Castle.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.AspNetCore\CoreDdd.AspNetCore.csproj" />
     <ProjectReference Include="..\repositoryLinks\databasebuilder\src\DatabaseBuilder\DatabaseBuilder.csproj" />
   </ItemGroup>
 
