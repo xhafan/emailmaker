@@ -35,6 +35,8 @@ namespace EmailMaker.Website
 {
     public class EmailMakerWebsiteApplication : HttpApplication
     {
+        private WindsorContainer _windsorContainer;
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -59,12 +61,12 @@ namespace EmailMaker.Website
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            var windsorContainer = new WindsorContainer();
-            _configureBus(windsorContainer);
+            _windsorContainer = new WindsorContainer();
+            _configureBus(_windsorContainer);
 
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerWebRequest);
 
-            windsorContainer.Install(
+            _windsorContainer.Install(
                 FromAssembly.Containing<ControllerInstaller>(),
                 FromAssembly.Containing<QueryExecutorInstaller>(),
                 FromAssembly.Containing<CommandHandlerInstaller>(),
@@ -77,7 +79,7 @@ namespace EmailMaker.Website
             _setupTransactionScopeUnitOfWork();
             //_setupDelayedDomainEventHandlingForUnitOfWork();
 
-            IoC.Initialize(new CastleContainer(windsorContainer));
+            IoC.Initialize(new CastleContainer(_windsorContainer));
 
             ControllerBuilder.Current.SetControllerFactory(new IoCControllerFactory());
             ModelBinders.Binders.DefaultBinder = new EnumConverterModelBinder();
@@ -87,25 +89,25 @@ namespace EmailMaker.Website
             void _setupTransactionScopeUnitOfWork()
             {
                 // call this method only when TransactionScopeUnitOfWorkHttpModule is used instead of UnitOfWorkHttpModule (see web.config system.webServer -> modules)
-                windsorContainer.Register(
+                _windsorContainer.Register(
                     Component.For<IStorage<TransactionScope>>()
                         .ImplementedBy<Storage<TransactionScope>>()
                         .LifeStyle.PerWebRequest);
 
-                DomainEvents.Initialize(windsorContainer.Resolve<IDomainEventHandlerFactory>());
+                DomainEvents.Initialize(_windsorContainer.Resolve<IDomainEventHandlerFactory>());
             }
 
             void _setupDelayedDomainEventHandlingForUnitOfWork()
             {
                 // call this method only when UnitOfWorkHttpModule is used instead of TransactionScopeUnitOfWorkHttpModule (see web.config system.webServer -> modules)
-                windsorContainer.Register(
+                _windsorContainer.Register(
                     Component.For<IStorage<DelayedDomainEventHandlingItems>>()
                         .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
                         .LifeStyle.PerWebRequest);
 
                 DomainEvents.InitializeWithDelayedDomainEventHandling(
-                    windsorContainer.Resolve<IDomainEventHandlerFactory>(),
-                    windsorContainer.Resolve<IStorageFactory>()
+                    _windsorContainer.Resolve<IDomainEventHandlerFactory>(),
+                    _windsorContainer.Resolve<IStorageFactory>()
                 );
             }
 
@@ -135,6 +137,11 @@ namespace EmailMaker.Website
                     .Routing(r => r.TypeBased().MapAssemblyOf<EmailEnqueuedToBeSentEventMessage>(rebusEmailMakerServiceQueueName))
                     .Start();
             }
+        }
+
+        protected void Application_End()
+        {
+            _windsorContainer.Dispose();
         }
 
         private void _UpgradeDatabase()
