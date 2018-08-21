@@ -119,6 +119,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailMaker.WebsiteCore", "E
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{52B749FC-B3E6-4584-8FEF-3DAF8319139F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDdd.AspNetCore", "repositoryLinks\coreddd\src\CoreDdd.AspNetCore\CoreDdd.AspNetCore.csproj", "{320BD779-77AF-4A8E-913C-7A30A859A2A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDdd.TestHelpers", "repositoryLinks\coreddd\src\CoreDdd.TestHelpers\CoreDdd.TestHelpers.csproj", "{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -426,6 +430,18 @@ Global
 		{52B749FC-B3E6-4584-8FEF-3DAF8319139F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{52B749FC-B3E6-4584-8FEF-3DAF8319139F}.Repolinks-Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{52B749FC-B3E6-4584-8FEF-3DAF8319139F}.Repolinks-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{320BD779-77AF-4A8E-913C-7A30A859A2A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{320BD779-77AF-4A8E-913C-7A30A859A2A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{320BD779-77AF-4A8E-913C-7A30A859A2A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{320BD779-77AF-4A8E-913C-7A30A859A2A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{320BD779-77AF-4A8E-913C-7A30A859A2A6}.Repolinks-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{320BD779-77AF-4A8E-913C-7A30A859A2A6}.Repolinks-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5}.Repolinks-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5}.Repolinks-Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -469,6 +485,8 @@ Global
 		{EF879534-64C9-462D-90C9-99E6A3E2E5F2} = {359DF790-C629-4DB0-B36F-939E1A54A39F}
 		{9D198AB1-B960-4038-A514-992F2C6B3F2B} = {359DF790-C629-4DB0-B36F-939E1A54A39F}
 		{F537D66C-6727-4652-9AC3-12878D21F0CB} = {9D198AB1-B960-4038-A514-992F2C6B3F2B}
+		{320BD779-77AF-4A8E-913C-7A30A859A2A6} = {0C10C201-7188-4109-95E8-B9BCDA39BA9F}
+		{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5} = {728BAF88-2E0F-4804-80E8-C79F2D094F6E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EFCD531-755C-4738-A710-61E0CB7030C6}
