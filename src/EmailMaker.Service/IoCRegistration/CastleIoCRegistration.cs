@@ -1,5 +1,4 @@
-﻿using Castle.Facilities.TypedFactory;
-using Castle.Windsor;
+﻿using Castle.Windsor;
 using Castle.Windsor.Installer;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
