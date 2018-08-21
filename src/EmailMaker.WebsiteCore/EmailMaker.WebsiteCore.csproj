@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Castle.Core" Version="4.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
     <PackageReference Include="Npgsql" Version="4.0.0" />
     <PackageReference Include="Rebus" Version="5.0.0-b12" />
     <PackageReference Include="Rebus.Castle.Windsor" Version="4.1.0" />
@@ -72,11 +72,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Castle.Facilities.AspNetCore">
+    <Reference Include="Castle.Facilities.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc" Version="4.9.9">
       <HintPath>..\dlls\Castle.Facilities.AspNetCore.dll</HintPath>
+      <SpecificVersion>true</SpecificVersion>
     </Reference>
-    <Reference Include="Castle.Windsor">
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc" Version="4.9.9">
       <HintPath>..\dlls\Castle.Windsor.dll</HintPath>
+      <SpecificVersion>true</SpecificVersion>
     </Reference>
   </ItemGroup>
 
@@ -88,11 +90,9 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <ItemGroup>
       <DatabaseFiles Include="$(SolutionDir)EmailMaker.Database/**/*.*" />
-      <CustomCastleWindsorFiles Include="$(SolutionDir)dlls/Castle.Windsor.*" />
     </ItemGroup>
     <RemoveDir Directories="$(OutDir)EmailMaker.Database" />
     <Copy SourceFiles="@(DatabaseFiles)" DestinationFolder="$(TargetDir)EmailMaker.Database/%(RecursiveDir)" />
-    <Copy SourceFiles="@(CustomCastleWindsorFiles)" DestinationFolder="$(TargetDir)" />
   </Target>
 
 </Project>
