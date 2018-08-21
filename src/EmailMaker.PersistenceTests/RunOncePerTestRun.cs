@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
@@ -22,6 +21,7 @@ namespace EmailMaker.PersistenceTests
     public class RunOncePerTestRun
     {
         private Mutex _mutex;
+        private WindsorContainer _windsorContainer;
 
         [OneTimeSetUp]
         public void SetUp()
@@ -30,12 +30,12 @@ namespace EmailMaker.PersistenceTests
 
             NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerThread);
 
-            var container = new WindsorContainer();
-            container.Install(
+            _windsorContainer = new WindsorContainer();
+            _windsorContainer.Install(
                 FromAssembly.Containing<NhibernateInstaller>(),
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
             );
-            IoC.Initialize(new CastleContainer(container));
+            IoC.Initialize(new CastleContainer(_windsorContainer));
 
             _buildDatabase();
 
@@ -107,6 +107,8 @@ namespace EmailMaker.PersistenceTests
         [OneTimeTearDown]
         public void TearDown()
         {
+            _windsorContainer.Dispose();
+
             _mutex.ReleaseMutex();
             _mutex.Dispose();
         }

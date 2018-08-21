@@ -1,5 +1,6 @@
 ﻿using System;
 using Castle.MicroKernel.Registration;
+using Castle.Windsor;
 using CoreDdd.Nhibernate.Configurations;
 using CoreIoC;
 using EmailMaker.Infrastructure;
@@ -7,6 +8,7 @@ using EmailMaker.Messages;
 using EmailMaker.Service.Handlers;
 using EmailMaker.Service.IoCRegistration;
 using Microsoft.Extensions.Configuration;
+using Ninject;
 using Rebus.Activation;
 using Rebus.Config;
 using Rebus.Handlers;
@@ -20,6 +22,8 @@ namespace EmailMaker.Service
     class Program
     {
         private static IConfigurationRoot _configuration;
+        private static IWindsorContainer _windsorContainer;
+        private static IKernel _kernel;
 
         static void Main()
         {
@@ -31,6 +35,8 @@ namespace EmailMaker.Service
                 Console.WriteLine("Press enter to quit");
                 Console.ReadLine();
             }
+
+            _DisposeIoCContainer();
         }
 
         private static IHandlerActivator _RegisterServicesIntoIoCAndGetHandlerActivator()
@@ -94,32 +100,38 @@ namespace EmailMaker.Service
 
         private static IHandlerActivator GetCastleWindsorHandlerActivator()
         {
-            var container = CastleIoCRegistration.RegisterServicesIntoIoC();
-            container.Register(
+            _windsorContainer = CastleIoCRegistration.RegisterServicesIntoIoC();
+            _windsorContainer.Register(
                 Classes.FromAssemblyContaining<EmailEnqueuedToBeSentEventMessageHandler>()
                     .BasedOn<IHandleMessages>()
                     .WithServiceAllInterfaces()
                     .LifestyleTransient()
             );
-            return new CastleWindsorContainerAdapter(container);
+            return new CastleWindsorContainerAdapter(_windsorContainer);
         }
 
         private static IHandlerActivator GetNinjectHandlerActivator()
         {
-            var kernel = NinjectIoCRegistration.RegisterServicesIntoIoC();           
-            kernel.Bind(x => x
+            _kernel = NinjectIoCRegistration.RegisterServicesIntoIoC();           
+            _kernel.Bind(x => x
                 .FromAssemblyContaining<EmailEnqueuedToBeSentEventMessageHandler>()
                 .SelectAllClasses()
                 .InheritedFrom<IHandleMessages>()
                 .BindAllInterfaces()
                 .Configure(y => y.InTransientScope())
             );
-            return new NinjectContainerAdapter(kernel);
+            return new NinjectContainerAdapter(_kernel);
         }
 
         private static void _ConfigureNhibernate()
         {
             IoC.Resolve<INhibernateConfigurator>();
+        }
+
+        private static void _DisposeIoCContainer()
+        {
+            _windsorContainer?.Dispose();
+            _kernel?.Dispose();
         }
     }
 }

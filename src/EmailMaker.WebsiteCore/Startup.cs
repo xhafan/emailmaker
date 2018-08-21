@@ -14,7 +14,6 @@ using CoreDdd.Domain.Events;
 using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
-using CoreDdd.UnitOfWorks;
 using CoreIoC;
 using CoreIoC.Castle;
 using CoreUtils.Storages;
@@ -83,6 +82,9 @@ namespace EmailMaker.WebsiteCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var applicationLifetime = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+
             _windsorContainer.GetFacility<AspNetCoreFacility>().RegistersMiddlewareInto(app);
 
             if (env.IsDevelopment())
@@ -229,6 +231,11 @@ namespace EmailMaker.WebsiteCore
             var uri = new UriBuilder(codeBase);
             var path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
+        }
+
+        private void OnShutdown()
+        {
+            _windsorContainer.Dispose();
         }
     }
 }
