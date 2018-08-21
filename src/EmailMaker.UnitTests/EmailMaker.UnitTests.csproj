@@ -20,11 +20,13 @@
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
     <PackageReference Include="CoreDdd" Version="3.0.24" />
     <PackageReference Include="CoreUtils" Version="3.0.24" />
+    <PackageReference Include="CoreDdd.TestHelpers" Version="3.0.24" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd\CoreDdd.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.TestHelpers\CoreDdd.TestHelpers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

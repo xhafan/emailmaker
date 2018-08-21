@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using CoreDdd.Domain.Events;
-using CoreIoC;
+using CoreDdd.TestHelpers.DomainEvents;
 using EmailMaker.Domain.Emails;
 using EmailMaker.Domain.Emails.EmailStates;
 using EmailMaker.Domain.Events.Emails;
 using EmailMaker.TestHelper.Builders;
-using FakeItEasy;
 using NUnit.Framework;
 using Shouldly;
 
 namespace EmailMaker.UnitTests.Domain.Emails
 {
-    // todo: refactor domain events setup - extract the code into some helper reusable test helper class
     [TestFixture]
     public class when_enqueueing_email_to_be_sent
     {
@@ -26,15 +24,12 @@ namespace EmailMaker.UnitTests.Domain.Emails
         private const string NameTwo = "name two";
         private Recipient _recipientOne;
         private Recipient _recipientTwo;
-        private FakeEmailEnqueuedToBeSentDomainEventHandler _fakeDomainEventHandler;
+        private EmailEnqueuedToBeSentDomainEvent _raisedDomainEvent;
 
         [SetUp]
         public void Context()
         {
-            var domainEventHandlerFactory = A.Fake<IDomainEventHandlerFactory>();
-            _fakeDomainEventHandler = new FakeEmailEnqueuedToBeSentDomainEventHandler();
-            A.CallTo(() => domainEventHandlerFactory.Create<EmailEnqueuedToBeSentDomainEvent>())
-                .Returns(new[] { _fakeDomainEventHandler });
+            var domainEventHandlerFactory = new FakeDomainEventHandlerFactory(domainEvent => _raisedDomainEvent = (EmailEnqueuedToBeSentDomainEvent)domainEvent);
             DomainEvents.Initialize(domainEventHandlerFactory);
 
             var template = EmailTemplateBuilder.New.Build();
@@ -62,9 +57,9 @@ namespace EmailMaker.UnitTests.Domain.Emails
         }
 
         [Test]
-        public void domain_event_was_raised()
+        public void domain_event_is_handled()
         {
-            _fakeDomainEventHandler.RaisedDomainEvent.EmailId.ShouldBe(EmailId);
+            _raisedDomainEvent.EmailId.ShouldBe(EmailId);
         }
 
         [Test]
