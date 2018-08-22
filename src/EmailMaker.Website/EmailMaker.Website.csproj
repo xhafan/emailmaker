@@ -189,6 +189,9 @@
     <Reference Include="CoreUtils">
       <HintPath>..\packages\CoreUtils.3.0.25\lib\net40\CoreUtils.dll</HintPath>
     </Reference>
+    <Reference Include="CoreDdd.AspNet">
+      <HintPath>..\packages\CoreDdd.AspNet.3.0.25\lib\net461\CoreDdd.AspNet.dll</HintPath>
+    </Reference>
     <Reference Include="DatabaseBuilder">
       <HintPath>..\packages\DatabaseBuilder.1.0.4\lib\net40\DatabaseBuilder.dll</HintPath>
     </Reference>
@@ -222,6 +225,10 @@
       <Project>{F27C0E99-734B-41BD-B2C6-CED99A9E8720}</Project>
       <Name>CoreIoC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.AspNet\CoreDdd.AspNet.csproj">
+      <Project>{BD5176DF-AEBE-4F65-BF29-29A7FC52FB20}</Project>
+      <Name>CoreDdd.AspNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\repositoryLinks\databasebuilder\src\DatabaseBuilder\DatabaseBuilder.csproj">
       <Project>{EF879534-64C9-462D-90C9-99E6A3E2E5F2}</Project>
       <Name>DatabaseBuilder</Name>
@@ -233,8 +240,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HttpModules\TransactionScopeUnitOfWorkHttpModule.cs" />
-    <Compile Include="HttpModules\UnitOfWorkHttpModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\js\emailmaker.jquery.extensions.js" />

@@ -5,17 +5,18 @@ using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
 using System.Reflection;
-using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using CoreDdd.AspNet.HttpModules;
 using CoreDdd.Domain.Events;
 using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
+using CoreDdd.UnitOfWorks;
 using CoreIoC;
 using CoreIoC.Castle;
 using CoreUtils.Storages;
@@ -30,6 +31,7 @@ using EmailMaker.Queries.Register.Castle;
 using Npgsql;
 using Rebus.Config;
 using Rebus.Routing.TypeBased;
+using Rebus.TransactionScopes;
 
 namespace EmailMaker.Website
 {
@@ -89,10 +91,12 @@ namespace EmailMaker.Website
             void _setupTransactionScopeUnitOfWork()
             {
                 // call this method only when TransactionScopeUnitOfWorkHttpModule is used instead of UnitOfWorkHttpModule (see web.config system.webServer -> modules)
-                _windsorContainer.Register(
-                    Component.For<IStorage<TransactionScope>>()
-                        .ImplementedBy<Storage<TransactionScope>>()
-                        .LifeStyle.PerWebRequest);
+
+                TransactionScopeUnitOfWorkHttpModule.Initialize(
+                    _windsorContainer.Resolve<IUnitOfWorkFactory>(),
+                    System.Transactions.IsolationLevel.ReadCommitted,
+                    transactionScope => transactionScope.EnlistRebus()
+                );
 
                 DomainEvents.Initialize(_windsorContainer.Resolve<IDomainEventHandlerFactory>());
             }
@@ -100,6 +104,9 @@ namespace EmailMaker.Website
             void _setupDelayedDomainEventHandlingForUnitOfWork()
             {
                 // call this method only when UnitOfWorkHttpModule is used instead of TransactionScopeUnitOfWorkHttpModule (see web.config system.webServer -> modules)
+
+                UnitOfWorkHttpModule.Initialize(_windsorContainer.Resolve<IUnitOfWorkFactory>());
+
                 _windsorContainer.Register(
                     Component.For<IStorage<DelayedDomainEventHandlingItems>>()
                         .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
