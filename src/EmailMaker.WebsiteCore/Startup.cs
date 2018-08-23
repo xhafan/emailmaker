@@ -5,7 +5,6 @@ using System.Data.SQLite;
 using System.IO;
 using System.Reflection;
 using Castle.Facilities.AspNetCore;
-using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
