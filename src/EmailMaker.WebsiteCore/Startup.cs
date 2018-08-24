@@ -15,7 +15,6 @@ using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
 using CoreIoC;
 using CoreIoC.Castle;
-using CoreUtils.Storages;
 using EmailMaker.Commands.Register.Castle;
 using EmailMaker.Controllers;
 using EmailMaker.Controllers.Register.Castle;
@@ -133,14 +132,9 @@ namespace EmailMaker.WebsiteCore
                         .LifestyleSingleton().AsMiddleware()
                 );
 
-                _windsorContainer.Register(
-                    Component.For<IStorage<DelayedDomainEventHandlingItems>>()
-                        .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
-                        .LifestyleScoped());
-
-                DomainEvents.InitializeWithDelayedDomainEventHandling(
+                DomainEvents.Initialize(
                     _windsorContainer.Resolve<IDomainEventHandlerFactory>(),
-                    _windsorContainer.Resolve<IStorageFactory>()
+                    isDelayedDomainEventHandlingEnabled: true
                     );
             }
         }

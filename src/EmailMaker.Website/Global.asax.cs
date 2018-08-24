@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using CoreDdd.AspNet.HttpModules;
@@ -19,7 +18,6 @@ using CoreDdd.Register.Castle;
 using CoreDdd.UnitOfWorks;
 using CoreIoC;
 using CoreIoC.Castle;
-using CoreUtils.Storages;
 using CoreWeb;
 using CoreWeb.ModelBinders;
 using EmailMaker.Commands.Register.Castle;
@@ -94,8 +92,7 @@ namespace EmailMaker.Website
 
                 TransactionScopeUnitOfWorkHttpModule.Initialize(
                     _windsorContainer.Resolve<IUnitOfWorkFactory>(),
-                    System.Transactions.IsolationLevel.ReadCommitted,
-                    transactionScope => transactionScope.EnlistRebus()
+                    transactionScopeEnlistmentAction: transactionScope => transactionScope.EnlistRebus()
                 );
 
                 DomainEvents.Initialize(_windsorContainer.Resolve<IDomainEventHandlerFactory>());
@@ -107,14 +104,9 @@ namespace EmailMaker.Website
 
                 UnitOfWorkHttpModule.Initialize(_windsorContainer.Resolve<IUnitOfWorkFactory>());
 
-                _windsorContainer.Register(
-                    Component.For<IStorage<DelayedDomainEventHandlingItems>>()
-                        .ImplementedBy<Storage<DelayedDomainEventHandlingItems>>()
-                        .LifeStyle.PerWebRequest);
-
-                DomainEvents.InitializeWithDelayedDomainEventHandling(
+                DomainEvents.Initialize(
                     _windsorContainer.Resolve<IDomainEventHandlerFactory>(),
-                    _windsorContainer.Resolve<IStorageFactory>()
+                    isDelayedDomainEventHandlingEnabled: true
                 );
             }
 
