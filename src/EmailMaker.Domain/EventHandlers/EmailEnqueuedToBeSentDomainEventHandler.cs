@@ -14,7 +14,7 @@ namespace EmailMaker.Domain.EventHandlers
             _bus = bus;
         }
 
-        public void Handle(EmailEnqueuedToBeSentDomainEvent domainEvent) // todo: cannot be async - would throw async used in incorrect place in the request handling pipeline
+        public void Handle(EmailEnqueuedToBeSentDomainEvent domainEvent)
         {
             var message = new EmailEnqueuedToBeSentEventMessage { EmailId = domainEvent.EmailId };
             _bus.Send(message).Wait();
