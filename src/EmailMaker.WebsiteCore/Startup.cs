@@ -37,7 +37,7 @@ using Rebus.TransactionScopes;
 
 namespace EmailMaker.WebsiteCore
 {
-    //  ASP.NET Core with Castle Windsor integration - https://github.com/fir3pho3nixx/Windsor/blob/aspnet-core-windsor-final/docs/aspnetcore-facility.md
+    //  ASP.NET Core with Castle Windsor integration - https://github.com/castleproject/Windsor/blob/master/docs/aspnetcore-facility.md
     public class Startup
     {
         private readonly WindsorContainer _windsorContainer = new WindsorContainer();
