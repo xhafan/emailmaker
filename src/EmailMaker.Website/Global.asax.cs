@@ -28,6 +28,7 @@ using EmailMaker.Messages;
 using EmailMaker.Queries.Register.Castle;
 using Npgsql;
 using Rebus.Config;
+using Rebus.Persistence.FileSystem;
 using Rebus.Routing.TypeBased;
 using Rebus.TransactionScopes;
 
@@ -120,21 +121,20 @@ namespace EmailMaker.Website
                 switch (rebusTransport)
                 {
                     case "MSMQ":
-                        rebusConfigurer.Transport(t => t.UseMsmq(rebusInputQueueName));
-                    break;
+                        rebusConfigurer
+                            .Transport(x => x.UseMsmq(rebusInputQueueName))
+                            .Subscriptions(x => x.UseJsonFile($"{Path.GetTempPath()}\\emailmaker_msmq_subscriptions.json"))
+                            ;
+                        break;
                     case "RabbitMQ":
                         var rebusRabbitMqConnectionString = ConfigurationManager.AppSettings["RebusRabbitMqConnectionString"];
-                        rebusConfigurer.Transport(t =>
-                            t.UseRabbitMq(rebusRabbitMqConnectionString, rebusInputQueueName));
+                        rebusConfigurer.Transport(x => x.UseRabbitMq(rebusRabbitMqConnectionString, rebusInputQueueName));
                         break;
                     default:
                         throw new Exception($"Unknown rebus transport: {rebusTransport}");
                 }
 
-                var rebusEmailMakerServiceQueueName = ConfigurationManager.AppSettings["RebusEmailMakerServiceQueueName"];
-                rebusConfigurer
-                    .Routing(r => r.TypeBased().MapAssemblyOf<EmailEnqueuedToBeSentEventMessage>(rebusEmailMakerServiceQueueName))
-                    .Start();
+                rebusConfigurer.Start();
             }
         }
 

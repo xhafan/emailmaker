@@ -32,5 +32,18 @@ namespace RebusTestExtensions.Extensions
                     onSend(messages as TMessage);
                 });
         }
+
+        public static void ExpectMessagePublished<TMessage>(
+            this IBus bus,
+            Action<TMessage> onPublish
+        )
+            where TMessage : class, new()
+        {
+            A.CallTo(() => bus.Publish(A<object>._, A<Dictionary<string, string>>._))
+                .Invokes((object messages, Dictionary<string, string> optionalHeaders) =>
+                {
+                    onPublish(messages as TMessage);
+                });
+        }
     }
 }

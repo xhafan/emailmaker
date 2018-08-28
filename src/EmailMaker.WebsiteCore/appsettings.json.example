@@ -6,8 +6,7 @@
   },
   "AllowedHosts": "*",
   "Rebus": {
-    "InputQueueName": "EmailMaker.Website",
-    "EmailMakerServiceQueueName": "EmailMaker.Service",
+    "InputQueueName": "EmailMaker.WebsiteCore",
     "RabbitMQ": {
       "ConnectionString": "amqp://admin:password01@localhost"
     }

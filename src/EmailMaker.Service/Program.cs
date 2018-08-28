@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using CoreDdd.Nhibernate.Configurations;
@@ -16,6 +17,7 @@ using Rebus.Ninject;
 using Rebus.Routing.TypeBased;
 using Ninject.Extensions.Conventions;
 using Rebus.Bus;
+using Rebus.Persistence.FileSystem;
 
 namespace EmailMaker.Service
 {
@@ -68,19 +70,21 @@ namespace EmailMaker.Service
             {
 #if NETFRAMEWORK
                 case "MSMQ":
-                    rebusConfigurer.Transport(t => t.UseMsmq(rebusInputQueue));
+                    rebusConfigurer
+                        .Transport(x => x.UseMsmq(rebusInputQueue))
+                        .Subscriptions(x => x.UseJsonFile($"{Path.GetTempPath()}\\emailmaker_msmq_subscriptions.json"))
+                        ;
                     break;
 #endif
                 case "RabbitMQ":
-                    rebusConfigurer.Transport(t =>
-                        t.UseRabbitMq(_configuration["Rebus:RabbitMQ:ConnectionString"], rebusInputQueue));
+                    rebusConfigurer.Transport(x => x.UseRabbitMq(_configuration["Rebus:RabbitMQ:ConnectionString"], rebusInputQueue));
                     break;
                 default:
                     throw new Exception($"Unknown rebus transport: {rebusTransport}");
             }
 
-            return rebusConfigurer
-                .Routing(r => r.TypeBased().MapAssemblyOf<SendEmailForEmailRecipientMessage>(rebusInputQueue))
+            var bus = rebusConfigurer
+                .Routing(x => x.TypeBased().MapAssemblyOf<SendEmailForEmailRecipientMessage>(rebusInputQueue))
                 .Options(o =>
                 {
                     o.EnableUnitOfWork(
@@ -91,6 +95,9 @@ namespace EmailMaker.Service
                     );
                 })
                 .Start();
+            bus.Subscribe<EmailEnqueuedToBeSentEventMessage>().Wait();
+            return bus;
+
         }
 
         private static void _LoadConfiguration()

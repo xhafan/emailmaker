@@ -164,12 +164,10 @@ namespace EmailMaker.WebsiteCore
         private void _configureBus(WindsorContainer container)
         {
             var rebusInputQueueName = AppSettings.Configuration["Rebus:InputQueueName"];
-            var rebusEmailMakerServiceQueueName = AppSettings.Configuration["Rebus:EmailMakerServiceQueueName"];
             var rebusRabbitMqConnectionString = AppSettings.Configuration["Rebus:RabbitMQ:ConnectionString"];
 
             Rebus.Config.Configure.With(new CastleWindsorContainerAdapter(container))
                 .Transport(t => t.UseRabbitMq(rebusRabbitMqConnectionString, rebusInputQueueName))
-                .Routing(r => r.TypeBased().MapAssemblyOf<EmailEnqueuedToBeSentEventMessage>(rebusEmailMakerServiceQueueName))
                 .Start();
         }
 

@@ -20,7 +20,7 @@ namespace EmailMaker.UnitTests.Domain.EventHandlers
         public void Context()
         {
             _bus = A.Fake<IBus>();
-            _bus.ExpectMessageSent<EmailEnqueuedToBeSentEventMessage>(x => _message = x);
+            _bus.ExpectMessagePublished<EmailEnqueuedToBeSentEventMessage>(x => _message = x);
 
             var evnt = new EmailEnqueuedToBeSentDomainEvent{ EmailId = EmailId };
             var handler = new EmailEnqueuedToBeSentDomainEventHandler(_bus);
