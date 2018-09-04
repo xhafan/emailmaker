@@ -24,12 +24,10 @@ using EmailMaker.Commands.Register.Castle;
 using EmailMaker.Controllers.Register.Castle;
 using EmailMaker.Domain.Register.Castle;
 using EmailMaker.Infrastructure.Register.Castle;
-using EmailMaker.Messages;
 using EmailMaker.Queries.Register.Castle;
 using Npgsql;
 using Rebus.Config;
 using Rebus.Persistence.FileSystem;
-using Rebus.Routing.TypeBased;
 using Rebus.TransactionScopes;
 
 namespace EmailMaker.Website
