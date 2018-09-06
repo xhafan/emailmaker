@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd" Version="3.0.28" />
-    <PackageReference Include="CoreUtils" Version="3.0.28" />
+    <PackageReference Include="CoreDdd" Version="3.0.29" />
+    <PackageReference Include="CoreUtils" Version="3.0.29" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
