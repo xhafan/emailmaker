@@ -28,11 +28,11 @@ namespace EmailMaker.PersistenceTests
         {
             _acquireSynchronizationMutex();
 
-            NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerThread);
+            CoreDddNhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerThread);
 
             _windsorContainer = new WindsorContainer();
             _windsorContainer.Install(
-                FromAssembly.Containing<NhibernateInstaller>(),
+                FromAssembly.Containing<CoreDddNhibernateInstaller>(),
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
             );
             IoC.Initialize(new CastleContainer(_windsorContainer));

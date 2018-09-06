@@ -109,6 +109,9 @@ namespace EmailMaker.WebsiteCore
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            _ConfigureBus(_windsorContainer);
+            _UpgradeDatabase();
+
             void _setupTransactionScopeUnitOfWork()
             {
                 _windsorContainer.Register(
@@ -142,26 +145,22 @@ namespace EmailMaker.WebsiteCore
 
         private void _RegisterApplicationComponents()
         {
-            _configureBus(_windsorContainer);
-
-            NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.Scoped());
+            CoreDddNhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.Scoped());
 
             _windsorContainer.Install(
+                FromAssembly.Containing<CoreDddInstaller>(),
+                FromAssembly.Containing<CoreDddNhibernateInstaller>(),
                 FromAssembly.Containing<ControllerInstaller>(),
-                FromAssembly.Containing<QueryExecutorInstaller>(),
                 FromAssembly.Containing<CommandHandlerInstaller>(),
                 FromAssembly.Containing<EventHandlerInstaller>(),
                 FromAssembly.Containing<QueryHandlerInstaller>(),
-                FromAssembly.Containing<NhibernateInstaller>(),
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
             );
             
             IoC.Initialize(new CastleContainer(_windsorContainer));
-
-            _UpgradeDatabase();
         }
 
-        private void _configureBus(WindsorContainer container)
+        private void _ConfigureBus(WindsorContainer container)
         {
             var rebusInputQueueName = AppSettings.Configuration["Rebus:InputQueueName"];
             var rebusRabbitMqConnectionString = AppSettings.Configuration["Rebus:RabbitMQ:ConnectionString"];

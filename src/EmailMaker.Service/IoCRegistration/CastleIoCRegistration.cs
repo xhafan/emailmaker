@@ -16,13 +16,13 @@ namespace EmailMaker.Service.IoCRegistration
         public static IWindsorContainer RegisterServicesIntoIoC()
         {
             var windsorContainer = new WindsorContainer();
-            NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerRebusMessage());
+            CoreDddNhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerRebusMessage());
 
             windsorContainer.Install(
-                FromAssembly.Containing<QueryExecutorInstaller>(),
+                FromAssembly.Containing<CoreDddInstaller>(),
+                FromAssembly.Containing<CoreDddNhibernateInstaller>(),
                 FromAssembly.Containing<EmailSenderInstaller>(),
                 FromAssembly.Containing<QueryHandlerInstaller>(),
-                FromAssembly.Containing<NhibernateInstaller>(),
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
             );
             IoC.Initialize(new CastleContainer(windsorContainer));

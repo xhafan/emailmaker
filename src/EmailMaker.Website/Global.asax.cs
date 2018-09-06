@@ -63,15 +63,15 @@ namespace EmailMaker.Website
             _windsorContainer = new WindsorContainer();
             _configureBus(_windsorContainer);
 
-            NhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerWebRequest);
+            CoreDddNhibernateInstaller.SetUnitOfWorkLifeStyle(x => x.PerWebRequest);
 
             _windsorContainer.Install(
+                FromAssembly.Containing<CoreDddInstaller>(),
+                FromAssembly.Containing<CoreDddNhibernateInstaller>(),
                 FromAssembly.Containing<ControllerInstaller>(),
-                FromAssembly.Containing<QueryExecutorInstaller>(),
                 FromAssembly.Containing<CommandHandlerInstaller>(),
                 FromAssembly.Containing<EventHandlerInstaller>(),
                 FromAssembly.Containing<QueryHandlerInstaller>(),
-                FromAssembly.Containing<NhibernateInstaller>(),
                 FromAssembly.Containing<EmailMakerNhibernateInstaller>()
                 );
 
