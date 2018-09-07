@@ -180,12 +180,6 @@
     <Reference Include="CoreDdd.Register.Castle">
       <HintPath>..\packages\CoreDdd.Register.Castle.3.0.29\lib\net461\CoreDdd.Register.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="CoreIoC">
-      <HintPath>..\packages\CoreIoC.3.0.29\lib\net40\CoreIoC.dll</HintPath>
-    </Reference>
-    <Reference Include="CoreIoC.Castle">
-      <HintPath>..\packages\CoreIoC.Castle.3.0.29\lib\net45\CoreIoC.Castle.dll</HintPath>
-    </Reference>
     <Reference Include="CoreUtils">
       <HintPath>..\packages\CoreUtils.3.0.29\lib\net40\CoreUtils.dll</HintPath>
     </Reference>

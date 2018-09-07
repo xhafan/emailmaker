@@ -125,6 +125,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDdd.TestHelpers", "repo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDdd.AspNet", "repositoryLinks\coreddd\src\CoreDdd.AspNet\CoreDdd.AspNet.csproj", "{BD5176DF-AEBE-4F65-BF29-29A7FC52FB20}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDdd.Register.DependencyInjection", "repositoryLinks\coreddd\src\CoreDdd.Register.DependencyInjection\CoreDdd.Register.DependencyInjection.csproj", "{15FB93F7-9134-4F8F-A7D1-CD51E82EE3CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDdd.Nhibernate.Register.DependencyInjection", "repositoryLinks\coreddd\src\CoreDdd.Nhibernate.Register.DependencyInjection\CoreDdd.Nhibernate.Register.DependencyInjection.csproj", "{DDF4ABCB-834D-485A-A01E-B7338F3225FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -450,6 +454,18 @@ Global
 		{BD5176DF-AEBE-4F65-BF29-29A7FC52FB20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD5176DF-AEBE-4F65-BF29-29A7FC52FB20}.Repolinks-Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD5176DF-AEBE-4F65-BF29-29A7FC52FB20}.Repolinks-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15FB93F7-9134-4F8F-A7D1-CD51E82EE3CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15FB93F7-9134-4F8F-A7D1-CD51E82EE3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15FB93F7-9134-4F8F-A7D1-CD51E82EE3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15FB93F7-9134-4F8F-A7D1-CD51E82EE3CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15FB93F7-9134-4F8F-A7D1-CD51E82EE3CE}.Repolinks-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15FB93F7-9134-4F8F-A7D1-CD51E82EE3CE}.Repolinks-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF4ABCB-834D-485A-A01E-B7338F3225FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF4ABCB-834D-485A-A01E-B7338F3225FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF4ABCB-834D-485A-A01E-B7338F3225FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF4ABCB-834D-485A-A01E-B7338F3225FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF4ABCB-834D-485A-A01E-B7338F3225FB}.Repolinks-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF4ABCB-834D-485A-A01E-B7338F3225FB}.Repolinks-Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -496,6 +512,8 @@ Global
 		{320BD779-77AF-4A8E-913C-7A30A859A2A6} = {0C10C201-7188-4109-95E8-B9BCDA39BA9F}
 		{7AE3F86C-0263-4E2A-9AF6-E16A18DF5DA5} = {728BAF88-2E0F-4804-80E8-C79F2D094F6E}
 		{BD5176DF-AEBE-4F65-BF29-29A7FC52FB20} = {0C10C201-7188-4109-95E8-B9BCDA39BA9F}
+		{15FB93F7-9134-4F8F-A7D1-CD51E82EE3CE} = {0C10C201-7188-4109-95E8-B9BCDA39BA9F}
+		{DDF4ABCB-834D-485A-A01E-B7338F3225FB} = {0C10C201-7188-4109-95E8-B9BCDA39BA9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EFCD531-755C-4738-A710-61E0CB7030C6}

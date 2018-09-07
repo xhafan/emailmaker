@@ -16,8 +16,6 @@ using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
 using CoreDdd.UnitOfWorks;
-using CoreIoC;
-using CoreIoC.Castle;
 using CoreWeb;
 using CoreWeb.ModelBinders;
 using EmailMaker.Commands.Register.Castle;
@@ -77,8 +75,6 @@ namespace EmailMaker.Website
 
             _setupTransactionScopeUnitOfWork();
             //_setupDelayedDomainEventHandlingForUnitOfWork();
-
-            IoC.Initialize(new CastleContainer(_windsorContainer));
 
             ControllerBuilder.Current.SetControllerFactory(new IoCControllerFactory());
             ModelBinders.Binders.DefaultBinder = new EnumConverterModelBinder();
@@ -143,7 +139,7 @@ namespace EmailMaker.Website
 
         private void _UpgradeDatabase()
         {
-            var configuration = IoC.Resolve<INhibernateConfigurator>().GetConfiguration();
+            var configuration = _windsorContainer.Resolve<INhibernateConfigurator>().GetConfiguration();
 
             var connectionString = configuration.Properties["connection.connection_string"];
             var connectionDriverClass = configuration.Properties["connection.driver_class"];
