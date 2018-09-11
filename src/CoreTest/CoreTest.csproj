@@ -25,5 +25,9 @@
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
 
 </Project>

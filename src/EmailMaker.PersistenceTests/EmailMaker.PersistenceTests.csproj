@@ -82,4 +82,9 @@
     <Exec Command="rmdir &quot;$(OutDir)\EmailMaker.Database&quot; /S /Q &gt;nul 2&gt;nul&#xD;&#xA;xcopy $(SolutionDir)\EmailMaker.Database &quot;$(OutDir)\EmailMaker.Database&quot; /E /I /Y &gt;nul" />
   </Target>
 
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
 </Project>

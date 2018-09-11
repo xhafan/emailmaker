@@ -95,4 +95,9 @@
     <Copy SourceFiles="@(DatabaseFiles)" DestinationFolder="$(TargetDir)EmailMaker.Database/%(RecursiveDir)" />
   </Target>
 
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
 </Project>

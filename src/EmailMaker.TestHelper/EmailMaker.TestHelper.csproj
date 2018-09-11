@@ -25,4 +25,9 @@
     <ProjectReference Include="..\EmailMaker.Domain\EmailMaker.Domain.csproj" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
 </Project>

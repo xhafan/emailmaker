@@ -10,4 +10,9 @@
     <PackageReference Include="Rebus" Version="5.0.0-b12" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'!='Release'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
 </Project>
