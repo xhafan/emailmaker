@@ -24,14 +24,14 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.29" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.29" />
-    <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.29" />
-    <PackageReference Include="CoreDdd" Version="3.0.29" />
-    <PackageReference Include="CoreIoC.Castle" Version="3.0.29" />
-    <PackageReference Include="CoreIoC" Version="3.0.29" />
-    <PackageReference Include="CoreUtils" Version="3.0.29" />
-    <PackageReference Include="CoreDdd.AspNetCore" Version="3.0.29" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.30" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.30" />
+    <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.30" />
+    <PackageReference Include="CoreDdd" Version="3.0.30" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.0.30" />
+    <PackageReference Include="CoreIoC" Version="3.0.30" />
+    <PackageReference Include="CoreUtils" Version="3.0.30" />
+    <PackageReference Include="CoreDdd.AspNetCore" Version="3.0.30" />
     <PackageReference Include="DatabaseBuilder" Version="1.0.4" />
   </ItemGroup>
 
