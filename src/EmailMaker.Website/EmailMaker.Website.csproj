@@ -205,7 +205,7 @@
     </ProjectReference>
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj">
       <Project>{38CAA86D-8ADF-4BA2-A56F-03A0948D9472}</Project>
-      <Name>CoreDdd</Name>
+      <Name>CoreDdd.Nhibernate</Name>
     </ProjectReference>
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC.Castle\CoreIoC.Castle.csproj">
       <Project>{051BB9FD-8215-4B16-AD1F-A37899C77544}</Project>
@@ -217,7 +217,7 @@
     </ProjectReference>
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj">
       <Project>{F27C0E99-734B-41BD-B2C6-CED99A9E8720}</Project>
-      <Name>CoreIoC</Name>
+      <Name>CoreUtils</Name>
     </ProjectReference>
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.AspNet\CoreDdd.AspNet.csproj">
       <Project>{BD5176DF-AEBE-4F65-BF29-29A7FC52FB20}</Project>
