@@ -76,7 +76,7 @@ namespace EmailMaker.Website
             _setupTransactionScopeUnitOfWork();
             //_setupDelayedDomainEventHandlingForUnitOfWork();
 
-            ControllerBuilder.Current.SetControllerFactory(new IoCControllerFactory());
+            ControllerBuilder.Current.SetControllerFactory(new IoCControllerFactory(_windsorContainer));
             ModelBinders.Binders.DefaultBinder = new EnumConverterModelBinder();
 
             _UpgradeDatabase();
