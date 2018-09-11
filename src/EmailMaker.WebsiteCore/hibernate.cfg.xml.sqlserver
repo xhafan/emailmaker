@@ -9,7 +9,7 @@
     <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
     <property name="show_sql">false</property>
     <property name="proxyfactory.factory_class">NHibernate.Bytecode.DefaultProxyFactoryFactory, NHibernate</property>
-    <property name="transaction.use_connection_on_system_prepare">false</property> <!-- set transaction.use_connection_on_system_prepare to 'false' when using .NET 4.6.1+, NHibernate 5+, more info here https://github.com/npgsql/npgsql/issues/1985#issuecomment-397266128 -->
+    <property name="transaction.use_connection_on_system_prepare">false</property> <!-- set transaction.use_connection_on_system_prepare to 'false' when using .NET 4.6.1+ or .NET Standard 2.0+, NHibernate 5.1.0+, more info here https://github.com/npgsql/npgsql/issues/1985#issuecomment-397266128 -->
 
   </session-factory>
 </hibernate-configuration>
