@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -90,7 +90,7 @@
   </PropertyGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Copy SourceFiles="$(SolutionDir)\EmailMaker.WebsiteCore\hibernate.cfg.xml.sqlite" DestinationFiles="$(SolutionDir)\EmailMaker.WebsiteCore\hibernate.cfg.xml" Condition="!Exists('$(SolutionDir)\EmailMaker.WebsiteCore\hibernate.cfg.xml')" />
+    <Copy SourceFiles="..\EmailMaker.WebsiteCore\hibernate.cfg.xml.sqlite" DestinationFiles="..\EmailMaker.WebsiteCore\hibernate.cfg.xml" Condition="!Exists('..\EmailMaker.WebsiteCore\hibernate.cfg.xml')" />
     <Copy SourceFiles="$(ProjectDir)appsettings.json.example" DestinationFiles="$(ProjectDir)appsettings.json" Condition="!Exists('$(ProjectDir)appsettings.json')" />
   </Target>
 

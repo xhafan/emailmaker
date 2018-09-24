@@ -6,3 +6,9 @@ services:
     build:
       context: .
       dockerfile: EmailMaker.WebsiteCore/Dockerfile
+
+  emailmaker.service:
+    image: ${DOCKER_REGISTRY}emailmakerservice
+    build:
+      context: .
+      dockerfile: EmailMaker.Service/Dockerfile

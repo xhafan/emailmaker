@@ -17,7 +17,6 @@ using Rebus.Ninject;
 using Rebus.Routing.TypeBased;
 using Ninject.Extensions.Conventions;
 using Rebus.Bus;
-using Rebus.Persistence.FileSystem;
 
 namespace EmailMaker.Service
 {
