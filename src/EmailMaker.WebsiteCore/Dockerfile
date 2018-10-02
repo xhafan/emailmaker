@@ -1,3 +1,7 @@
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 80
+
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
 
@@ -8,11 +12,13 @@ RUN dotnet restore EmailMaker.WebsiteCore/EmailMaker.WebsiteCore.csproj
 # Copy everything else and build
 COPY . .
 WORKDIR /src/EmailMaker.WebsiteCore
+RUN dotnet build EmailMaker.WebsiteCore.csproj -c Release -o /app
+COPY EmailMaker.Database /app/EmailMaker.Database
+
+FROM build AS publish
 RUN dotnet publish EmailMaker.WebsiteCore.csproj -c Release -o /app
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime
+FROM base AS final
 WORKDIR /app
-EXPOSE 80
-COPY --from=build /app .
-COPY EmailMaker.Database /app/EmailMaker.Database
+COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "EmailMaker.WebsiteCore.dll"]
