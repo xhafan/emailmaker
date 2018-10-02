@@ -1,7 +1,7 @@
 {
   "IoCContainer": "Castle", // values: Castle, Ninject
   "Rebus": {
-    "Transport": "MSMQ", // values: RabbitMQ, MSMQ (windows only)
+    "Transport": "RabbitMQ", // values: RabbitMQ, MSMQ (windows only)
     "InputQueueName": "EmailMaker.Service",
     "RabbitMQ": {
       "ConnectionString": "amqp://admin:password01@localhost"
