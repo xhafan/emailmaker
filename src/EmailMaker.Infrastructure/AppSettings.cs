@@ -9,7 +9,8 @@ namespace EmailMaker.Infrastructure
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true);
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
