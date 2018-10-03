@@ -10,5 +10,8 @@
     "RabbitMQ": {
       "ConnectionString": "amqp://admin:password01@localhost"
     }
+  },
+  "NHibernate": {
+    "ConfigurationFileName": "hibernate.cfg.xml"
   }
 }

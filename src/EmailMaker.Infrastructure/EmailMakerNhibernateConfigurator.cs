@@ -16,8 +16,11 @@ namespace EmailMaker.Infrastructure
 {
     public class EmailMakerNhibernateConfigurator : NhibernateConfigurator
     {
-        public EmailMakerNhibernateConfigurator(bool shouldMapDtos = true)
-            : base(shouldMapDtos)
+        public EmailMakerNhibernateConfigurator(
+            bool shouldMapDtos = true,
+            string configurationFileName = null
+            )
+            : base(shouldMapDtos, configurationFileName)
         {
 #if DEBUG || REPOLINKS_DEBUG
             NHibernateProfiler.Initialize();
