@@ -14,5 +14,6 @@
   "NHibernate": {
     "ConfigurationFileName": "hibernate.cfg.xml"
   },
-  "PathBase": ""
+  "PathBase": "",
+  "UnitOfWorkMode": "TransactionScopeUnitOfWork" // values: TransactionScopeUnitOfWork, UnitOfWork
 }
