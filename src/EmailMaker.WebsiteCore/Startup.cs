@@ -98,6 +98,12 @@ namespace EmailMaker.WebsiteCore
             _setupTransactionScopeUnitOfWork();
             //_setupUnitOfWorkWithDelayedDomainEventHandling();
 
+            var pathBase = AppSettings.Configuration["PathBase"];
+            if (!string.IsNullOrWhiteSpace(pathBase))
+            {
+                app.UsePathBase(pathBase);
+            }
+
             app.UseStaticFiles();
 
             app.UseAuthentication();
