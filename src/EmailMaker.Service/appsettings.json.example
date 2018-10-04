@@ -10,5 +10,7 @@
   "NHibernate": {
     "ConfigurationFileName": "hibernate.cfg.xml"
   },
-  "SmtpServer": "localhost"
+  "SmtpServer": "localhost",
+  "PathBase": "",
+  "UnitOfWorkMode": "TransactionScopeUnitOfWork" // values: TransactionScopeUnitOfWork, UnitOfWork
 }

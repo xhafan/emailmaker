@@ -21,7 +21,6 @@ using EmailMaker.Controllers.Register.Castle;
 using EmailMaker.Domain.Register.Castle;
 using EmailMaker.Infrastructure;
 using EmailMaker.Infrastructure.Register.Castle;
-using EmailMaker.Messages;
 using EmailMaker.Queries.Register.Castle;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +31,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Npgsql;
 using Rebus.Config;
-using Rebus.Routing.TypeBased;
 using Rebus.TransactionScopes;
 
 namespace EmailMaker.WebsiteCore
@@ -92,11 +90,21 @@ namespace EmailMaker.WebsiteCore
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error/Error");
             }
 
-            _setupTransactionScopeUnitOfWork();
-            //_setupUnitOfWorkWithDelayedDomainEventHandling();
+            var unitOfWorkMode = AppSettings.Configuration["UnitOfWorkMode"];
+            switch (unitOfWorkMode)
+            {
+                case "TransactionScopeUnitOfWork":
+                    _setupTransactionScopeUnitOfWork();
+                    break;
+                case "UnitOfWork":
+                    _setupUnitOfWorkWithDelayedDomainEventHandling();
+                    break;
+                default:
+                    throw new NotSupportedException("Unsupported unit of work mode.");
+            }
 
             var pathBase = AppSettings.Configuration["PathBase"];
             if (!string.IsNullOrWhiteSpace(pathBase))
