@@ -112,7 +112,7 @@ namespace EmailMaker.Controllers
             return Json(await _GetEmail(id));
         }
  
-        public async Task<string> GetHtml(int id)
+        public async Task<ContentResult> GetHtml(int id)
         {
             var partMessage = new GetEmailPartsQuery { EmailId = id };
             var emailPartDtos = await _queryExecutor.ExecuteAsync<GetEmailPartsQuery, EmailPartDto>(partMessage);
@@ -132,7 +132,7 @@ namespace EmailMaker.Controllers
                         throw new EmailMakerException("Unknown part type:" + part.PartType);
                 }
             });
-            return sb.ToString();
+            return Content(sb.ToString(), "text/html");
         }
    
     }
