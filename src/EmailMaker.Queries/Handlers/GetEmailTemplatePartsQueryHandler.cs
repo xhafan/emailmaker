@@ -16,7 +16,8 @@ namespace EmailMaker.Queries.Handlers
         protected override IQueryOver GetQueryOver<TResult>(GetEmailTemplatePartsQuery query)
         {
             return Session.QueryOver<EmailTemplatePartDto>()
-                .Where(e => e.EmailTemplateId == query.EmailTemplateId);
+                .Where(e => e.EmailTemplateId == query.EmailTemplateId)
+                .OrderBy(x => x.PartId).Asc;
         }
     }
 }
