@@ -11,6 +11,7 @@ using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreIoC;
 using CoreIoC.Castle;
+using DatabaseBuilder;
 using EmailMaker.Infrastructure.Register.Castle;
 using Npgsql;
 using NUnit.Framework;
@@ -61,8 +62,8 @@ namespace EmailMaker.PersistenceTests
                 var assemblyLocation = _GetAssemblyLocation();
                 var folderWithSqlFiles = Path.Combine(assemblyLocation, "EmailMaker.Database", dbProviderName);
 
-                var databaseBuilder = new DatabaseBuilder.DatabaseBuilder(_getDbConnection);
-                databaseBuilder.UpgradeDatabase(folderWithSqlFiles);
+                var builderOfDatabase = new BuilderOfDatabase(_getDbConnection);
+                builderOfDatabase.BuildDatabase(folderWithSqlFiles);
 
                 IDbConnection _getDbConnection()
                 {

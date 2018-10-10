@@ -224,7 +224,7 @@
       <HintPath>..\packages\CoreDdd.AspNet.3.0.32\lib\net461\CoreDdd.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="DatabaseBuilder">
-      <HintPath>..\packages\DatabaseBuilder.1.0.4\lib\net40\DatabaseBuilder.dll</HintPath>
+      <HintPath>..\packages\DatabaseBuilder.1.0.5\lib\net40\DatabaseBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">

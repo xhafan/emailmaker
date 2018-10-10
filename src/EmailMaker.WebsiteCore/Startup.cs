@@ -15,6 +15,7 @@ using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
 using CoreIoC;
 using CoreIoC.Castle;
+using DatabaseBuilder;
 using EmailMaker.Commands.Register.Castle;
 using EmailMaker.Controllers;
 using EmailMaker.Controllers.Register.Castle;
@@ -195,8 +196,8 @@ namespace EmailMaker.WebsiteCore
             var assemblyLocation = _GetAssemblyLocation();
             var folderWithSqlFiles = Path.Combine(assemblyLocation, "EmailMaker.Database", dbProviderName);
 
-            var databaseBuilder = new DatabaseBuilder.DatabaseBuilder(_getDbConnection);
-            databaseBuilder.UpgradeDatabase(folderWithSqlFiles);
+            var builderOfDatabase = new BuilderOfDatabase(_getDbConnection);
+            builderOfDatabase.BuildDatabase(folderWithSqlFiles);
 
             IDbConnection _getDbConnection()
             {
