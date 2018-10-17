@@ -124,7 +124,7 @@
       <HintPath>..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="Rebus, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rebus.5.0.0-b12\lib\net45\Rebus.dll</HintPath>
+      <HintPath>..\packages\Rebus.5.0.1\lib\net45\Rebus.dll</HintPath>
     </Reference>
     <Reference Include="Rebus.CastleWindsor, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rebus.Castle.Windsor.4.1.0\lib\net45\Rebus.CastleWindsor.dll</HintPath>
@@ -133,7 +133,7 @@
       <HintPath>..\packages\Rebus.Msmq.4.0.0\lib\net45\Rebus.Msmq.dll</HintPath>
     </Reference>
     <Reference Include="Rebus.RabbitMq, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rebus.RabbitMq.5.0.0-b01\lib\net452\Rebus.RabbitMq.dll</HintPath>
+      <HintPath>..\packages\Rebus.RabbitMq.5.0.0-b02\lib\net452\Rebus.RabbitMq.dll</HintPath>
     </Reference>
     <Reference Include="Rebus.TransactionScopes, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rebus.TransactionScopes.4.1.0\lib\net451\Rebus.TransactionScopes.dll</HintPath>

@@ -9,8 +9,8 @@
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="4.4.0" />
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
-    <PackageReference Include="Rebus" Version="5.0.0-b12" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.5" />
+    <PackageReference Include="Rebus" Version="5.0.1" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="Shouldly" Version="3.0.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
