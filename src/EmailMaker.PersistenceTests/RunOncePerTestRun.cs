@@ -62,10 +62,10 @@ namespace EmailMaker.PersistenceTests
                 var assemblyLocation = _GetAssemblyLocation();
                 var folderWithSqlFiles = Path.Combine(assemblyLocation, "EmailMaker.Database", dbProviderName);
 
-                var builderOfDatabase = new BuilderOfDatabase(_getDbConnection);
+                var builderOfDatabase = new BuilderOfDatabase(createConnectionFunc: _createDbConnection);
                 builderOfDatabase.BuildDatabase(folderWithSqlFiles);
 
-                IDbConnection _getDbConnection()
+                IDbConnection _createDbConnection()
                 {
 
                     switch (dbProviderName)
