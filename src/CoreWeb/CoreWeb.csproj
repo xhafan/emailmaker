@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreIoC" Version="3.0.34" />
-    <PackageReference Include="CoreUtils" Version="3.0.34" />
+    <PackageReference Include="CoreIoC" Version="3.0.35" />
+    <PackageReference Include="CoreUtils" Version="3.0.35" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
