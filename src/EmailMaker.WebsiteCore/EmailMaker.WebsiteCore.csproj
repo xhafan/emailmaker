@@ -10,7 +10,9 @@
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
-    <PackageReference Include="Castle.Core" Version="4.2.1" />
+    <PackageReference Include="Castle.Core" Version="4.3.1" />
+    <PackageReference Include="Castle.Facilities.AspNetCore" Version="5.0.0-beta001" />
+    <PackageReference Include="Castle.Windsor" Version="5.0.0-beta001" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
     <PackageReference Include="Npgsql" Version="4.0.0" />
     <PackageReference Include="Rebus" Version="5.0.1" />
@@ -69,17 +71,6 @@
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Castle.Facilities.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc" Version="4.9.9">
-      <HintPath>..\dlls\Castle.Facilities.AspNetCore.dll</HintPath>
-      <SpecificVersion>true</SpecificVersion>
-    </Reference>
-    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc" Version="4.9.9">
-      <HintPath>..\dlls\Castle.Windsor.dll</HintPath>
-      <SpecificVersion>true</SpecificVersion>
-    </Reference>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
