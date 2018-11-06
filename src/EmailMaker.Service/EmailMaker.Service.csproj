@@ -34,16 +34,17 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.34" />
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.0.34" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.34" />
-    <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.34" />
-    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.0.34" />
-    <PackageReference Include="CoreDdd" Version="3.0.34" />
-    <PackageReference Include="CoreIoC.Castle" Version="3.0.34" />
-    <PackageReference Include="CoreIoC.Ninject" Version="3.0.34" />
-    <PackageReference Include="CoreIoC" Version="3.0.34" />
-    <PackageReference Include="CoreUtils" Version="3.0.34" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.35" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.0.35" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.35" />
+    <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.35" />
+    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.0.35" />
+    <PackageReference Include="CoreDdd" Version="3.0.35" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.0.35" />
+    <PackageReference Include="CoreIoC.Ninject" Version="3.0.35" />
+    <PackageReference Include="CoreIoC" Version="3.0.35" />
+    <PackageReference Include="CoreUtils" Version="3.0.35" />
+    <PackageReference Include="CoreDdd.Rebus.UnitOfWork" Version="3.0.35" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
@@ -57,6 +58,7 @@
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC.Ninject\CoreIoC.Ninject.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj" />
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj" />
+    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Rebus.UnitOfWork\CoreDdd.Rebus.UnitOfWork.csproj" />
   </ItemGroup>
 
   <ItemGroup>

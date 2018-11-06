@@ -3,6 +3,8 @@ using System.IO;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using CoreDdd.Nhibernate.Configurations;
+using CoreDdd.Rebus.UnitOfWork;
+using CoreDdd.UnitOfWorks;
 using CoreIoC;
 using EmailMaker.Infrastructure;
 using EmailMaker.Messages;
@@ -85,17 +87,50 @@ namespace EmailMaker.Service
                     throw new Exception($"Unknown rebus transport: {rebusTransport}");
             }
 
-            var bus = rebusConfigurer
-                .Routing(x => x.TypeBased().MapAssemblyOf<SendEmailForEmailRecipientMessage>(rebusInputQueue))
-                .Options(o =>
-                {
-                    o.EnableUnitOfWork(
-                        RebusUnitOfWork.Create,
-                        RebusUnitOfWork.Commit,
-                        RebusUnitOfWork.Rollback,
-                        RebusUnitOfWork.Cleanup
+            var rebusUnitOfWorkMode = _configuration["Rebus:UnitOfWorkMode"];
+            switch (rebusUnitOfWorkMode)
+            {
+                case "TransactionScopeUnitOfWork":
+                    RebusTransactionScopeUnitOfWork.Initialize(
+                        unitOfWorkFactory: IoC.Resolve<IUnitOfWorkFactory>(),
+                        isolationLevel: System.Transactions.IsolationLevel.ReadCommitted,
+                        transactionScopeEnlistmentAction: null
                     );
-                })
+                    rebusConfigurer
+                        .Options(o =>
+                        {
+                            o.EnableUnitOfWork(
+                                RebusTransactionScopeUnitOfWork.Create,
+                                RebusTransactionScopeUnitOfWork.Commit,
+                                RebusTransactionScopeUnitOfWork.Rollback,
+                                RebusTransactionScopeUnitOfWork.Cleanup
+                            );
+                        })
+                        ;
+                    break;
+                case "UnitOfWork":
+                    RebusUnitOfWork.Initialize(
+                        unitOfWorkFactory: IoC.Resolve<IUnitOfWorkFactory>(),
+                        isolationLevel: System.Data.IsolationLevel.ReadCommitted
+                    );
+                    rebusConfigurer
+                        .Options(o =>
+                        {
+                            o.EnableUnitOfWork(
+                                RebusUnitOfWork.Create,
+                                RebusUnitOfWork.Commit,
+                                RebusUnitOfWork.Rollback,
+                                RebusUnitOfWork.Cleanup
+                            );
+                        })
+                        ; break;
+                default:
+                    throw new Exception($"Unknown rebus unit of work mode: {rebusUnitOfWorkMode}");
+            }
+
+
+            var bus = rebusConfigurer
+                .Routing(x => x.TypeBased().MapAssemblyOf<SendEmailForEmailRecipientMessage>(rebusInputQueue))                
                 .Start();
             bus.Subscribe<EmailEnqueuedToBeSentEventMessage>().Wait();
             return bus;

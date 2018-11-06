@@ -1,16 +1,15 @@
 {
   "IoCContainer": "Castle", // values: Castle, Ninject
   "Rebus": {
-    "Transport": "RabbitMQ", // values: RabbitMQ, MSMQ (windows only)
+    "Transport": "RabbitMQ", // values: RabbitMQ, MSMQ (MSMQ is Windows and full .NET framework only)
     "InputQueueName": "EmailMaker.Service",
     "RabbitMQ": {
       "ConnectionString": "amqp://admin:password01@localhost"
-    }
+    },
+    "UnitOfWorkMode": "UnitOfWork" // values: UnitOfWork, TransactionScopeUnitOfWork
   },
   "NHibernate": {
     "ConfigurationFileName": "hibernate.cfg.xml"
   },
-  "SmtpServer": "localhost",
-  "PathBase": "",
-  "UnitOfWorkMode": "TransactionScopeUnitOfWork" // values: TransactionScopeUnitOfWork, UnitOfWork
+  "SmtpServer": "localhost"
 }
