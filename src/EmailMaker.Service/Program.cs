@@ -19,6 +19,8 @@ using Rebus.Ninject;
 using Rebus.Routing.TypeBased;
 using Ninject.Extensions.Conventions;
 using Rebus.Bus;
+using Rebus.CastleWindsor;
+
 #if NETFRAMEWORK
 using Rebus.Persistence.FileSystem;
 #endif
@@ -128,10 +130,7 @@ namespace EmailMaker.Service
                     throw new Exception($"Unknown rebus unit of work mode: {rebusUnitOfWorkMode}");
             }
 
-
-            var bus = rebusConfigurer
-                .Routing(x => x.TypeBased().MapAssemblyOf<SendEmailForEmailRecipientMessage>(rebusInputQueue))                
-                .Start();
+            var bus = rebusConfigurer.Start();
             bus.Subscribe<EmailEnqueuedToBeSentEventMessage>().Wait();
             return bus;
 
@@ -145,12 +144,7 @@ namespace EmailMaker.Service
         private static IHandlerActivator GetCastleWindsorHandlerActivator()
         {
             _windsorContainer = CastleIoCRegistration.RegisterServicesIntoIoC();
-            _windsorContainer.Register(
-                Classes.FromAssemblyContaining<EmailEnqueuedToBeSentEventMessageHandler>()
-                    .BasedOn<IHandleMessages>()
-                    .WithServiceAllInterfaces()
-                    .LifestyleTransient()
-            );
+            _windsorContainer.AutoRegisterHandlersFromAssemblyOf<EmailEnqueuedToBeSentEventMessageHandler>();
             return new CastleWindsorContainerAdapter(_windsorContainer);
         }
 

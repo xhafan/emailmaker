@@ -73,6 +73,12 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Copy SourceFiles="$(ProjectDir)hibernate.cfg.xml.sqlite" DestinationFiles="$(ProjectDir)hibernate.cfg.xml" Condition="!Exists('$(ProjectDir)hibernate.cfg.xml')" />
     <Copy SourceFiles="$(ProjectDir)appsettings.json.example" DestinationFiles="$(ProjectDir)appsettings.json" Condition="!Exists('$(ProjectDir)appsettings.json')" />

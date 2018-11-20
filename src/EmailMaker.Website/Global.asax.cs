@@ -16,7 +16,6 @@ using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
 using CoreDdd.Register.Castle;
 using CoreDdd.UnitOfWorks;
-using CoreWeb;
 using CoreWeb.ModelBinders;
 using DatabaseBuilder;
 using EmailMaker.Commands.Register.Castle;
