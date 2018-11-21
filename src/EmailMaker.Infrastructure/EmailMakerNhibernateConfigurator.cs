@@ -14,7 +14,7 @@ using HibernatingRhinos.Profiler.Appender.NHibernate;
 
 namespace EmailMaker.Infrastructure
 {
-    public class EmailMakerNhibernateConfigurator : NhibernateConfigurator
+    public class EmailMakerNhibernateConfigurator : BaseNhibernateConfigurator
     {
         public EmailMakerNhibernateConfigurator(
             bool shouldMapDtos = true,
