@@ -29,9 +29,12 @@ namespace EmailMaker.Infrastructure
 
         protected override Assembly[] GetAssembliesToMap()
         {
-            var assembliesToMap = new List<Assembly> { typeof(Email).Assembly, typeof(EmailAutoMap).Assembly };
-            if (ShouldMapDtos) assembliesToMap.Add(typeof(EmailDto).Assembly);
-            return assembliesToMap.ToArray();
+            return new[]
+            {
+                typeof(Email).Assembly,
+                typeof(EmailAutoMap).Assembly,
+                typeof(EmailDto).Assembly
+            };
         }
 
         protected override IEnumerable<Type> GetIncludeBaseTypes()

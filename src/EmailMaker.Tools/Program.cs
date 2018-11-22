@@ -1,4 +1,5 @@
 ﻿using System;
+using CoreDdd.Nhibernate.DatabaseSchemaGenerators;
 using EmailMaker.Infrastructure;
 
 namespace EmailMaker.Tools
@@ -13,15 +14,18 @@ namespace EmailMaker.Tools
             var line = Console.ReadLine();
             if (line == "1")
             {
-                var dbDriverName = _getDbDriverName();
-                var databaseSchemaFileName = $"EmailMaker_generated_database_schema_{dbDriverName}.sql";
-                new EmailMakerDatabaseSchemaGenerator(databaseSchemaFileName).Generate();
-                Console.WriteLine($"Database schema sql file has been generated into {databaseSchemaFileName}");
+                using (var nhibernateConfigurator = new EmailMakerNhibernateConfigurator(shouldMapDtos: false))
+                {
+                    var dbDriverName = _getDbDriverName(nhibernateConfigurator);
+                    var databaseSchemaFileName = $"EmailMaker_generated_database_schema_{dbDriverName}.sql";
+                    new DatabaseSchemaGenerator(databaseSchemaFileName, nhibernateConfigurator).Generate();
+                    Console.WriteLine($"Database schema sql file has been generated into {databaseSchemaFileName}");
+                }
             }
 
-            string _getDbDriverName()
+            string _getDbDriverName(EmailMakerNhibernateConfigurator nhibernateConfigurator)
             {
-                var configuration = new EmailMakerNhibernateConfigurator(shouldMapDtos: false).GetConfiguration();
+                var configuration = nhibernateConfigurator.GetConfiguration();
                 var connectionDriverClass = configuration.Properties["connection.driver_class"];
 
                 switch (connectionDriverClass)

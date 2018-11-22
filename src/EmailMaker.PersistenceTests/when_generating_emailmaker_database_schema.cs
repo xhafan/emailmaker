@@ -1,4 +1,5 @@
-﻿using EmailMaker.Infrastructure;
+﻿using CoreDdd.Nhibernate.DatabaseSchemaGenerators;
+using EmailMaker.Infrastructure;
 using NUnit.Framework;
 
 namespace EmailMaker.PersistenceTests
@@ -9,7 +10,7 @@ namespace EmailMaker.PersistenceTests
         [Test]
         public void schema_is_generated_without_an_error()
         {
-            new EmailMakerDatabaseSchemaGenerator(@".\schema.sql").Generate();
+            new DatabaseSchemaGenerator(@".\schema.sql", new EmailMakerNhibernateConfigurator(shouldMapDtos: false)).Generate();
         }
     }
 }
