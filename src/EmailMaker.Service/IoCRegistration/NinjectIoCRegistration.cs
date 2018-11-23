@@ -14,7 +14,7 @@ namespace EmailMaker.Service.IoCRegistration
         public static IKernel RegisterServicesIntoIoC()
         {
             var kernel = new StandardKernel();
-            CoreDddNhibernateBindings.SetUnitOfWorkLifeStyle(x => x.InThreadScope()); // todo: here should be "per rebus message" (see PerRebusMessage for CastleIoCRegistration)
+            CoreDddNhibernateBindings.SetUnitOfWorkLifeStyle(x => x.InThreadScope()); // todo: here should be "per rebus message" (see PerRebusMessage for CastleIoCRegistration); might not play nicely with async code
 
             kernel.Load(
                 typeof(CoreDddBindings).Assembly,

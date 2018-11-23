@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Rebus.UnitOfWork;
@@ -16,7 +15,6 @@ using Rebus.Activation;
 using Rebus.Config;
 using Rebus.Handlers;
 using Rebus.Ninject;
-using Rebus.Routing.TypeBased;
 using Ninject.Extensions.Conventions;
 using Rebus.Bus;
 using Rebus.CastleWindsor;
