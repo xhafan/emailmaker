@@ -19,10 +19,10 @@ namespace EmailMaker.PersistenceTests.Domain.Users
         public void Context()
         {
             _user = new User(FirstName, LastName, EmailAddress, Password);
-            Save(_user);
-            Clear();
+            UnitOfWork.Save(_user);
+            UnitOfWork.Clear();
 
-            _retrievedUser = Get<User>(_user.Id);
+            _retrievedUser = UnitOfWork.Get<User>(_user.Id);
         }
 
         [Test]

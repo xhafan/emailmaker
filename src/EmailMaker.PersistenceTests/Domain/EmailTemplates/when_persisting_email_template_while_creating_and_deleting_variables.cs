@@ -17,35 +17,35 @@ namespace EmailMaker.PersistenceTests.Domain.EmailTemplates
         public void test_multiple_variable_creation_and_deletion_persistence()
         {
             var user = UserBuilder.New.Build();
-            Save(user);
+            UnitOfWork.Save(user);
             _emailTemplate = EmailTemplateBuilder.New
                 .WithInitialHtml("12345")
                 .WithUserId(user.Id)
                 .Build();
-            Save(_emailTemplate);            
-            Clear();
-            _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
+            UnitOfWork.Save(_emailTemplate);
+            UnitOfWork.Clear();
+            _retrievedEmailTemplate = UnitOfWork.Get<EmailTemplate>(_emailTemplate.Id);
             _CheckThatRetrievedEmailTemplateIsTheSameAsEmailTemplate();
             
             _emailTemplate = _retrievedEmailTemplate;
             _emailTemplate.CreateVariable(_emailTemplate.Parts.First().Id, 1, 1);
-            Save(_emailTemplate);
-            Clear();
-            _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
+            UnitOfWork.Save(_emailTemplate);
+            UnitOfWork.Clear();
+            _retrievedEmailTemplate = UnitOfWork.Get<EmailTemplate>(_emailTemplate.Id);
             _CheckThatRetrievedEmailTemplateIsTheSameAsEmailTemplate();
 
             _emailTemplate = _retrievedEmailTemplate;
             _emailTemplate.CreateVariable(_emailTemplate.Parts.Last().Id, 1, 1);
-            Save(_emailTemplate);
-            Clear();
-            _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
+            UnitOfWork.Save(_emailTemplate);
+            UnitOfWork.Clear();
+            _retrievedEmailTemplate = UnitOfWork.Get<EmailTemplate>(_emailTemplate.Id);
             _CheckThatRetrievedEmailTemplateIsTheSameAsEmailTemplate();
 
             _emailTemplate = _retrievedEmailTemplate;
             _emailTemplate.DeleteVariable(_emailTemplate.Parts.ElementAt(1).Id);
-            Save(_emailTemplate);
-            Clear();
-            _retrievedEmailTemplate = Get<EmailTemplate>(_emailTemplate.Id);
+            UnitOfWork.Save(_emailTemplate);
+            UnitOfWork.Clear();
+            _retrievedEmailTemplate = UnitOfWork.Get<EmailTemplate>(_emailTemplate.Id);
             _CheckThatRetrievedEmailTemplateIsTheSameAsEmailTemplate();        
         }
 

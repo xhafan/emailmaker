@@ -23,12 +23,12 @@ namespace EmailMaker.PersistenceTests.Queries
         public void Context()
         {
             _recipientOne = new Recipient(EmailAddressOne, "name1");
-            Save(_recipientOne);
+            UnitOfWork.Save(_recipientOne);
 
             _recipientTwo = new Recipient(EmailAddressTwo, "name2");
-            Save(_recipientTwo);        
+            UnitOfWork.Save(_recipientTwo);        
 
-            var queryHandler = new GetExistingRecipientsQueryHandler(PersistenceTestHelper.UnitOfWork);
+            var queryHandler = new GetExistingRecipientsQueryHandler(UnitOfWork);
             _result = queryHandler.Execute<Recipient>(new GetExistingRecipientsQuery
             {
                 RecipientEmailAddresses = new[]

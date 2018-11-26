@@ -23,10 +23,10 @@ namespace EmailMaker.PersistenceTests.Queries
         [SetUp]
         public void Context()
         {
-           _user = new User(FirstName, LastName, EmailAddress, Password);
-            Save(_user);
+            _user = new User(FirstName, LastName, EmailAddress, Password);
+            UnitOfWork.Save(_user);
 
-            var queryHandler = new GetUserDetailsByEmailAddressQueryHandler(PersistenceTestHelper.UnitOfWork);
+            var queryHandler = new GetUserDetailsByEmailAddressQueryHandler(UnitOfWork);
             _results = queryHandler.Execute<UserDto>(new GetUserDetailsByEmailAddressQuery { EmailAddress = EmailAddress });
         }
         

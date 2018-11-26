@@ -23,31 +23,31 @@ namespace EmailMaker.PersistenceTests.Queries
         {
             _persistEmail();
 
-            var queryHandler = new GetEmailPartsQueryHandler(PersistenceTestHelper.UnitOfWork);
+            var queryHandler = new GetEmailPartsQueryHandler(UnitOfWork);
             _result = queryHandler.Execute<EmailPartDto>(new GetEmailPartsQuery { EmailId = _email.Id });
 
             void _persistEmail()
             {
                 var user = UserBuilder.New.Build();
-                Save(user);
+                UnitOfWork.Save(user);
                 var emailTemplate = EmailTemplateBuilder.New
                     .WithInitialHtml("123")
                     .WithName("template name")
                     .WithUserId(user.Id)
                     .Build();
-                Save(emailTemplate);
+                UnitOfWork.Save(emailTemplate);
                 emailTemplate.CreateVariable(emailTemplate.Parts.First().Id, 1, 1);
-                Save(emailTemplate);
+                UnitOfWork.Save(emailTemplate);
 
                 var anotherEmailTemplate = EmailTemplateBuilder.New
                     .WithInitialHtml("another html")
                     .WithName("template name")
                     .WithUserId(user.Id)
                     .Build();
-                Save(anotherEmailTemplate);
+                UnitOfWork.Save(anotherEmailTemplate);
 
                 _email = new Email(emailTemplate);
-                Save(_email);
+                UnitOfWork.Save(_email);
             }
         }
 

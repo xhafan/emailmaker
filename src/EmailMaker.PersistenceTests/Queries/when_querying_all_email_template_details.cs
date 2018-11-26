@@ -24,19 +24,19 @@ namespace EmailMaker.PersistenceTests.Queries
         {
             _persistEmailTemplate();
 
-            var queryHandler = new GetAllEmailTemplateQueryHandler(PersistenceTestHelper.UnitOfWork);
+            var queryHandler = new GetAllEmailTemplateQueryHandler(UnitOfWork);
             _result = queryHandler.Execute<EmailTemplateDetailsDto>(new GetAllEmailTemplateQuery { UserId = _user.Id });
 
             void _persistEmailTemplate()
             {
                 _user = UserBuilder.New.Build();
-                Save(_user);
+                UnitOfWork.Save(_user);
                 _emailTemplate = EmailTemplateBuilder.New
                     .WithInitialHtml("html")
                     .WithName("template name")
                     .WithUserId(_user.Id)
                     .Build();
-                Save(_emailTemplate);
+                UnitOfWork.Save(_emailTemplate);
             }
         }
 

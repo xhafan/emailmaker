@@ -19,24 +19,24 @@ namespace EmailMaker.PersistenceTests.Domain.Emails
         public void Context()
         {
             _persistEmail();
-            Clear();
+            UnitOfWork.Clear();
 
-            _retrievedEmail = Get<Email>(_email.Id);
+            _retrievedEmail = UnitOfWork.Get<Email>(_email.Id);
 
             void _persistEmail()
             {
                 var user = UserBuilder.New.Build();
-                Save(user);
+                UnitOfWork.Save(user);
                 _emailTemplate = EmailTemplateBuilder.New
                     .WithInitialHtml("123")
                     .WithUserId(user.Id)
                     .Build();
-                Save(_emailTemplate);
+                UnitOfWork.Save(_emailTemplate);
                 _emailTemplate.CreateVariable(_emailTemplate.Parts.First().Id, 1, 1);
-                Save(_emailTemplate);
+                UnitOfWork.Save(_emailTemplate);
 
                 _email = new Email(_emailTemplate);
-                Save(_email);
+                UnitOfWork.Save(_email);
             }
         }
 

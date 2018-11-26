@@ -26,25 +26,25 @@ namespace EmailMaker.PersistenceTests.Domain.Emails
         public void Context()
         {
             _persistEmailWithRecipients();
-            Clear();
+            UnitOfWork.Clear();
 
-            _retrievedEmail = Get<Email>(_email.Id);
+            _retrievedEmail = UnitOfWork.Get<Email>(_email.Id);
 
             void _persistEmailWithRecipients()
             {
                 var user = UserBuilder.New.Build();
-                Save(user);
+                UnitOfWork.Save(user);
                 _emailTemplate = EmailTemplateBuilder.New
                     .WithInitialHtml("123")
                     .WithName("template name")
                     .WithUserId(user.Id)
                     .Build();
-                Save(_emailTemplate);
+                UnitOfWork.Save(_emailTemplate);
 
                 _recipientOne = new Recipient(EmailOne, "name one");
                 _recipientTwo = new Recipient(EmailTwo, "name two");
-                Save(_recipientOne);
-                Save(_recipientTwo);
+                UnitOfWork.Save(_recipientOne);
+                UnitOfWork.Save(_recipientTwo);
 
                 _email = new EmailBuilder()
                     .WithoutAssigningIdsToParts()
@@ -54,7 +54,7 @@ namespace EmailMaker.PersistenceTests.Domain.Emails
                     .WithRecipient(_recipientOne)
                     .WithRecipient(_recipientTwo)
                     .Build();
-                Save(_email);
+                UnitOfWork.Save(_email);
             }
         }
 

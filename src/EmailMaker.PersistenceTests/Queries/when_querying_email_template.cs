@@ -22,13 +22,13 @@ namespace EmailMaker.PersistenceTests.Queries
         {
             _persistEmailTemplate();
 
-            var queryHandler = new GetEmailTemplateQueryHandler(PersistenceTestHelper.UnitOfWork);
+            var queryHandler = new GetEmailTemplateQueryHandler(UnitOfWork);
             _result = queryHandler.Execute<EmailTemplateDto>(new GetEmailTemplateQuery {EmailTemplateId = _emailTemplate.Id});
 
             void _persistEmailTemplate()
             {
                 var user = UserBuilder.New.Build();
-                Save(user);
+                UnitOfWork.Save(user);
                 _emailTemplate = EmailTemplateBuilder.New
                     .WithInitialHtml("html")
                     .WithName("name")
@@ -39,8 +39,8 @@ namespace EmailMaker.PersistenceTests.Queries
                     .WithName("template name")
                     .WithUserId(user.Id)
                     .Build();
-                Save(_emailTemplate);
-                Save(anotherEmailTemplate);
+                UnitOfWork.Save(_emailTemplate);
+                UnitOfWork.Save(anotherEmailTemplate);
             }
         }
 
