@@ -34,17 +34,17 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.0.36" />
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.0.36" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.0.36" />
-    <PackageReference Include="CoreDdd.Register.Castle" Version="3.0.36" />
-    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.0.36" />
-    <PackageReference Include="CoreDdd" Version="3.0.36" />
-    <PackageReference Include="CoreIoC.Castle" Version="3.0.36" />
-    <PackageReference Include="CoreIoC.Ninject" Version="3.0.36" />
-    <PackageReference Include="CoreIoC" Version="3.0.36" />
-    <PackageReference Include="CoreUtils" Version="3.0.36" />
-    <PackageReference Include="CoreDdd.Rebus.UnitOfWork" Version="3.0.36" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.1.0" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.1.0" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.1.0" />
+    <PackageReference Include="CoreDdd.Register.Castle" Version="3.1.0" />
+    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.1.0" />
+    <PackageReference Include="CoreDdd" Version="3.1.0" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.1.0" />
+    <PackageReference Include="CoreIoC.Ninject" Version="3.1.0" />
+    <PackageReference Include="CoreIoC" Version="3.1.0" />
+    <PackageReference Include="CoreUtils" Version="3.1.0" />
+    <PackageReference Include="CoreDdd.Rebus.UnitOfWork" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
