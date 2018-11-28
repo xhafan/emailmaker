@@ -22,7 +22,7 @@
     <PackageReference Include="Rebus.Ninject" Version="3.0.0" />
     <PackageReference Include="Rebus.RabbitMQ" Version="5.0.0-b02" />
     <PackageReference Include="Rebus.UnitOfWork" Version="4.0.0" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">

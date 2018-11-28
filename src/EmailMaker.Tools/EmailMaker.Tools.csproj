@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
     <PackageReference Include="Npgsql" Version="4.0.0" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />
   </ItemGroup>
 

@@ -8,7 +8,7 @@ using Castle.Facilities.AspNetCore;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
-using CoreDdd.AspNetCore.Middleware;
+using CoreDdd.AspNetCore.Middlewares;
 using CoreDdd.Domain.Events;
 using CoreDdd.Nhibernate.Configurations;
 using CoreDdd.Nhibernate.Register.Castle;
