@@ -205,23 +205,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <Reference Include="CoreDdd">
-      <HintPath>..\packages\CoreDdd.3.1.0\lib\net461\CoreDdd.dll</HintPath>
+    <Reference Include="CoreDdd, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.3.2.0\lib\net461\CoreDdd.dll</HintPath>
     </Reference>
-    <Reference Include="CoreDdd.Nhibernate">
-      <HintPath>..\packages\CoreDdd.Nhibernate.3.1.0\lib\net461\CoreDdd.Nhibernate.dll</HintPath>
+    <Reference Include="CoreDdd.Nhibernate, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.Nhibernate.3.2.0\lib\net461\CoreDdd.Nhibernate.dll</HintPath>
     </Reference>
-    <Reference Include="CoreDdd.Nhibernate.Register.Castle">
-      <HintPath>..\packages\CoreDdd.Nhibernate.Register.Castle.3.1.0\lib\net461\CoreDdd.Nhibernate.Register.Castle.dll</HintPath>
+    <Reference Include="CoreDdd.Nhibernate.Register.Castle, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.Nhibernate.Register.Castle.3.2.0\lib\net461\CoreDdd.Nhibernate.Register.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="CoreDdd.Register.Castle">
-      <HintPath>..\packages\CoreDdd.Register.Castle.3.1.0\lib\net461\CoreDdd.Register.Castle.dll</HintPath>
+    <Reference Include="CoreDdd.Register.Castle, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.Register.Castle.3.2.0\lib\net461\CoreDdd.Register.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="CoreUtils">
-      <HintPath>..\packages\CoreUtils.3.1.0\lib\net40\CoreUtils.dll</HintPath>
+    <Reference Include="CoreUtils, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreUtils.3.2.0\lib\net461\CoreUtils.dll</HintPath>
     </Reference>
-    <Reference Include="CoreDdd.AspNet">
-      <HintPath>..\packages\CoreDdd.AspNet.3.1.0\lib\net461\CoreDdd.AspNet.dll</HintPath>
+    <Reference Include="CoreDdd.AspNet, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreDdd.AspNet.3.2.0\lib\net461\CoreDdd.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="DatabaseBuilder">
       <HintPath>..\packages\DatabaseBuilder.1.0.11\lib\net461\DatabaseBuilder.dll</HintPath>
@@ -243,14 +243,6 @@
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreDdd.Nhibernate\CoreDdd.Nhibernate.csproj">
       <Project>{38CAA86D-8ADF-4BA2-A56F-03A0948D9472}</Project>
       <Name>CoreDdd.Nhibernate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC.Castle\CoreIoC.Castle.csproj">
-      <Project>{051BB9FD-8215-4B16-AD1F-A37899C77544}</Project>
-      <Name>CoreIoC.Castle</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreIoC\CoreIoC.csproj">
-      <Project>{BBBD355A-6056-4269-A235-2D0A3D3E8170}</Project>
-      <Name>CoreIoC</Name>
     </ProjectReference>
     <ProjectReference Include="..\repositoryLinks\coreddd\src\CoreUtils\CoreUtils.csproj">
       <Project>{F27C0E99-734B-41BD-B2C6-CED99A9E8720}</Project>
