@@ -31,167 +31,167 @@
     drop table if exists hibernate_unique_key cascade;
 
     create table "EmailRecipient" (
-        Id int8 not null,
-       Sent boolean not null,
-       SentDate timestamp,
-       EmailId int4 not null,
-       RecipientId int4 not null,
-       primary key (Id)
+        "Id" int8 not null,
+       "Sent" boolean not null,
+       "SentDate" timestamp,
+       "EmailId" int4 not null,
+       "RecipientId" int4 not null,
+       primary key ("Id")
     );
 
     create table "Email" (
-        Id int4 not null,
-       FromAddress text,
-       Subject text,
-       EmailTemplateId int4 not null,
-       EmailStateId int4 not null,
-       primary key (Id)
+        "Id" int4 not null,
+       "FromAddress" text,
+       "Subject" text,
+       "EmailTemplateId" int4 not null,
+       "EmailStateId" int4 not null,
+       primary key ("Id")
     );
 
     create table "EmailPart" (
-        Id int4 not null,
-       Position int4,
-       EmailId int4,
-       primary key (Id)
+        "Id" int4 not null,
+       "Position" int4,
+       "EmailId" int4,
+       primary key ("Id")
     );
 
     create table "HtmlEmailPart" (
-        EmailPartId int4 not null,
-       Html text not null,
-       primary key (EmailPartId)
+        "EmailPartId" int4 not null,
+       "Html" text not null,
+       primary key ("EmailPartId")
     );
 
     create table "VariableEmailPart" (
-        EmailPartId int4 not null,
-       Value text not null,
-       VariableTypeId int4 not null,
-       primary key (EmailPartId)
+        "EmailPartId" int4 not null,
+       "Value" text not null,
+       "VariableTypeId" int4 not null,
+       primary key ("EmailPartId")
     );
 
     create table "EmailState" (
-        Id int4 not null,
-       Name varchar(255) not null,
-       CanSend boolean not null,
-       primary key (Id)
+        "Id" int4 not null,
+       "Name" varchar(255) not null,
+       "CanSend" boolean not null,
+       primary key ("Id")
     );
 
     create table "Recipient" (
-        Id int4 not null,
-       EmailAddress text not null,
-       Name text not null,
-       primary key (Id)
+        "Id" int4 not null,
+       "EmailAddress" text not null,
+       "Name" text not null,
+       primary key ("Id")
     );
 
     create table "EmailTemplate" (
-        Id int4 not null,
-       Name text,
-       UserId int4 not null,
-       primary key (Id)
+        "Id" int4 not null,
+       "Name" text,
+       "UserId" int4 not null,
+       primary key ("Id")
     );
 
     create table "EmailTemplatePart" (
-        Id int4 not null,
-       Position int4,
-       EmailTemplateId int4,
-       primary key (Id)
+        "Id" int4 not null,
+       "Position" int4,
+       "EmailTemplateId" int4,
+       primary key ("Id")
     );
 
     create table "HtmlEmailTemplatePart" (
-        EmailTemplatePartId int4 not null,
-       Html text not null,
-       primary key (EmailTemplatePartId)
+        "EmailTemplatePartId" int4 not null,
+       "Html" text not null,
+       primary key ("EmailTemplatePartId")
     );
 
     create table "RepeatedSectionEmailTemplatePart" (
-        EmailTemplatePartId int4 not null,
-       primary key (EmailTemplatePartId)
+        "EmailTemplatePartId" int4 not null,
+       primary key ("EmailTemplatePartId")
     );
 
     create table "VariableEmailTemplatePart" (
-        EmailTemplatePartId int4 not null,
-       Value text not null,
-       VariableTypeId int4 not null,
-       primary key (EmailTemplatePartId)
+        "EmailTemplatePartId" int4 not null,
+       "Value" text not null,
+       "VariableTypeId" int4 not null,
+       primary key ("EmailTemplatePartId")
     );
 
     create table "VariableType" (
-        Id int4 not null,
-       Name text not null,
-       primary key (Id)
+        "Id" int4 not null,
+       "Name" text not null,
+       primary key ("Id")
     );
 
     create table "User" (
-        Id int4 not null,
-       FirstName text not null,
-       LastName text not null,
-       EmailAddress text not null,
-       Password text not null,
-       primary key (Id)
+        "Id" int4 not null,
+       "FirstName" text not null,
+       "LastName" text not null,
+       "EmailAddress" text not null,
+       "Password" text not null,
+       primary key ("Id")
     );
 
     alter table "EmailRecipient" 
         add constraint FK_EmailRecipient_Email 
-        foreign key (EmailId) 
+        foreign key ("EmailId") 
         references "Email";
 
     alter table "EmailRecipient" 
         add constraint FK_EmailRecipient_Recipient 
-        foreign key (RecipientId) 
+        foreign key ("RecipientId") 
         references "Recipient";
 
     alter table "Email" 
         add constraint FK_Email_EmailTemplate 
-        foreign key (EmailTemplateId) 
+        foreign key ("EmailTemplateId") 
         references "EmailTemplate";
 
     alter table "Email" 
         add constraint FK_Email_EmailState 
-        foreign key (EmailStateId) 
+        foreign key ("EmailStateId") 
         references "EmailState";
 
     alter table "EmailPart" 
-        add constraint FKBF23041BBB7A8FCD 
-        foreign key (EmailId) 
+        add constraint FKA8FE8E0857CF3324 
+        foreign key ("EmailId") 
         references "Email";
 
     alter table "HtmlEmailPart" 
-        add constraint FK65C2916CEAEB1497 
-        foreign key (EmailPartId) 
+        add constraint FK74C262642FF790CE 
+        foreign key ("EmailPartId") 
         references "EmailPart";
 
     alter table "VariableEmailPart" 
-        add constraint FK745F0341EAEB1497 
-        foreign key (EmailPartId) 
+        add constraint FK210310E12FF790CE 
+        foreign key ("EmailPartId") 
         references "EmailPart";
 
     alter table "VariableEmailPart" 
         add constraint FK_VariableEmailPart_VariableType 
-        foreign key (VariableTypeId) 
+        foreign key ("VariableTypeId") 
         references "VariableType";
 
     alter table "EmailTemplatePart" 
-        add constraint FK26AB486FC3BA1A19 
-        foreign key (EmailTemplateId) 
+        add constraint FK5B64EE8459E59C54 
+        foreign key ("EmailTemplateId") 
         references "EmailTemplate";
 
     alter table "HtmlEmailTemplatePart" 
-        add constraint FK63296C768EBDE1D 
-        foreign key (EmailTemplatePartId) 
+        add constraint FK1D48765B6AE0A639 
+        foreign key ("EmailTemplatePartId") 
         references "EmailTemplatePart";
 
     alter table "RepeatedSectionEmailTemplatePart" 
-        add constraint FK711F67BA8EBDE1D 
-        foreign key (EmailTemplatePartId) 
+        add constraint FK266A423A6AE0A639 
+        foreign key ("EmailTemplatePartId") 
         references "EmailTemplatePart";
 
     alter table "VariableEmailTemplatePart" 
-        add constraint FK6132B08D8EBDE1D 
-        foreign key (EmailTemplatePartId) 
+        add constraint FK8329007D6AE0A639 
+        foreign key ("EmailTemplatePartId") 
         references "EmailTemplatePart";
 
     alter table "VariableEmailTemplatePart" 
         add constraint FK_VariableEmailTemplatePart_VariableType 
-        foreign key (VariableTypeId) 
+        foreign key ("VariableTypeId") 
         references "VariableType";
 
     create table hibernate_unique_key (
