@@ -1,1 +1,1 @@
-EmailMaker - email marketing ASP.NET MVC and ASP.NET Core MVC demo app demonstrating CoreDdd libs (https://github.com/xhafan/coreddd) and DatabaseBuilder (https://github.com/xhafan/databasebuilder) usage.
+EmailMaker - email marketing ASP.NET Core MVC and ASP.NET MVC demo app demonstrating CoreDdd libs (https://github.com/xhafan/coreddd) and DatabaseBuilder (https://github.com/xhafan/databasebuilder) usage.
