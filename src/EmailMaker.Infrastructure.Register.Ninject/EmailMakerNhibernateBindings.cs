@@ -7,7 +7,10 @@ namespace EmailMaker.Infrastructure.Register.Ninject
     {
         public override void Load()
         {
-            Bind<INhibernateConfigurator>().To<EmailMakerNhibernateConfigurator>().InSingletonScope();
+            Bind<INhibernateConfigurator>().To<EmailMakerNhibernateConfigurator>()
+                .InSingletonScope()
+                .WithConstructorArgument("configurationFileName",
+                    AppSettings.Configuration["NHibernate:ConfigurationFileName"]);
         }
     }
 }
