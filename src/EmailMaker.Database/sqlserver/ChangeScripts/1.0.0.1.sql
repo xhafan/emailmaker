@@ -6,4 +6,4 @@ create table [Version]
     , ScriptNumber int
 )
 
-INSERT INTO [Version] (Major, Minor, Revision, ScriptNumber) VALUES (1, 0, 0, 0)
+INSERT INTO [Version] (Major, Minor, Revision, ScriptNumber) VALUES (0, 0, 0, 0)
