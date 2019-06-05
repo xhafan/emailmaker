@@ -26,7 +26,7 @@
     <PackageReference Include="CoreIoC" Version="3.2.0" />
     <PackageReference Include="CoreUtils" Version="3.2.0" />
     <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.2.0" />
-    <PackageReference Include="DatabaseBuilder" Version="1.0.11" />
+    <PackageReference Include="DatabaseBuilder" Version="1.2.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
