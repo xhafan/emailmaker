@@ -13,7 +13,7 @@
     <PackageReference Include="Castle.Core" Version="4.2.1" />
     <PackageReference Include="Castle.Windsor" Version="4.1.0" />
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
-    <PackageReference Include="log4net" Version="1.2.10" />
+    <PackageReference Include="log4net" Version="2.0.10" />
     <PackageReference Include="Ninject" Version="3.3.4" />
     <PackageReference Include="Ninject.Extensions.Conventions" Version="3.3.0" />
     <PackageReference Include="Npgsql" Version="4.0.0" />
