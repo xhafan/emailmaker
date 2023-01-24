@@ -91,7 +91,7 @@ namespace EmailMaker.Service
             switch (rebusUnitOfWorkMode)
             {
                 case "TransactionScopeUnitOfWork":
-                    RebusTransactionScopeUnitOfWork.Initialize(
+                    var rebusTransactionScopeUnitOfWork = new RebusTransactionScopeUnitOfWork(
                         unitOfWorkFactory: IoC.Resolve<IUnitOfWorkFactory>(),
                         isolationLevel: System.Transactions.IsolationLevel.ReadCommitted,
                         transactionScopeEnlistmentAction: null
@@ -100,16 +100,16 @@ namespace EmailMaker.Service
                         .Options(o =>
                         {
                             o.EnableUnitOfWork(
-                                RebusTransactionScopeUnitOfWork.Create,
-                                RebusTransactionScopeUnitOfWork.Commit,
-                                RebusTransactionScopeUnitOfWork.Rollback,
-                                RebusTransactionScopeUnitOfWork.Cleanup
+                                rebusTransactionScopeUnitOfWork.Create,
+                                rebusTransactionScopeUnitOfWork.Commit,
+                                rebusTransactionScopeUnitOfWork.Rollback,
+                                rebusTransactionScopeUnitOfWork.Cleanup
                             );
                         })
                         ;
                     break;
                 case "UnitOfWork":
-                    RebusUnitOfWork.Initialize(
+                    var rebusUnitOfWork = new RebusUnitOfWork(
                         unitOfWorkFactory: IoC.Resolve<IUnitOfWorkFactory>(),
                         isolationLevel: System.Data.IsolationLevel.ReadCommitted
                     );
@@ -117,10 +117,10 @@ namespace EmailMaker.Service
                         .Options(o =>
                         {
                             o.EnableUnitOfWork(
-                                RebusUnitOfWork.Create,
-                                RebusUnitOfWork.Commit,
-                                RebusUnitOfWork.Rollback,
-                                RebusUnitOfWork.Cleanup
+                                rebusUnitOfWork.Create,
+                                rebusUnitOfWork.Commit,
+                                rebusUnitOfWork.Rollback,
+                                rebusUnitOfWork.Cleanup
                             );
                         })
                         ; break;

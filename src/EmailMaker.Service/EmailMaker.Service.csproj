@@ -44,7 +44,7 @@
     <PackageReference Include="CoreIoC.Ninject" Version="3.2.0" />
     <PackageReference Include="CoreIoC" Version="3.2.0" />
     <PackageReference Include="CoreUtils" Version="3.2.0" />
-    <PackageReference Include="CoreDdd.Rebus.UnitOfWork" Version="3.2.0" />
+    <PackageReference Include="CoreDdd.Rebus.UnitOfWork" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">
