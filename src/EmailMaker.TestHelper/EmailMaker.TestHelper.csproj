@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd" Version="3.3.1" />
+    <PackageReference Include="CoreDdd" Version="3.3.2" />
     <PackageReference Include="CoreUtils" Version="3.3.1" />
   </ItemGroup>
 
