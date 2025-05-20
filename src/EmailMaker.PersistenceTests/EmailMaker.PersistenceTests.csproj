@@ -25,7 +25,7 @@
     <PackageReference Include="CoreIoC.Castle" Version="3.3.0" />
     <PackageReference Include="CoreIoC" Version="3.3.0" />
     <PackageReference Include="CoreUtils" Version="3.3.1" />
-    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.3.0" />
+    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.3.1" />
     <PackageReference Include="DatabaseBuilder" Version="1.2.4" />
   </ItemGroup>
 
