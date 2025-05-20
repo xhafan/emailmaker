@@ -11,3 +11,4 @@ obj
 /*/appsettings.json
 EmailMaker-repolinks.sln
 bin
+*.bak

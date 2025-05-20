@@ -10,6 +10,7 @@ namespace EmailMaker.Domain.NhibernateMapping.Emails.EmailStates
         {
             mapping.Id(x => x.Id).GeneratedBy.Assigned();
             mapping.DiscriminateSubClassesOnColumn("Name");
+            mapping.Map(x => x.Name).ReadOnly();
         }
     }
 }

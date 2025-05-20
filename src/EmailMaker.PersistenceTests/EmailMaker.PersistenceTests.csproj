@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -14,19 +14,19 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
     <PackageReference Include="Shouldly" Version="3.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.2.0" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.2.0" />
-    <PackageReference Include="CoreDdd" Version="3.2.0" />
-    <PackageReference Include="CoreIoC.Castle" Version="3.2.0" />
-    <PackageReference Include="CoreIoC" Version="3.2.0" />
-    <PackageReference Include="CoreUtils" Version="3.2.0" />
-    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.2.0" />
-    <PackageReference Include="DatabaseBuilder" Version="1.2.2" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.3.0" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.3.2" />
+    <PackageReference Include="CoreDdd" Version="3.3.1" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.3.0" />
+    <PackageReference Include="CoreIoC" Version="3.3.0" />
+    <PackageReference Include="CoreUtils" Version="3.3.1" />
+    <PackageReference Include="CoreDdd.Nhibernate.TestHelpers" Version="3.3.0" />
+    <PackageReference Include="DatabaseBuilder" Version="1.2.4" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">

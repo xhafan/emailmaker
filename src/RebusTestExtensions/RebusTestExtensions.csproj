@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="4.4.0" />
-    <PackageReference Include="Rebus" Version="5.0.1" />
+    <PackageReference Include="Rebus" Version="6.6.2" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'!='Release'">

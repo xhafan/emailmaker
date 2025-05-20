@@ -26,8 +26,8 @@ namespace RebusTestExtensions.Extensions
         )
             where TMessage : class, new()
         {
-            A.CallTo(() => bus.SendLocal(A<object>._, A<Dictionary<string, string>>._))
-                .Invokes((object messages, Dictionary<string, string> optionalHeaders) =>
+            A.CallTo(() => bus.SendLocal(A<object>._, A<IDictionary<string, string>>._))
+                .Invokes((object messages, IDictionary<string, string> optionalHeaders) =>
                 {
                     onSend(messages as TMessage);
                 });
@@ -39,8 +39,8 @@ namespace RebusTestExtensions.Extensions
         )
             where TMessage : class, new()
         {
-            A.CallTo(() => bus.Publish(A<object>._, A<Dictionary<string, string>>._))
-                .Invokes((object messages, Dictionary<string, string> optionalHeaders) =>
+            A.CallTo(() => bus.Publish(A<object>._, A<IDictionary<string, string>>._))
+                .Invokes((object messages, IDictionary<string, string> optionalHeaders) =>
                 {
                     onPublish(messages as TMessage);
                 });

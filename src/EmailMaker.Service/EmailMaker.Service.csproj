@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -17,34 +17,31 @@
     <PackageReference Include="Ninject" Version="3.3.4" />
     <PackageReference Include="Ninject.Extensions.Conventions" Version="3.3.0" />
     <PackageReference Include="Npgsql" Version="4.0.0" />
-    <PackageReference Include="Rebus" Version="5.0.1" />
+    <PackageReference Include="Rebus" Version="6.6.2" />
     <PackageReference Include="Rebus.Castle.Windsor" Version="4.1.0" />
     <PackageReference Include="Rebus.Ninject" Version="3.0.0" />
     <PackageReference Include="Rebus.RabbitMQ" Version="5.0.0-b02" />
     <PackageReference Include="Rebus.UnitOfWork" Version="4.0.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <PackageReference Include="System.Data.SqlClient" Version="4.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="Rebus.Msmq" Version="4.0.0" />
+	<PackageReference Include="Rebus.Msmq" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.2.0" />
-    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.2.0" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.2.0" />
-    <PackageReference Include="CoreDdd.Register.Castle" Version="3.2.0" />
-    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.2.0" />
-    <PackageReference Include="CoreDdd" Version="3.2.0" />
-    <PackageReference Include="CoreIoC.Castle" Version="3.2.0" />
-    <PackageReference Include="CoreIoC.Ninject" Version="3.2.0" />
-    <PackageReference Include="CoreIoC" Version="3.2.0" />
-    <PackageReference Include="CoreUtils" Version="3.2.0" />
-    <PackageReference Include="CoreDdd.Rebus.UnitOfWork" Version="3.2.1" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.3.0" />
+    <PackageReference Include="CoreDdd.Nhibernate.Register.Ninject" Version="3.3.0" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.3.2" />
+    <PackageReference Include="CoreDdd.Register.Castle" Version="3.3.0" />
+    <PackageReference Include="CoreDdd.Register.Ninject" Version="3.3.0" />
+    <PackageReference Include="CoreDdd" Version="3.3.1" />
+    <PackageReference Include="CoreIoC.Castle" Version="3.3.0" />
+    <PackageReference Include="CoreIoC.Ninject" Version="3.3.0" />
+    <PackageReference Include="CoreIoC" Version="3.3.0" />
+    <PackageReference Include="CoreUtils" Version="3.3.1" />
+    <PackageReference Include="CoreDdd.Rebus.UnitOfWork" Version="3.3.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Repolinks-Debug'">

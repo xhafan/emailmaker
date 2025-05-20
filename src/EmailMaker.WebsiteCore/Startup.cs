@@ -64,8 +64,8 @@ namespace EmailMaker.WebsiteCore
                     });
 
             // Add framework services.
-            services.AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); // avoid json camel case, https://stackoverflow.com/a/38202543/379279
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); // avoid json camel case, https://stackoverflow.com/a/38202543/379279
             services.AddLogging(lb => lb.AddConsole().AddDebug());
 
             // Custom application component registrations, ordering is important here
@@ -234,7 +234,7 @@ namespace EmailMaker.WebsiteCore
         private string _GetAssemblyLocation()
         {
             var codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            var uri = new UriBuilder(codeBase);
+            var uri = new UriBuilder(codeBase!);
             var path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
         }
