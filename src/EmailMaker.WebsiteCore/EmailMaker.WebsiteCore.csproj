@@ -31,7 +31,7 @@
     <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.3.0" />
     <PackageReference Include="CoreDdd.Nhibernate" Version="3.3.3" />
     <PackageReference Include="CoreDdd.Register.Castle" Version="3.3.0" />
-    <PackageReference Include="CoreDdd" Version="3.3.2" />
+    <PackageReference Include="CoreDdd" Version="3.3.3" />
     <PackageReference Include="CoreIoC.Castle" Version="3.3.0" />
     <PackageReference Include="CoreIoC" Version="3.3.0" />
     <PackageReference Include="CoreUtils" Version="3.3.1" />
