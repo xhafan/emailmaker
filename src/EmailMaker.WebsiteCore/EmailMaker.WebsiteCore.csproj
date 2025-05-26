@@ -29,7 +29,7 @@
 
   <ItemGroup Condition="'$(Configuration)' != 'Repolinks-Debug'">
     <PackageReference Include="CoreDdd.Nhibernate.Register.Castle" Version="3.3.0" />
-    <PackageReference Include="CoreDdd.Nhibernate" Version="3.3.3" />
+    <PackageReference Include="CoreDdd.Nhibernate" Version="3.3.4" />
     <PackageReference Include="CoreDdd.Register.Castle" Version="3.3.0" />
     <PackageReference Include="CoreDdd" Version="3.3.3" />
     <PackageReference Include="CoreIoC.Castle" Version="3.3.0" />
